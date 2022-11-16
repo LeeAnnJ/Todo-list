@@ -23,6 +23,12 @@
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
+  <p>
+    element-icon:
+    <el-icon color="#409EFC" class="no-inherit">
+      <Share />
+  </el-icon>
+  </p>
   
 </template>
 
