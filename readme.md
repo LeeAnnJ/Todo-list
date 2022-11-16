@@ -16,12 +16,15 @@
 |xxxx|xxxx|xxxx|
 </center>
 
+### 2022.11.16 by 联机
+引入了vue3支持的[element-plus组件](https://element-plus.gitee.io/zh-CN/component/button.html)和顺带的[element-icon图标组](https://element-plus.gitee.io/zh-CN/component/icon.html)，使用方法可以看链接的文档。
+
 ### 2022.11.14 by 联机
 在需要预览界面效果前，请先[配置Vue环境](https://blog.csdn.net/mengchuan6666/article/details/125893199)
 
 前端项目文件夹结构设置:
 
-- node_models: Vue框架的基本配置
+- node_models: vite进行的Vue框架的基本配置和element引入。
 - public: 通用资源，之后我会把图标文件放在`/icons`文件夹。
 - src: 项目的主要结构在这里
 	- assets: 静态资源，例如通用的css样式、界面用到的图片等
@@ -30,8 +33,10 @@
 	- http: 以后连接后端的api在这里
 	- pages: 页面，一个页面配置一个文件夹，若使用需要在`router/index.js`文件进行路由配置，我简单写了个两个页面。
 	- router: 用来配置路由，我在`index.js`文件里写了简单示例
-	- App.vue: 启动页面，一般不用动
-	- main.js: 上全局变量之前应该不用动
+	- `App.vue`: 启动页面，一般不用动
+	- `main.js`: 上全局变量之前应该不用动
+- `vite.config.js`:vite打包的配置文件。
+- UIdesign 界面设计图 
 
 
 ### 2022.11.12 by 联机
