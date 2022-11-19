@@ -3,17 +3,23 @@ import {createRouter, createWebHistory} from 'vue-router'
 // 页面对应的vue文件
 import HelloRouter from '../pages/hello/HelloWorld.vue'
 import JumpRouter from '../pages/jump/jump.vue'
+import HomeRouter from '../pages/home/Home.vue'
 
 
 const routes = [
     {
     	path: '/',
-    	redirect: '/hello'
+    	redirect: '/home'
     },
     {
     	path:'/hello',
-    	name: "首页",
+    	name: "欢迎页",
     	component: HelloRouter
+    },
+    {
+        path:'/home',
+        name:'Todo-List在线看板',
+        component:HomeRouter
     },
     {
     	path:'/jump',
