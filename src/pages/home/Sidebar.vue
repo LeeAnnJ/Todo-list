@@ -7,9 +7,9 @@
         <hr>
 
     </div> -->
-    <el-container class="side">
-        <el-aside>Aside侧边栏</el-aside>
-    </el-container>
+    <!-- <el-container class="side"> -->
+        <el-aside class="side">Aside侧边栏</el-aside>
+    <!-- </el-container> -->
 </template>
 
 <script>
@@ -18,9 +18,10 @@
 
 <style scoped>
     .side{
+        /* border: 1px solid #000000; */
         background-color: #FDFDFD;
         border-right: 1px solid #888888;
-        width: 15%;
+        width: 150px;
         height: 100%;
         float: left;
     }
