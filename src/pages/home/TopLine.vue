@@ -1,17 +1,21 @@
 <template>
   <div class="header">
-    <el-icon style="position:absolute;left:5px;top:12px;"><Grid /></el-icon>
-    <span style="position:absolute;left:25px;top:9px;"><b>To-do List 在线看板</b></span>
+    <el-icon class="titleIcon" style="">
+      <Grid />
+    </el-icon>
+    <span class="title">
+      <b>To-do List 在线看板</b>
+    </span>
 
     <el-input v-model="input4" class="input_search" placeholder="输入编号搜索任务">
         <template #prefix>
           <el-icon class="el-input__icon"><search /></el-icon>
         </template>
-      </el-input>
+    </el-input>
 
     <!-- 个人设置 -->
     <div class="setting_block">
-    <!-- 点击显示详细信息 -->
+      <!-- 点击显示详细信息 -->
       <el-popover show="" placement="bottom" :width="300" trigger="click">
         <template #reference>
           <el-icon class="setting" :size="24"><Setting /></el-icon>
@@ -66,7 +70,7 @@
 
 <script lang="ts" setup>
     import { ref } from 'vue'
-    import {Search } from '@element-plus/icons-vue'
+    import { Search } from '@element-plus/icons-vue'
 
     const input4 = ref('')
 
@@ -81,10 +85,24 @@
         margin-top: 0px;
         position:absolute;
     }
+    .titleIcon{
+        position:absolute;
+        left:5px;
+        top:12px;
+        color: #f9f9f9;
+    }
+    .title{
+        position:absolute;
+        left:25px;
+        top:9px;
+        color: #f9f9f9;
+    }
     .input_search{
         position:absolute;
-        left:420px;
-        width: 400px;
+        /* left:420px; */
+        left: 30%;
+        /* width: 400px; */
+        width: 30%;
         height:32px;
         top:4px;
     }
@@ -94,6 +112,7 @@
         right:130px;
         height:40px;
         width:40px;
+        color:#f9f9f9;
     }
     .bell{
         position:absolute;
@@ -101,6 +120,7 @@
         right:70px;
         height: 40px;
         width: 40px;
+        color: #f9f9f9;
     }
     .user{
         position:absolute;
@@ -108,6 +128,7 @@
         right:10px;
         height:40px;
         width:40px;
+        color: #f9f9f9;
     }
     .setting_tips{
         display: none;
@@ -157,5 +178,4 @@
     .user_block:hover .user {
         background-color: whitesmoke;
     }
-
 </style>

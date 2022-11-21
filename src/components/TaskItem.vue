@@ -22,9 +22,12 @@
                 <el-icon class="leftIcon">
                     <Clock />
                 </el-icon>
-                <!-- 星标 -->
+                <el-icon class="leftIcon">
+                    <StarFilled />
+                </el-icon>
+                <!-- task check -->
                 <el-button :class="isImportant? 'rightIcon':'rightIcon clicked'" @click="starClick($event)">
-                    <el-icon style="margin: 0px;padding:0px;"><StarFilled/></el-icon>
+                    <el-icon style="margin: 0px;padding:0px;"><Plus /></el-icon>
                 </el-button>
             </div>
         </div>
@@ -32,7 +35,7 @@
 </template>
 
 <script>
-    import { Calendar, Clock, StarFilled} from '@element-plus/icons-vue'
+    import { Calendar, Clock, StarFilled,Plus} from '@element-plus/icons-vue'
     export default{
         name:"task-item",
         props:{

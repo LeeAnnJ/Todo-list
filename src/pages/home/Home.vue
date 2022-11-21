@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import Sidebar from './sidebar.vue';
+    import Sidebar from './Sidebar.vue';
     import TopLine from './TopLine.vue';
     import TaskItem from '../../components/TaskItem.vue';
 
@@ -56,6 +56,8 @@
         padding: 50px 70px;
         background-color: #FAF9F8;
         flex-direction: column;
+        position: absolute;
+        left: 207px;
     }
     .headLine{
         border: 1rpx solid #000000;
