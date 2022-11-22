@@ -17,6 +17,7 @@
                     <div>
                         <h2 style="text-align: left;">在这里放一个任务</h2>
                         <task-item></task-item>
+                        <AddNewTask></AddNewTask>
                     </div>
                 </div>
             </el-container>
@@ -28,13 +29,20 @@
     import Sidebar from './Sidebar.vue';
     import TopLine from './TopLine.vue';
     import TaskItem from '../../components/TaskItem.vue';
+    import AddNewTask from '../../components/AddNewTask.vue';
 
     export default {
         components :{
             Sidebar,
             TopLine,
-            TaskTtem:"task-item"
-        }
+            TaskTtem:"task-item",
+            AddNewTask
+        },
+        data(){
+            return{
+                
+            }
+        },
     }
 
 

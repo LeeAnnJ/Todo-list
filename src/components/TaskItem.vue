@@ -1,67 +1,69 @@
 <template>
-    <div class="global">
-        <!-- 左边的颜色条 -->
-        <div class="colorSide"></div>
-        <!-- 主要内容 -->
-        <div class="itemContent">
-            <!-- 任务名称 -->
-            <p class="title">
-                <b>任务名称</b>
-            </p>
-            <!-- 细节部分，后面共同参与人我想升级成头像 -->
-            <p class="detail">
-                创建时间: 2022-11-19<br>
-                共同参与人: 张三 李四
-            </p>
-            <!-- 下方图标操作 -->
-            <div class="iconGroup">
-                <!-- 截止时间和周期性 -->
-                <el-icon class="leftIcon">
-                    <Calendar/>
-                </el-icon>
-                <el-icon class="leftIcon">
-                    <Clock />
-                </el-icon>
-                <el-icon class="leftIcon">
-                    <StarFilled />
-                </el-icon>
-                <!-- task check -->
-                <el-button :class="isImportant? 'rightIcon':'rightIcon clicked'" @click="starClick($event)">
-                    <el-icon style="margin: 0px;padding:0px;"><Plus /></el-icon>
-                </el-button>
-            </div>
-        </div>
+  <div :class="isfocus? 'global up':'global'" @mouseenter="focusOn" @mouseleave="focusLeave">
+    <!-- 左边的颜色条 -->
+    <div class="colorSide"></div>
+    <!-- 主要内容 -->
+    <div class="itemContent">
+      <!-- 任务名称 -->
+      <p class="title">
+        <b>任务名称</b>
+      </p>
+      <!-- 细节部分，后面共同参与人我想升级成头像 -->
+      <p class="detail">
+        创建时间: 2022-11-19<br>
+        共同参与人: 张三 李四
+      </p>
+      <!-- 下方图标操作 -->
+      <div class="iconGroup">
+        <!-- 截止时间和周期性 -->
+        <el-button class="leftIcon">
+          <el-icon ><Calendar/></el-icon>
+        </el-button>
+        <el-button class="leftIcon">
+          <el-icon><Clock /> </el-icon>
+        </el-button>
+        <!-- important -->
+        <el-button :class="isImportant? 'starIcon clicked':'starIcon'" @click="starClick()">
+          <el-icon><StarFilled /></el-icon>
+        </el-button>
+        <!-- task check -->
+        <el-button :class="isDone? 'rightIcon clicked':'rightIcon'">
+          <el-icon><Check /></el-icon>
+        </el-button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    import { Calendar, Clock, StarFilled,Plus} from '@element-plus/icons-vue'
+    import { Calendar, Clock, StarFilled, Plus,} from '@element-plus/icons-vue';
     export default{
         name:"task-item",
         props:{
             imp:{
                 type: Boolean,
                 default: false
+            },
+            done:{
+                type:Boolean,
+                default: false
             }
         },
         data(){
             return{
                 isImportant:this.imp,
+                isDone:this.done,
+                isfocus:false
             }
         },
         methods:{
-            starClick(e){
+            starClick(){
                 // console.log("clicked");
                 this.isImportant=!this.isImportant;
                 console.log(this.isImportant);
-                // let target = e.target;
-                // console.log(target);
-                // if (target.nodeName == "SPAN" || target.nodeName == "I") {
-                //     target = e.target.parentNode;
-                // }
-                // target.blur();
-                // return;
-            }
+            },
+            focusOn(){this.isfocus=true;},
+            focusLeave(){this.isfocus=false;},
         }
     }
 
@@ -69,13 +71,19 @@
 
 <style scoped>
     .global{
-        border: 1px solid #000000;
+        border: 1px solid #303133;
         border-radius: 30px;
+        margin-top: 30px;
         width: 250px;
         height: 160px;
         background-color: #FFFFFF;
         padding: 0px;
-        /* flex-direction: row; */
+        /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+        box-shadow: 3px 3px 2px 1px#c7c8ca;
+    }
+    .global.up{
+        margin-top: 0px;
+        box-shadow: 5px 5px 3px 2px#babbbd;
     }
     .colorSide{
         /* border: 1px solid #000000; */
@@ -123,13 +131,44 @@
 
     } */
     .leftIcon{
+        border: none;
         /* border: 1px solid #000; */
+        width: 25px;
+        height: 25px;
         padding: 0px;
-        margin-right: 16px;
+        margin: 0px;
+        margin-right: 4px;
         float: left;
         font-size: 25px;
     }
-    .rightIcon /*,.rightIcon:focus:not(.rightIcon:hover)*/{
+    .starIcon{
+        border:none;
+        /* border: 1px solid #000000; */
+        width: 25px;
+        height: 25px;
+        padding: 0px;
+        margin:0px;
+        padding:0px; 
+        float: left;
+        font-size: 25px;
+    }
+    .starIcon:hover {
+        background-color:#fff8e1;
+        color: #FFCA19;
+    }
+    .starIcon:focus {
+        background-color: #FFFFFF;
+        color: #c8c9cc;
+    }
+    .starIcon:active {
+        color: #FFCA19;
+        background-color: #FFFFFF;
+    }
+    .starIcon.clicked{
+        color: #FFCA19;
+        background-color: #FFFFFF;
+    }
+    .rightIcon{
         border: 1px solid#e9e9eb;
         border-radius: 50%;
         width: 28px;
@@ -141,9 +180,9 @@
         color: #c8c9cc ;
     }
     .rightIcon:hover {
-        background-color:#fff8e1;
-        color: #FFCA19;
-        border-color: #f9e6a9;
+        background-color:#f0f9eb;
+        color: #95d475;
+        border-color: #e1f3d8;
     }
     .rightIcon:focus {
         border-color: #e9e9eb;
@@ -151,14 +190,14 @@
         color: #c8c9cc;
     }
     .rightIcon:active {
-        color: #FFCA19;
-        border-color: #f9e6a9;
-        background-color: #FFFFFF;
+        color: #529b2e;
+        border-color: #b3e19d;
+        background-color: #d1edc4;
     }
     .rightIcon.clicked{
-        color: #FFCA19;
-        border-color: #f9e6a9;
-        background-color: #FFFFFF;
+        color: #67C23A;
+        border-color: #67C23A;
+        background-color: #e1f3d8;
     }
     .border{
         border: 1px solid #000000;
