@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <el-icon class="titleIcon" style="">
+    <el-icon class="titleIcon">
       <Grid />
     </el-icon>
     <span class="title">
@@ -78,23 +78,25 @@
 
 <style scoped>
     .header{    
+        border-bottom: 2px solid #CDD0D6;
         background-color: #2564CF;
         width:100%;
-        height:40px;
-        top:0px;
-        margin-top: 0px;
+        height: 55px;
+        top: 0px;
+        /* margin-top: 0px; */
         position:absolute;
     }
     .titleIcon{
         position:absolute;
-        left:5px;
-        top:12px;
+        left: 10px;
+        top: 15px;
         color: #f9f9f9;
+        font-size: 23px;
     }
     .title{
         position:absolute;
-        left:25px;
-        top:9px;
+        left:35px;
+        top:15px;
         color: #f9f9f9;
     }
     .input_search{
@@ -103,31 +105,31 @@
         left: 30%;
         /* width: 400px; */
         width: 30%;
-        height:32px;
-        top:4px;
+        height:35px;
+        top: 10px;
     }
     .setting{
         position:absolute;
-        top:0px;
-        right:130px;
-        height:40px;
-        width:40px;
+        top: 7px;
+        right: 130px;
+        height: 40px;
+        width: 40px;
         color:#f9f9f9;
     }
     .bell{
         position:absolute;
-        top:0px;
-        right:70px;
+        top: 7px;
+        right: 68px;
         height: 40px;
         width: 40px;
         color: #f9f9f9;
     }
     .user{
         position:absolute;
-        top:0px;
-        right:10px;
-        height:40px;
-        width:40px;
+        top: 7px;
+        right: 10px;
+        height: 40px;
+        width: 40px;
         color: #f9f9f9;
     }
     .setting_tips{

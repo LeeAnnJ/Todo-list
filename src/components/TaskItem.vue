@@ -1,9 +1,9 @@
 <template>
   <div :class="isfocus? 'global up':'global'" @mouseenter="focusOn" @mouseleave="focusLeave">
     <!-- 左边的颜色条 -->
-    <div class="colorSide"></div>
+    <div :class="isDone? 'colorside finish':'colorside'"></div>
     <!-- 主要内容 -->
-    <div class="itemContent">
+    <div class="item-content">
       <!-- 任务名称 -->
       <p class="title">
         <b>任务名称</b>
@@ -23,11 +23,11 @@
           <el-icon><Clock /> </el-icon>
         </el-button>
         <!-- important -->
-        <el-button :class="isImportant? 'starIcon clicked':'starIcon'" @click="starClick()">
+        <el-button :class="isImportant? 'starIcon clicked':'starIcon'" @click="starClick">
           <el-icon><StarFilled /></el-icon>
         </el-button>
         <!-- task check -->
-        <el-button :class="isDone? 'rightIcon clicked':'rightIcon'">
+        <el-button :class="isDone? 'rightIcon clicked':'rightIcon'" @click="confirmDone">
           <el-icon><Check /></el-icon>
         </el-button>
       </div>
@@ -50,7 +50,7 @@
             }
         },
         data(){
-            return{
+            return {
                 isImportant:this.imp,
                 isDone:this.done,
                 isfocus:false
@@ -58,12 +58,15 @@
         },
         methods:{
             starClick(){
-                // console.log("clicked");
+                // console.log("click star");
                 this.isImportant=!this.isImportant;
-                console.log(this.isImportant);
             },
             focusOn(){this.isfocus=true;},
             focusLeave(){this.isfocus=false;},
+            confirmDone(){
+                // console.log("click finish");
+                this.isDone=!this.isDone;
+            },
         }
     }
 
@@ -73,7 +76,7 @@
     .global{
         border: 1px solid #303133;
         border-radius: 30px;
-        margin-top: 30px;
+        margin-top: 15px;
         width: 250px;
         height: 160px;
         background-color: #FFFFFF;
@@ -85,16 +88,20 @@
         margin-top: 0px;
         box-shadow: 5px 5px 3px 2px#babbbd;
     }
-    .colorSide{
-        /* border: 1px solid #000000; */
+    .colorside{
+        border: 1px solid #333;
+        border-right: none;
         background-color: #2564CF;
         width: 29px;
-        height: 100%;
-        border-radius: 29px 0px 0px 29px;
+        height: 99%;
+        border-radius: 28px 0px 0px 28px;
         float: left;
         /* flex-direction: row; */
     }
-    .itemContent{
+    .colorside.finish{
+        background-color: #00994D;
+    }
+    .item-content{
         /* border:1px solid #000000; */
         height: 77%;
         width: 81%;

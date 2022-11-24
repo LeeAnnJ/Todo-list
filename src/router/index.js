@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 // 页面对应的vue文件
-import HelloRouter from '../pages/hello/HelloWorld.vue'
-import JumpRouter from '../pages/jump/jump.vue'
-import HomeRouter from '../pages/home/Home.vue'
+import HelloRouter from '../pages/hello/HelloWorld.vue';
+import JumpRouter from '../pages/jump/jump.vue';
+import HomeRouter from '../pages/home/Home.vue';
+import DetailRouter from '../pages/task-detail/TaskDetail.vue';
 
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     	path:'/jump',
     	name:'跳转',
     	component: JumpRouter
+    },
+    {
+    	path:'/taskDetail',
+    	name:'任务详情',
+    	component: DetailRouter
     }
 ]
 

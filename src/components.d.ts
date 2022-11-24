@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddNewTask: typeof import('./components/AddNewTask.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElButtom: typeof import('element-plus/es')['ElButtom']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDialog: typeof import('element-plus/es')['ElDialog']
@@ -16,6 +17,7 @@ declare module '@vue/runtime-core' {
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -24,8 +26,11 @@ declare module '@vue/runtime-core' {
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    NewTask: typeof import('./components/NewTask.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./components/SvgIcon.vue')['default']
     TaskItem: typeof import('./components/TaskItem.vue')['default']
+    TopLine: typeof import('./components/TopLine.vue')['default']
   }
 }
