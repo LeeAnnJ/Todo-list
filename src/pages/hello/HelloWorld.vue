@@ -1,65 +1,90 @@
 <template>
-	<img alt="Vue logo" src="../../assets/logo.png" />
-	
-  <h1>{{ msg }}</h1>
-  
-  <p>
-    Welcome:
-    <a href="https://hx.dcloud.net.cn/" target="_blank">HBuilderX</a>
-  </p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Documentation
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <button type="button" @click="pageJump">点击跳转</button>
-  <el-button type="primary">a el-button</el-button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
-  <p>
-    element-icon:
-    <el-icon color="#409EFC" class="no-inherit">
-      <Share />
-  </el-icon>
-  </p>
-  
+  <div class="hello-main">
+    <div class="login-window">
+      <el-form class="form" :model="form" label-position='top'>
+        <el-form-item class="form-item" label="用户账号">
+          <el-input class="input_log" v-model="form.userID" clearable />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input class="input_log" v-model="form.password" type="password" show-password />
+        </el-form-item>
+      </el-form>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">注册</el-button>
+          <el-button type="primary" @click="dialogVisible = false">登录</el-button>
+        </div>
+      
+    </div>
+  </div>
 </template>
 
-<style>
-a {
-  color: #42b983;
-}
-</style>
-
 <script>
-import { defineComponent } from 'vue'
-import { ElButton } from 'element-plus'
+    import { ref } from 'vue';
+    import {reactive} from 'vue';
 
-export default {
-  components:{
-    ElButton
-  },
-	data() {
-		return {
-			count: 0,
-		};
-	},
-	methods: {
-		pageJump() {
-			console.log("页面跳转：")
-			this.$router.push({
-				path:"/jump"
-			})
-		}
-	},
-  
-};
+    export default {
+        components:{
+        },
+        data() {
+            return {
+                dialogVisible: ref(false),
+                input_account: ref(""),
+                count: 0,
+                form: reactive({
+                    userID:'',
+                    password: '',
+                })
+            };
+        },
+        methods: {
+            handleClose(){
+              ElMessageBox.confirm('Are you sure to close this dialog?')
+              .then(() => {
+                  done()
+              })
+              .catch(() => {
+                // catch error
+              })
+            }
+        },
+    };
 
 </script>
+
+<style scoped>
+.hello-main{
+    height: 850px;
+    width: 100%;
+    background-color: #FAFAFA;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-window{
+    border: 1px solid #c8c9cc;
+    width: 400px;
+    height: 400px;
+    background-color: #FAFAFA;
+    display: flex;
+    vertical-align: middle;
+}
+.form{
+    width: 100%;
+    border: 1px solid #000;
+    align-items: center;
+}
+.form-item{
+    border: 1px solid #000;
+    
+    
+}
+.dialog-footer button:first-child {
+    margin-right: 10px;
+}
+.input_log{
+    width: 300px;
+}
+
+</style>

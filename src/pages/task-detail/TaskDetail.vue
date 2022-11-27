@@ -49,7 +49,7 @@
         <!-- 标题栏 -->
         <div class="title">
           <img class="title-icon" src="../../assets/icons/9_application.png" alt="some_text" />
-          <b style="float: left;">子步骤</b>
+          <b style="float: left;">子步骤（2）</b>
         </div>
         <!-- 子步骤 -->
         <el-card class="substep">
@@ -58,7 +58,7 @@
         </el-card>
         <el-card class="substep">
           <div class="substep-tag">未完成</div>
-          <div style="padding-left: 15px;">子步骤2</div>
+          <div style="padding-left: 15px;">子步骤2 balabala balabala balabala balabala balabaal</div>
         </el-card>
         <el-card class="substep">
           <div class="substep-tag finish">已完成</div>
@@ -69,6 +69,73 @@
           添加子步骤
         </el-button>
       </div>
+
+      <!-- 动态 -->
+      <div class="card-slot">
+        <!-- 标题栏 -->
+        <div class="title">
+          <img class="title-icon" src="../../assets/icons/10_inform.png" alt="some_text" />
+          <b style="float: left;">动态（3）</b>
+        </div>
+        <!-- 动态条目 -->
+        <el-card class="feed-item">
+          <div class="feed-user">
+            <el-avatar> user </el-avatar>
+            用户名
+          </div>
+          <div class="feed-detail" style="">添加了子步骤:子步骤3</div>
+          <span style="padding-left: 25px;">2022-11-26 14:34</span>
+        </el-card>
+        <el-card class="feed-item">
+          <div class="feed-user">
+            <el-avatar> user </el-avatar>
+            用户名
+          </div>
+          <div class="feed-detail" style="">加入了该任务</div>
+          <span style="padding-left: 25px;">2022-11-26 15:14</span>
+        </el-card>
+        <el-card class="feed-item">
+          <div class="feed-user">
+            <el-avatar> user </el-avatar>
+            用户名
+          </div>
+          <div class="feed-detail" style="">测试文字折叠测试文字折叠测试文字折叠测试文字折叠测试文字折叠</div>
+          <span style="padding-left: 25px;">2022-11-26 15:14</span>
+        </el-card>
+      </div>
+
+      <!-- 共同参与人 -->
+      <div class="card-slot">
+        <!-- 标题栏 -->
+        <div class="title">
+          <img class="title-icon" src="../../assets/icons/3_user.png" alt="some_text" />
+          <b style="float: left;">共同参与人（5）</b>
+        </div>
+        <!-- 参与人 -->
+        <el-card v-for="i in 10" class="user">
+          <el-avatar :size="50" class="user-avatar"> user </el-avatar>
+          用户名
+        </el-card>
+        <el-button class="add-button" round>
+          <el-icon><Plus /></el-icon>
+          添加共同参与人
+        </el-button>
+      </div>
+
+      <!-- 共同参与人 -->
+      <div class="card-slot">
+        <!-- 标题栏 -->
+        <div class="title">
+          <img class="title-icon" src="../../assets/icons/6_classific.png" alt="text" />
+          <b style="float: left;">附件（0）</b>
+        </div>
+        <!-- 参与人 -->
+        <el-button class="add-button" round>
+          <el-icon><Plus /></el-icon>
+          添加附件
+        </el-button>
+      </div>
+
     </el-container>
   </div>
 </template>
@@ -79,9 +146,9 @@
     
     export default {
         components :{
-    TopLine,
-    Document
-},
+          TopLine,
+          Document
+        },
         data(){
             return {
                 iconUrl:[
@@ -102,9 +169,10 @@
     .main{
         background-color: #F5F6F7;
         min-height: 765px;
+        width: 1700px;
     }
     .card-slot{
-        border: 1px solid #000;
+        /* border: 1px solid #000; */
         height: 100%;
         width: 320px;
         padding: 30px 20px;
@@ -188,7 +256,7 @@
         width: 100%;
         min-height: 90px;
         text-align: left;
-        margin-bottom: 17px;
+        margin-bottom: 13px;
     }
     .substep:hover{
       /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
@@ -211,5 +279,34 @@
         border: none;
         width: 100%;
         height: 40px;
+    }
+    .feed-item{
+        width: 100%;
+        border-radius: 8px;
+        text-align: left;
+        color: #606266;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    .feed-user{
+        /* border: 1px solid #000; */
+        margin-bottom: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+    }
+    .feed-detail{
+        padding-left: 40px;
+        margin-bottom: 10px;
+    }
+    .user{
+        text-align: left;
+        border-radius: 8px;
+        margin-bottom: 13px;
+        padding-left: 10px;
+        font-weight: 600;
+    }
+    .user-avatar{
+        margin-right: 10px;
     }
 </style>
