@@ -1,90 +1,51 @@
 <template>
   <div class="hello-main">
-    <div class="login-window">
-      <el-form class="form" :model="form" label-position='top'>
-        <el-form-item class="form-item" label="用户账号">
-          <el-input class="input_log" v-model="form.userID" clearable />
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input class="input_log" v-model="form.password" type="password" show-password />
-        </el-form-item>
-      </el-form>
-        <div class="dialog-footer">
-          <el-button @click="dialogVisible = false">注册</el-button>
-          <el-button type="primary" @click="dialogVisible = false">登录</el-button>
-        </div>
-      
+    <h1 class="hello-title">板栗看板</h1>
+    控制创意，如此简单
+    <el-button class="login-button">马上开启</el-button>
+    <div class="registor">
+      还没有看板账号？
+      <el-button link>点击这里注册</el-button>
     </div>
   </div>
 </template>
 
 <script>
-    import { ref } from 'vue';
-    import {reactive} from 'vue';
-
     export default {
-        components:{
-        },
-        data() {
-            return {
-                dialogVisible: ref(false),
-                input_account: ref(""),
-                count: 0,
-                form: reactive({
-                    userID:'',
-                    password: '',
-                })
-            };
-        },
-        methods: {
-            handleClose(){
-              ElMessageBox.confirm('Are you sure to close this dialog?')
-              .then(() => {
-                  done()
-              })
-              .catch(() => {
-                // catch error
-              })
-            }
-        },
+        
     };
-
 </script>
 
 <style scoped>
 .hello-main{
     height: 850px;
     width: 100%;
-    background-color: #FAFAFA;
     position: fixed;
     top: 0px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    background-image: url('../../assets/backgroud.jpg');
+    background-size: cover;
 }
-.login-window{
-    border: 1px solid #c8c9cc;
-    width: 400px;
-    height: 400px;
-    background-color: #FAFAFA;
-    display: flex;
-    vertical-align: middle;
-}
-.form{
+.hello-title{
     width: 100%;
-    border: 1px solid #000;
-    align-items: center;
+    margin-bottom: 20px;
 }
-.form-item{
-    border: 1px solid #000;
-    
-    
+.login-button{
+    width: 200px;
+    height: 60px;
+    border-radius: 15px;
+    align-self: center;
+    margin:30px 0px 20px 0px;
+    font-size: 25px;
+    font-weight: 300;
+    box-shadow: 1px 1px 0px 1px#d8d9db;
 }
-.dialog-footer button:first-child {
-    margin-right: 10px;
-}
-.input_log{
-    width: 300px;
+.registor{
+    /* border: 1px solid #000; */
+    width: 100%;
+    flex-direction: row;
 }
 
 </style>
