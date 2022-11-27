@@ -2,12 +2,12 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 // 页面对应的vue文件
 import HelloRouter from '../pages/hello/HelloWorld.vue';
-import LoginRouter from '../pages/login/login.vue';
-import JumpRouter from '../pages/jump/jump.vue';
+import jump from '../pages/jump/jump.vue';
 import HomeRouter from '../pages/home/Home.vue';
 import DetailRouter from '../pages/task-detail/TaskDetail.vue';
-
-
+import ddl from '../pages/jump/ddl.vue';
+import important from '../pages/jump/important.vue';
+import period from '../pages/jump/period.vue';
 
 const routes = [
     {
@@ -27,7 +27,7 @@ const routes = [
     {
         path:'/home',
         name:'Todo-List在线看板',
-        component:HomeRouter
+        component: HomeRouter
     },
     {
     	path:'/taskDetail',
@@ -36,9 +36,33 @@ const routes = [
     },
     {
     	path:'/jump',
-    	name:'跳转',
-    	component: JumpRouter
+    	name:'全部',
+    	component: jump
     },
+
+/////////////////////////////////////////////////
+
+    {
+    	path:'/ddl',
+    	name:'_ddl',
+    	component: ddl
+    },
+    {
+    	path:'/important',
+    	name:'_important',
+    	component: important
+    },
+    {
+    	path:'/taskDetail',
+    	name:'任务详情',
+    	component: DetailRouter
+    },
+    {
+    	path:'/period',
+    	name:'_period',
+    	component: period
+    }
+   
 ]
 
 const router = createRouter({
