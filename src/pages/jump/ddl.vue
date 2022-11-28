@@ -1,35 +1,26 @@
 <template>
-  <div>
-    <!-- 顶栏 -->
-    <el-affix>
-    <TopLine></TopLine>
-    
-    </el-affix>
-    
-    <el-container class="global">
-      <el-container class="main">
-        <!-- 侧边栏 -->
-        <Sidebar></Sidebar>
+    <div>
+        <!-- 顶栏 -->
+        <el-affix>
+            <TopLine></TopLine>
+        </el-affix>
 
-<h2>
-<el-icon>
-    <Calendar />
-</el-icon>
-有截止日期的任务
-</h2>
-
-<p></p>
-
-
-
-</el-container>
-</el-container>
-</div>
+        <el-container class="global">
+            <el-container class="main">
+                <!-- 侧边栏 -->
+                <Sidebar></Sidebar>
+                <h2>
+                    <el-icon><Calendar /></el-icon>
+                    有截止日期的任务
+                </h2>
+                <p></p>
+            </el-container>
+        </el-container>
+    </div>
 </template>
 
-
 <script>
-import Sidebar from '../../pages/home/Sidebar.vue';
+import Sidebar from '../home/sidebar.vue';
 import TopLine from '../../components/TopLine.vue';
 import TaskItem from '../../components/TaskItem.vue';
 import NewTask from '../../components/NewTask.vue';
@@ -62,11 +53,9 @@ export default {
     flex-direction: column;
     padding: 0px;
 }
-
 .main {
     width: 100%;
     flex-direction: row;
     margin: 0px;
 }
-
 </style>

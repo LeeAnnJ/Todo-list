@@ -29,7 +29,7 @@
 
 
 <script>
-import Sidebar from '../../pages/home/Sidebar.vue';
+import Sidebar from '../home/sidebar.vue';
 import TopLine from '../../components/TopLine.vue';
 import TaskItem from '../../components/TaskItem.vue';
 import NewTask from '../../components/NewTask.vue';

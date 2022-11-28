@@ -179,7 +179,6 @@
     
     const input_search = ref('')
 
-
     const username = ref('name')
     const account = ref('33322244455')
     const sex = ref('男')
@@ -196,103 +195,101 @@
 </script>
 
 <style scoped>
+    .infinite-list-item:hover{
+      border: 0.1px solid rgb(0, 162, 255);
+      box-shadow: 2px 2px 1.5px 1px#c7c8ca !important;
+    }
+    .infinite-list {
+      height: 300px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .infinite-list .infinite-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      left:0px;
+      background: var(--el-color-primary-light-9);
+      margin: 10px;
+      color: var(--el-color-primary);
+    }
+    .infinite-list .infinite-list-item + .list-item {
+      margin-top: 10px;
+    }
+    /* .info_block{
+      position: absolute;
+      top:50px;
+    } */
+    .divider3{
+      position: absolute;
+      top:32px;
+      left:0px;
+    }
+    .avatar_content{
+      font-size: 27px;
+    }
+    .edit_words4{
+      position: absolute;
+      left: 10px;
+      top: 222px;
+    }
+    .input_intro{
+      position: absolute;
+      width: 220px;
+      left:75px;
+      top: 217px;
+    }
+    .edit_words3{
+      position: absolute;
+      left:10px;
+      top:170px;
+    }
+    .radio_sex{
+      position: absolute;
+      left:80px;
+      top:115px;
+    }
+    .edit_words1{
+      position: absolute;
+      left:10px;
+      top:75px;
+    }
+    .edit_words2{
+      position: absolute;
+      left:10px;
+      top:125px;
+    }
 
-
-.infinite-list-item:hover{
-  border: 0.1px solid rgb(0, 162, 255);
-  box-shadow: 2px 2px 1.5px 1px#c7c8ca !important;
-}
-.infinite-list {
-  height: 300px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.infinite-list .infinite-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  left:0px;
-  background: var(--el-color-primary-light-9);
-  margin: 10px;
-  color: var(--el-color-primary);
-}
-.infinite-list .infinite-list-item + .list-item {
-  margin-top: 10px;
-}
-/* .info_block{
-  position: absolute;
-  top:50px;
-} */
-.divider3{
-  position: absolute;
-  top:32px;
-  left:0px;
-}
-.avatar_content{
-  font-size: 27px;
-}
-.edit_words4{
-  position: absolute;
-  left: 10px;
-  top: 222px;
-}
-.input_intro{
-  position: absolute;
-  width: 220px;
-  left:75px;
-  top: 217px;
-}
-.edit_words3{
-  position: absolute;
-  left:10px;
-  top:170px;
-}
-.radio_sex{
-  position: absolute;
-  left:80px;
-  top:115px;
-}
-.edit_words1{
-  position: absolute;
-  left:10px;
-  top:75px;
-}
-.edit_words2{
-  position: absolute;
-  left:10px;
-  top:125px;
-}
-
-.log_out{
-  position:absolute;
-  top: 315px;
-  width:100%;
-  left:0px;
-}
-.user_info_block{
-  height: 328px;
-}
-.user_info{
-  position: absolute;
-  top:100px;
-}
-.divider1{
-  position: absolute;
-  top:75px;
-  left:0px;
-}
-.divider2{
-  position: absolute;
-  top:285px;
-  left:0px;
-}
-.edit_info{
-  position: absolute;
-  top:35px;
-  right:20px;
-}
+    .log_out{
+      position:absolute;
+      top: 315px;
+      width:100%;
+      left:0px;
+    }
+    .user_info_block{
+      height: 328px;
+    }
+    .user_info{
+      position: absolute;
+      top:100px;
+    }
+    .divider1{
+      position: absolute;
+      top:75px;
+      left:0px;
+    }
+    .divider2{
+      position: absolute;
+      top:285px;
+      left:0px;
+    }
+    .edit_info{
+      position: absolute;
+      top:35px;
+      right:20px;
+    }
     .header{    
         border-bottom: 2px solid #CDD0D6;
         background-color: #2564CF;

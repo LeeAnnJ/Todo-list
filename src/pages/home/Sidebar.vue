@@ -54,13 +54,10 @@
 
               </el-menu-item-group>
             </el-menu>
+
             <el-divider />
 
             <el-menu class="menu">
-
-
-
-
 
               <el-menu-item-group>
                 <todo-item v-for="(todo, index) in todos" :key="todo.id" :title="todo.title"
@@ -69,13 +66,10 @@
 
               </el-menu-item-group>
 
-
-
               <form v-on:submit.prevent="addNewTodo">
                 <el-input placeholder="新建列表" id="new-todo" v-model="newTodoText">
                 </el-input>
               </form>
-
 
             </el-menu>
             <!-- </el-scrollbar> -->
@@ -87,13 +81,11 @@
   </el-affix>
 </template>
 
-
-
-<!--------------------------------------------------------------------->
-
 <script>
-import TodoItem from './newlistitem.vue'
-
+import TodoItem from './newlistitem.vue';
+import { reactive, ref } from 'vue';
+import { padStart } from 'lodash';
+import { RouterView } from 'vue-router';
 
 export default {
   components: { TodoItem },
@@ -117,17 +109,9 @@ export default {
   }
 }
 
-
-
-import { reactive, ref } from 'vue';
-
-import { padStart } from 'lodash';
-import { RouterView } from 'vue-router';
-
 const form = reactive({
   name: ''
 })
-
 const items = form.name;
 
 </script>

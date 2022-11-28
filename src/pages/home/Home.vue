@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import Sidebar from './Sidebar.vue';
+    import Sidebar from './sidebar.vue';
     import TopLine from '../../components/TopLine.vue';
     import TaskItem from '../../components/TaskItem.vue';
     import NewTask from '../../components/NewTask.vue';
@@ -65,7 +65,7 @@
         components :{
             Sidebar,
             TopLine,
-            TaskTtem:"task-item",
+            TaskTtem: "task-item",
             NewTask
         },
         data(){

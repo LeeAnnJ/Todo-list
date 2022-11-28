@@ -1,13 +1,14 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 // 页面对应的vue文件
-import HelloRouter from '../pages/hello/HelloWorld.vue';
-import jump from '../pages/jump/jump.vue';
-import HomeRouter from '../pages/home/Home.vue';
-import DetailRouter from '../pages/task-detail/TaskDetail.vue';
-import ddl from '../pages/jump/ddl.vue';
-import important from '../pages/jump/important.vue';
-import period from '../pages/jump/period.vue';
+import HelloRouter from '../pages/hello/hello.vue';
+import HomeRouter from '../pages/home/home.vue';
+import LoginRouter from '../pages/login/login.vue';
+import AllTask from '../pages/jump/allTask.vue';
+import DDL from '../pages/jump/ddl.vue';
+import Important from '../pages/jump/important.vue';
+import Period from '../pages/jump/period.vue';
+import DetailRouter from '../pages/task-detail/taskdetail.vue';
 
 const routes = [
     {
@@ -35,22 +36,19 @@ const routes = [
     	component: DetailRouter
     },
     {
-    	path:'/jump',
+    	path:'/all',
     	name:'全部',
-    	component: jump
+    	component: AllTask
     },
-
-/////////////////////////////////////////////////
-
     {
     	path:'/ddl',
     	name:'_ddl',
-    	component: ddl
+    	component: DDL
     },
     {
     	path:'/important',
     	name:'_important',
-    	component: important
+    	component: Important
     },
     {
     	path:'/taskDetail',
@@ -60,7 +58,7 @@ const routes = [
     {
     	path:'/period',
     	name:'_period',
-    	component: period
+    	component: Period
     }
    
 ]

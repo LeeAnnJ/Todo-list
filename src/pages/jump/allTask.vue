@@ -3,25 +3,16 @@
 		<!-- 顶栏 -->
 		<el-affix>
 			<TopLine></TopLine>
-
 		</el-affix>
 
 		<el-container class="global">
 			<el-container class="main">
 				<!-- 侧边栏 -->
 				<Sidebar></Sidebar>
-
-
 				<h2>
-					<el-icon>
-						<HomeFilled />
-					</el-icon>
+					<el-icon><HomeFilled /></el-icon>
 					所有任务
 				</h2>
-
-
-
-
 			</el-container>
 		</el-container>
 	</div>
@@ -29,7 +20,7 @@
 
 
 <script>
-import Sidebar from '../../pages/home/Sidebar.vue';
+import Sidebar from '../home/sidebar.vue';
 import TopLine from '../../components/TopLine.vue';
 import TaskItem from '../../components/TaskItem.vue';
 import NewTask from '../../components/NewTask.vue';
