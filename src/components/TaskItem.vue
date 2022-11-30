@@ -150,14 +150,13 @@
     }
     .starIcon{
         border:none;
-        /* border: 1px solid #000000; */
         width: 25px;
         height: 25px;
         padding: 0px;
         margin:0px;
-        padding:0px; 
         float: left;
         font-size: 25px;
+        color:#73767a;
     }
     .starIcon:hover {
         background-color:#fff8e1;
@@ -165,7 +164,7 @@
     }
     .starIcon:focus {
         background-color: #FFFFFF;
-        color: #c8c9cc;
+        color: #73767a;
     }
     .starIcon:active {
         color: #FFCA19;

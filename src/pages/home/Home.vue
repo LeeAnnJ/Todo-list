@@ -66,7 +66,7 @@
             Sidebar,
             TopLine,
             TaskTtem: "task-item",
-            NewTask
+            NewTask,
         },
         data(){
             return {
