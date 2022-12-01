@@ -45,7 +45,7 @@
                   周期性任务
                 </el-menu-item>
 
-                <el-menu-item index="/jump" class="menuItem">
+                <el-menu-item index="/allTask" class="menuItem">
                   <el-icon>
                     <HomeFilled />
                   </el-icon>

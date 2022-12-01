@@ -42,7 +42,7 @@ const routes = [
     	component: DetailRouter
     },
     {
-    	path:'/all',
+    	path:'/allTask',
     	name:'全部',
     	component: AllTask
     },
