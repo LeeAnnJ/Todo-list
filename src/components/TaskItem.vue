@@ -4,10 +4,39 @@
     <div :class="isDone? 'colorside finish':'colorside'"></div>
     <!-- 主要内容 -->
     <div class="item-content">
-      <!-- 任务名称 -->
-      <p class="title">
-        <b>任务名称</b>
-      </p>
+      <!-- 任务名称 和 更多菜单-->
+      <div class="title">
+        <b>{{title}}</b>
+        <!-- <el-dropdown class="menu" trigger="click" >
+          <span class="el-dropdown-link">
+            <el-icon v-if="isfocus" ><MoreFilled /></el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item :icon="Plus">添加共同参与人</el-dropdown-item>
+              <el-dropdown-item :icon="Plus">重命名</el-dropdown-item>
+              <el-dropdown-item :icon="Plus">分组</el-dropdown-item>
+              <el-dropdown-item :icon="Plus">删除该任务</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown> -->
+        <!-- 菜单部分 -->
+        <el-popover trigger="hover" transition="all 0.5s">
+					<template #reference>
+            <div class="menu" @mouseenter="focusOn">
+						  <el-icon v-if="isfocus"  ><MoreFilled /></el-icon>
+            </div>
+					</template>
+            <div style="margin-top: 7px" @mouseenter="focusOn">
+              <div class="menu-item">添加共同参与人</div>
+              <div class="menu-item">重命名</div>
+              <div class="menu-item">分组</div>
+              <div class="menu-item">删除该任务</div>
+            </div>
+        </el-popover>
+        <!-- <el-icon v-if="isfocus" style="float: right;"><MoreFilled /></el-icon> -->
+      </div>
+
       <!-- 细节部分，后面共同参与人我想升级成头像 -->
       <p class="detail">
         创建时间: 2022-11-19<br>
@@ -15,13 +44,50 @@
       </p>
       <!-- 下方图标操作 -->
       <div class="iconGroup">
-        <!-- 截止时间和周期性 -->
-        <el-button class="leftIcon">
-          <el-icon ><Calendar/></el-icon>
-        </el-button>
-        <el-button class="leftIcon">
-          <el-icon><Clock /> </el-icon>
-        </el-button>
+        <!-- 截止时间 -->
+        <el-popover trigger="click" :title="('截止时间:'+ddl)">
+					<template #reference>
+						<el-button class="leftIcon">
+							<el-icon ><Calendar/></el-icon>
+						</el-button>
+					</template>
+					<el-button link @click="(dateVisible=true)">修改截止时间</el-button>
+        </el-popover>
+        <el-dialog v-model="dateVisible" title="选择截止日期" width="35%">
+          <el-date-picker 
+						v-model="selectTime" 
+						type="datetime" 
+						placeholder="选择截止时间"
+						value-format="YYYY-MM-DD hh:mm:ss"
+            size="small"
+					/>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="(this.dataVisible = false)">Cancel</el-button>
+              <el-button type="primary" @click="setDDL">Confirm</el-button>
+            </span>
+          </template>
+        </el-dialog>
+        
+        <!-- 周期性 -->
+        <el-popover trigger="click" :title="('重复:'+circul)">
+					<template #reference>
+						<el-button class="leftIcon">
+							<el-icon><Clock /> </el-icon>
+						</el-button>
+					</template>
+					<el-button link @click="(circulVisible=true)">修改周期性</el-button>
+        </el-popover>
+        <el-dialog v-model="circulVisible" title="设置周期性" width="35%">
+          周期性的数据设置我还不知道，先放一放
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="(this.circleVisible = false)">Cancel</el-button>
+              <el-button type="primary" @click="setDDL">Confirm</el-button>
+            </span>
+          </template>
+        </el-dialog>
+
         <!-- important -->
         <el-button :class="isImportant? 'starIcon clicked':'starIcon'" @click="starClick">
           <el-icon><StarFilled /></el-icon>
@@ -36,10 +102,16 @@
 </template>
 
 <script>
-    import { Calendar, Clock, StarFilled, Plus,} from '@element-plus/icons-vue';
-    export default{
+    import { Calendar, Clock, Select, StarFilled} from '@element-plus/icons-vue';
+    import {ref} from 'vue';
+
+		export default{
         name:"task-item",
         props:{
+            title:{
+                type: String,
+                default: "任务名称"
+            },
             imp:{
                 type: Boolean,
                 default: false
@@ -48,12 +120,19 @@
                 type:Boolean,
                 default: false
             }
+
         },
         data(){
             return {
-                isImportant:this.imp,
-                isDone:this.done,
-                isfocus:false
+                isImportant: this.imp,
+                isDone: this.done,
+                isfocus: false,
+								ddl: ref('暂无'),
+                selectTime: ref(''),
+                circul: ref('暂无'),
+                selectcrl: ref(''),
+                dateVisible: false,
+                circulVisible: false
             }
         },
         methods:{
@@ -67,146 +146,22 @@
                 // console.log("click finish");
                 this.isDone=!this.isDone;
             },
+            setDDL(){
+                if(this.selectTime != null) this.ddl=this.selectTime;
+                else this.ddl="暂无";
+                this.dateVisible = false;
+            },
+            setCircul(){
+                if(this.selectcrl!=null) this.circul=this.selectcrl;
+                else this.circul="暂无";
+                this.circulVisible=false;
+            }
         }
     }
 
 </script>
 
 <style scoped>
-    .global{
-        border: 1px solid #303133;
-        border-radius: 30px;
-        margin-top: 15px;
-        width: 250px;
-        height: 160px;
-        background-color: #FFFFFF;
-        padding: 0px;
-        /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
-        box-shadow: 3px 3px 2px 1px#c7c8ca;
-    }
-    .global.up{
-        margin-top: 0px;
-        box-shadow: 5px 5px 3px 2px#babbbd;
-    }
-    .colorside{
-        border: 1px solid #333;
-        border-right: none;
-        background-color: #2564CF;
-        width: 29px;
-        height: 99%;
-        border-radius: 28px 0px 0px 28px;
-        float: left;
-        /* flex-direction: row; */
-    }
-    .colorside.finish{
-        background-color: #00994D;
-    }
-    .item-content{
-        /* border:1px solid #000000; */
-        height: 77%;
-        width: 81%;
-        flex-direction: column;
-        padding: 25px 0px 10px 15px;
-        float: left;
-        position: relative;
-        /* float: left; */
-    }
-    .title{
-        /* border: 1px solid #000000; */
-        width: 90%;
-        font-size: 20px;
-        text-align: left;
-        margin: 0px 0px;
-    }
-    .detail{
-        /* border: 1px solid #000000; */
-        /* height: 20px; */
-        float: left;
-        margin: 10px 0px;
-        font-size: 14px;
-        line-height: 24px;
-    }
-    .iconGroup{
-        /* background-color: #d21515; */
-        height: 35px;
-        width: 90%;
-        float: inline-end;
-        position: absolute;
-        bottom: 0px;
-    }
-    /* .iconView{
-
-    } */
-    .leftIcon{
-        border: none;
-        /* border: 1px solid #000; */
-        width: 25px;
-        height: 25px;
-        padding: 0px;
-        margin: 0px;
-        margin-right: 4px;
-        float: left;
-        font-size: 25px;
-    }
-    .starIcon{
-        border:none;
-        width: 25px;
-        height: 25px;
-        padding: 0px;
-        margin:0px;
-        float: left;
-        font-size: 25px;
-        color:#73767a;
-    }
-    .starIcon:hover {
-        background-color:#fff8e1;
-        color: #FFCA19;
-    }
-    .starIcon:focus {
-        background-color: #FFFFFF;
-        color: #73767a;
-    }
-    .starIcon:active {
-        color: #FFCA19;
-        background-color: #FFFFFF;
-    }
-    .starIcon.clicked{
-        color: #FFCA19;
-        background-color: #FFFFFF;
-    }
-    .rightIcon{
-        border: 1px solid#e9e9eb;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        padding: 0px;
-        margin-right: 10px;
-        float: right;
-        font-size: 25px;
-        color: #c8c9cc ;
-    }
-    .rightIcon:hover {
-        background-color:#f0f9eb;
-        color: #95d475;
-        border-color: #e1f3d8;
-    }
-    .rightIcon:focus {
-        border-color: #e9e9eb;
-        background-color: #FFFFFF;
-        color: #c8c9cc;
-    }
-    .rightIcon:active {
-        color: #529b2e;
-        border-color: #b3e19d;
-        background-color: #d1edc4;
-    }
-    .rightIcon.clicked{
-        color: #67C23A;
-        border-color: #67C23A;
-        background-color: #e1f3d8;
-    }
-    .border{
-        border: 1px solid #000000;
-    }
+    @import '../assets/css/TaskItem.css';
 </style>
   
