@@ -6,7 +6,6 @@
     </el-button>
   </div>
 
-
 <el-dialog v-model="dialogFormVisible" title="新建任务">
   <el-form :model="form">
 
@@ -18,10 +17,9 @@
       <el-input v-model="form.datetime" autocomplete="off" />
     </el-form-item>
 
-    <el-form-item label="截至时间" :label-width="formLabelWidth">
+    <el-form-item label="截止时间" :label-width="formLabelWidth">
       <el-input v-model="form.people" autocomplete="off" />
     </el-form-item>
-
 
   </el-form>
   <template #footer>
