@@ -21,5 +21,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(router)
 app.use(ElementPlus)
-app.provide('$axios',axios)
+// app.provide('$axios',axios)
 app.mount('#app')

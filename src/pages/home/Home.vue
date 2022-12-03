@@ -25,7 +25,6 @@
               </el-button>
             </div>
           </div>
-          <el-button @click="jumpDetail">测试跳转任务详情</el-button>
           <!-- 任务列表 -->
           <div class="item-slot">
             <div style="font-size: 18px;">
@@ -74,11 +73,7 @@
             }
         },
         methods:{
-            jumpDetail(){
-                this.$router.push({
-				          path:"/taskDetail"
-			          });
-            }
+            
         }
     }
 

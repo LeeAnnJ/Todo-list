@@ -8,7 +8,6 @@
     </el-button>
   </div>
 
-
   <el-dialog v-model="dialogFormVisible" title="新建任务">
     <el-form :model="form">
 
@@ -25,18 +24,13 @@
       </el-form-item>
 
       <el-form-item label="设为重要任务" :label-width="(formLabelWidth)">
-
-        <el-checkbox v-model="form.importance" label="     " size="large" />
-        <el-icon>
-          <Star />
-        </el-icon>
+        <el-checkbox v-model="form.importance" label="" size="large" />
+        <el-icon><Star /></el-icon>
       </el-form-item>
 
       <el-form-item label="设为周期性任务" :label-width="formLabelWidth">
-        <el-checkbox v-model="form.period" label="     " size="large" />
-        <el-icon>
-          <Calendar />
-        </el-icon>
+        <el-checkbox v-model="form.period" label="" size="large" />
+        <el-icon><Calendar /></el-icon>
       </el-form-item>
 
       <el-form-item label="任务描述" :label-width="formLabelWidth">
@@ -74,10 +68,6 @@ const form = reactive({
   period: '',
   desc: ''
 })
-
-
-
-
 
 </script>
 

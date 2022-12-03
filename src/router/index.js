@@ -10,6 +10,7 @@ import DDL from '../pages/jump/ddl.vue';
 import Important from '../pages/jump/important.vue';
 import Period from '../pages/jump/period.vue';
 import DetailRouter from '../pages/task-detail/taskdetail.vue';
+import TestRouter from '../pages/test/test.vue';
 
 const routes = [
     {
@@ -65,6 +66,11 @@ const routes = [
     	path:'/period',
     	name:'_period',
     	component: Period
+    },
+    {
+        path: '/test',
+        name: '测试界面',
+        component: TestRouter
     }
    
 ]
