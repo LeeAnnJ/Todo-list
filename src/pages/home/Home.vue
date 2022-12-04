@@ -76,11 +76,11 @@
             
         }
     }
-
-
 </script>
 
 <style scoped>
+    @import '../../assets/css/maincontent.css';
+
     .global{
         flex-direction: column;
         padding: 0px;
@@ -90,43 +90,5 @@
         flex-direction: row;
         margin: 0px;
     }
-    .content{
-        /* border: 1px solid #000000; */
-        width: 75%;
-        height: max-content;
-        margin: 0px;
-        padding: 50px 70px;
-        background-color: #FAF9F8;
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        left: 207px;
-    }
-    .headline{
-        /* background-color: aquamarine; */
-        width: 100%;
-        height: 100px;
-        float: left;
-        text-align: left;
-    }
-    .head-detail{
-        /* background-color: aqua; */
-        padding-left: 35px;
-    }
-    .item-slot{
-      /* border: 1px solid #000; */
-      width: 100%;
-      height: max-content;
-      display: flex;
-      flex-direction: column;
-      padding-left: 40px;
-      margin-top: 15px;
-    }
-    .item-container{
-      /* border: 1px solid #000; */
-      width: 257px;
-      height: 180px;
-      margin: 0px 40px 20px 0px;
-      display: inline-block;
-    }
+    
 </style>
