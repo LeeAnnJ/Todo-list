@@ -92,9 +92,7 @@ export default {
   data() {
     return {
       newTodoText: '',
-      todos: [
-
-      ],
+      todos: [],
       nextTodoId: 1
     }
   },
