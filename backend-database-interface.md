@@ -16,6 +16,7 @@
 4. 请求参数中的字段若无特殊说明，与数据库中的数据表对应字段内容一致、
 
 ## 用户信息相关
+
 ### 1.创建用户账号
 
 根据用户注册时填写的表单生成新的账号记录，返回账号id
@@ -37,10 +38,10 @@
     "client_id":"xxxx"
 }
 ```
+
 ### 2.根据账号获取用户信息
 
 接口请求地址：`/getUserById`，请求方式：`GET`
-
 
 
 请求参数说明：
@@ -58,12 +59,14 @@
 成功响应返回数据：
 ```json
 {
-    "client_id": "xxx",
-    "user_anme": "xxx",
-    "password_hash": "xxx",
-    "avator_path": "xxx",
-    "register_time":"xxx",
-    "introduction": "xxx",
+    "client":{
+        "client_id": "xxx",
+        "user_anme": "xxx",
+        "password_hash": "xxx",
+        "avator_path": "xxx",
+        "register_time":"xxx",
+        "introduction": "xxx"
+    }
 }
 ```
 
@@ -172,7 +175,7 @@ responseType: 'blob'
     "folder_id":"xxx"
 }
 ```
-### 1.修改任务列表名称
+### 2.修改任务列表名称
 接口请求地址：`/alterTaskList`，请求方式：`POST`
 
 请求参数说明：
@@ -228,30 +231,323 @@ responseType: 'blob'
 ```
 ### 2. 根据任务id获取任务信息
 
-### 3. 修改任务信息
+接口请求地址：`/getTaskById`，请求方式：`GET`
 
-### 4. 删除任务
+请求参数说明：
+```json
+{
+    "task_id":"xxx"
+}
+```
+成功响应编码：
+```json
+{
+    "task": {
+        "task_id": "xxx",
+        "register_id": "xxx",
+        "create_time": "yyyy-mm-dd hh:mm",
+        "name": "xxx",
+        "type" :0,
+        "priority": 0,
+        "deadline": "yyyy-mm-dd hh:mm",
+        "group_belong": 0000,
+        "note": "xxxx",
+        "is_favor": 0,
+        "belongs_folder_id": "xxx"
+    }
+}
+```
+**P.S.** `task`中若有字符为空，返回`null`。
 
-### 5. 根据任务id获取子步骤
+### 3.根据账户id查询其参与的所有任务
 
-### 6. 为任务添加子步骤
+接口请求地址：`/getTaskByUser`，请求方式：`GET`
 
-### 7. 修改任务子步骤
+请求参数说明：
+```json
+{
+    "client_id":"xxx"
+}
+```
+成功响应编码：
+```json
+{   
+    "tasks":{
+        "task": {
+            "task_id": "xxx",
+            "register_id": "xxx",
+            "create_time": "yyyy-mm-dd hh:mm",
+            "name": "xxx",
+            "type" :0,
+            "priority": 0,
+            "deadline": "yyyy-mm-dd hh:mm",
+            "group_belong": 0000,
+            "note": "xxxx",
+            "is_favor": 0,
+            "belongs_folder_id": "xxx"
+        },
+        "task": {
+             "task_id": "xxx",
+            "register_id": "xxx",
+            "create_time": "yyyy-mm-dd hh:mm",
+            "name": "xxx",
+            "type" :0,
+            "priority": 0,
+            "deadline": "yyyy-mm-dd hh:mm",
+            "group_belong": 0000,
+            "note": "xxxx",
+            "is_favor": 0,
+            "belongs_folder_id": "xxx"
+        },
+        ...
+    }
+}
+```
 
-### 8. 删除任务子步骤
+### 4. 修改任务信息
+接口请求地址：`/modifyTask`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "task_id":"xxx",
+    "content": {
+        "name": "xxx",
+        "type": 0,
+        "priority": 0,
+        "deadline": "yyyy-mm-dd hh:mm",
+        "note": "text",
+        "is_favor": 0,
+        "belongs_folder_id": 0
+    }
+}
+```
+成功响应编码：无
+
+### 5. 删除任务
+
+接口请求地址：`/modifyTask`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "task_id":"xxx"
+}
+```
+成功响应编码：无
+
+### 6. 根据任务id获取子步骤
+
+接口请求地址：`/getSubtask`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "task_id":"xxx"
+}
+```
+成功响应编码：
+```json
+{   
+    "task_id":"xxx",
+    "subtasks":{
+        "subtask": {
+            "subtask_id": 000,
+            "name": "xxx"
+        },
+        "subtask": {
+            "subtask_id": 000,
+            "name": "xxx"
+        },
+        ...
+    }
+}
+```
+
+### 7. 为任务添加子步骤
+
+接口请求地址：`/addSubtask`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "task_id":"xxx",
+    "sub_task": {
+        "name": "xxx",
+    }
+}
+```
+成功响应编码：
+```json
+{   
+    "task_id":"xxx",
+    "subtasks_id": "xxx"
+}
+```
+
+### 8. 修改任务子步骤
+
+接口请求地址：`/alterSubtask`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "subtask_id":"xxx",
+    "content": {
+        "name": "xxx",
+    }
+}
+```
+成功响应编码：无
+
+### 9. 删除任务子步骤
+
+接口请求地址：`/deleteSubtask`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "subtask_id":"xxx",
+}
+```
+成功响应编码：无
 
 ## 任务群组相关
 
 ### 1. 查询任务群组的创建人
+根据任务编号`task_id`,查询任务的创建人
 
-### 2. 添加共同参与人
+接口请求地址：`/getTaskOwner`，请求方式：`GET`
 
-### 3.删除共同参与人
+请求参数说明：
+```json
+{
+    "task_id":"xxx",
+}
+```
+成功响应编码：
+```json
+{   
+    "task_id":"xxx",
+    "task_owner": "xxx",
+}
+```
+
+### 2. 查询任务的所有参与人
+
+根据任务编号`task_id`,查询所有参与此任务的用户。
+
+接口请求地址：`/getTaskOwner`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "task_id":"xxx",
+}
+```
+成功响应编码：
+```json
+{   
+    "task_id":"xxx",
+    "clients": {
+        "client":{
+            "client_id": 000,
+            "user_name": "xxx",
+            "avator_path": "xxx",
+            "is_owner": false
+        }
+    }
+}
+```
+**P.S.** 若用户是该任务的创建人，则`is_owner`字段为`true`
+
+### 3. 添加共同参与人
+
+向任务编号为`task_id`的用户添加账号为`client_id`的参与人,
+
+接口请求地址：`/addTaskMember`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "task_id": "xxx",
+    "client_id": "xxx"
+}
+```
+成功响应编码：无
+
+### 4.删除共同参与人
+
+接口请求地址：`/deleteTaskMember`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "task_id": "xxx",
+    "client_id": "xxx"
+}
+```
+成功响应编码：无
 
 ## 消息提示相关
 
 ### 1.查询用户对应的消息
 
+根据用户账号，查询所有接收方为该用户的信息。
+
+接口请求地址：`/getMessage`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "client_id":"xxx",
+}
+```
+成功响应编码：
+```json
+{   
+    "client_id":"xxx",
+    "messages": {
+        "message":{
+            "message_id": 000,
+            "push_type": 0,
+            "push_time": "yyyy-mm-dd hh:mm",
+            "is_read": 0,
+        }
+    }
+}
+```
+(表格里好像没看到信息内容？)
+
 ### 2.修改消息的已读/未读状态
 
+
+接口请求地址：`/getMessage`，请求方式：`POST`
+
+请求参数说明：
+```json
+{
+    "message_id":"xxx",
+    "is_read": 0
+}
+```
+成功响应编码：无
+
 ### 3. 为目标用户生成消息
+
+接口请求地址：`/getMessage`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "client_id": "xxx",
+    "push_time": "xxx",
+    "content": "xxx"
+}
+```
+成功响应编码：
+```json
+{   
+    "message_id":"xxx"
+}
+```
