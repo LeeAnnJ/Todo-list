@@ -31,16 +31,7 @@
               <h1 style="text-align: left; margin: 0px 0px 10px 0px;">任务列表</h1>
             </div>
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
-              <div class="item-container">
-                <task-item></task-item>
-              </div>
-              <div class="item-container">
-                <task-item></task-item>
-              </div>
-              <div class="item-container">
-                <task-item></task-item>
-              </div>
-              <div class="item-container">
+              <div v-for="i in 5" class="item-container">
                 <task-item></task-item>
               </div>
               <div class="item-container">
