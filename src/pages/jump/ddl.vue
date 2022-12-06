@@ -4,19 +4,18 @@
 		<el-affix>
 				<TopLine></TopLine>
 		</el-affix>
-
 		<el-container class="global">
 			<el-container class="main">
 				<!-- 侧边栏 -->
 				<Sidebar></Sidebar>
-        <!-- 主要内容 -->
+				<!-- 主要内容 -->
 				<div class="content">
 					<!-- "我的一天"对应的标题栏 -->
 					<div class="headline">
 						<div style="flex-direction:row; font-size: 20px;">
 							<h2 style="margin: 0px; line-height: 15px;">
 								<el-icon><Calendar /></el-icon>
-                有截止日期的任务
+								有截止日期的任务
 							</h2>
 						</div>
 					</div>

@@ -12,6 +12,7 @@ import store from './store'
 
 //Vue.config.productionTip = false
 //App.myType='app'
+const app = createApp(App)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
