@@ -52,3 +52,15 @@ export const delete_subtask_from_task = (req: Request, res: Response) => {
     // TODO: delete subtask from task
     res.send('delete subtask from task');
 }
+
+// mark task as done
+export const mark_task_as_done = (req: Request, res: Response) => {
+    // TODO: mark task as done
+    res.send('mark task as done');
+}
+
+// mark subtask as done
+export const mark_subtask_as_done = (req: Request, res: Response) => {
+    // TODO: mark subtask as done
+    res.send('mark subtask as done');
+}

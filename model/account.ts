@@ -22,7 +22,6 @@ export class Account {
     getClientId(): number {
         return this.client_id;
     }
-
     
 }
 
