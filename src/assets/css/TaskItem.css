@@ -7,7 +7,8 @@
     background-color: #FFFFFF;
     padding: 0px;
     /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
-    box-shadow: 3px 3px 3px 2px#c7c8ca;
+    box-shadow: 1px 1px 5px 3px#d9dbde;
+    transition: all .2s ease-in-out;
 }
 
 .global.up{
@@ -29,7 +30,7 @@
 
 .colorside.finish{
     background-color: #00994D;
-    transition: all 0.3s;
+    transition: all 0.3s ;
 }
 
 .item-content{
@@ -68,11 +69,16 @@
     /* border: 1px solid #000000; */
     /* height: 20px; */
     float: left;
-    margin: 10px 0px;
+    margin: 5px 0px 5px 0px;
     font-size: 14px;
     line-height: 24px;
+    flex-direction: column;
+    text-align: left;
 }
-
+.coordinator{
+    border: 1px solid #000;
+    margin-right: 5px;
+}
 .iconGroup{
     /* background-color: #d21515; */
     height: 35px;
