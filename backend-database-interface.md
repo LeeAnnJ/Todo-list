@@ -234,7 +234,21 @@ responseType: 'blob'
 ```
 返回数据：无
 
-### 3.删除任务列表
+### 3.移动任务所在的任务列表
+将编号为`task_id`的任务移动到编号为`folder_id`的任务列表
+
+接口请求地址：`/moveTaskList`, 请求方式:`POST`
+
+请求参数说明：
+```json
+{
+    "task_id": "xxx",
+    "folder_id": "xxx"
+}
+```
+成功响应数据：无
+
+### 4..删除任务列表
 接口请求地址：`/deleteTaskList`，请求方式：`POST`
 
 请求参数说明：
