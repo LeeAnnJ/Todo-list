@@ -28,7 +28,8 @@
 {
     "account":{
         "user_name":"xxx",
-        "password_hash":"xxx"
+        "password_hash":"xxx",
+        "introduction":"xxx",
     }
 }
 ```
@@ -42,7 +43,6 @@
 ### 2.根据账号获取用户信息
 
 接口请求地址：`/getUserById`，请求方式：`GET`
-
 
 请求参数说明：
 ```json
@@ -61,7 +61,7 @@
 {
     "client":{
         "client_id": "xxx",
-        "user_anme": "xxx",
+        "user_name": "xxx",
         "password_hash": "xxx",
         "avator_path": "xxx",
         "register_time":"xxx",
@@ -82,7 +82,7 @@
 {
     "client_id": "xxx",
     "content":{
-        "user_anme": "xxx",
+        "user_name": "xxx",
         "password_hash": "xxx",
         "introduction": "xxx"
     }
@@ -157,6 +157,53 @@ responseType: 'blob'
 }
 ```
 返回数据：无
+
+### 7.登录请求
+根据用户输入的账户名和密码判断是否有该账户，若有返回账号相关信息，若无返回错误信息。
+
+接口请求地址：`/getUserById`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "user_name": "xxx",
+    "password": "xxx",
+}
+```
+成功响应返回数据：
+```json
+{
+    "client":{
+        "client_id": "xxx",
+        "user_name": "xxx",
+        "password_hash": "xxx",
+        "avator_path": "xxx",
+        "register_time":"xxx",
+        "introduction": "xxx"
+    }
+}
+```
+### 8.注册时判断用户名是否重复
+接口请求地址：`/checkName`，请求方式：`GET`
+
+请求参数说明：
+```json
+{
+    "user_name": "xxx",
+}
+```
+若用户名有重复，返回数据：
+```json
+{
+    "result": false
+}
+```
+否则返回数据：
+```json
+{
+    "result": true
+}
+```
 
 ## 任务列表相关
 ### 1.为用户新建任务列表
