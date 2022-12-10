@@ -99,14 +99,14 @@ import { Folder } from '../model/folder';
 import { Task, SubTask } from '../model/task';
 
 // the database repository class
-export class DbRepo {
+class DbRepo {
     // the database connection
     private connection: mysql.Connection;
     // the database repository instance
     private static instance: DbRepo;
 
     // the constructor
-    private constructor() {
+    public constructor() {
         // create a database connection
         this.connection = mysql.createConnection({
             host: config.host,
@@ -436,3 +436,5 @@ export class DbRepo {
     //////////////////////////// Task ////////////////////////////
     
 }
+
+export const db = new DbRepo();
