@@ -17,15 +17,14 @@ export const get_group_by_id = (req: Request, res: Response) => {
     res.send('get group by id');
 }
 
-// get owner of group
-export const get_owner_of_group = (req: Request, res: Response) => {
-    // TODO: get owner of group
-    res.send('get owner of group');
-}
-
 // get the task owner of group
 export const get_task_owner_of_group = (req: Request, res: Response) => {
     // TODO: get task owner of group
     res.send('get task owner of group');
 }
 
+// get the members of group
+export const get_members_of_group = (req: Request, res: Response) => {
+    // TODO: get members of group
+    res.send('get members of group');
+}
