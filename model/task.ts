@@ -18,6 +18,9 @@ export class Task {
     task_isfavorite: boolean;
     task_folder_id: number;
     task_status: number;
+    subtasks_count: number;
+    subtasks: SubTask[];
+    
 
     constructor(task_id: number, task_creator: number, task_create_time: Date, task_name: string, task_description: string, task_type: boolean, task_priority: number, task_ddl: Date, task_group_id: number, task_note: string, task_isfavorite: boolean, task_folder_id: number, task_status: number) {
         this.task_id = task_id;
@@ -33,9 +36,9 @@ export class Task {
         this.task_isfavorite = task_isfavorite;
         this.task_folder_id = task_folder_id;
         this.task_status = task_status;
+        this.subtasks_count = 0;
+        this.subtasks = [];
     }
-
-
     // group task constructor
     // TODO: add group task constructor
     // constructor
