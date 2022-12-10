@@ -3,12 +3,14 @@
 // Used in routes\task.ts to handle the request from client about task
 
 import { Request, Response } from 'express';
-// import { Task } from '../model/task';
+import { Task } from '../model/task';
+import { db } from '../controller/dbRepo';
 
 // create task
 export const create_task = (req: Request, res: Response) => {
     // TODO: create task
     res.send('create task');
+    
 }
 
 // get task by id
