@@ -135,3 +135,5 @@ dist
 # ides
 .vscode/*
 .idea/*
+
+package-lock.json
