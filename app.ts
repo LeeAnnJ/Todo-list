@@ -17,10 +17,11 @@ import logger from 'morgan';
 import path from 'path';
 
 // import routers
-var indexRouter = require('./routes/index');
-var accountRouter = require('./routes/account');
-var taskRouter = require('./routes/task');
-var messageRouter = require('./routes/message');
+const indexRouter = require('./routes/index');
+const accountRouter = require('./routes/account');
+const taskRouter = require('./routes/task');
+const messageRouter = require('./routes/message');
+const groupRouter = require('./routes/group');
 
 
 const app = express();
@@ -72,6 +73,7 @@ app.use('/', indexRouter);
 app.use('/account', accountRouter);
 app.use('/task', taskRouter);
 app.use('/message', messageRouter);
+app.use('/group', groupRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
