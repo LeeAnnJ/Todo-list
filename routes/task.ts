@@ -1,9 +1,6 @@
 // the routers about task is difined here
 
-import { Router } from 'express';
-import { createServer } from 'http';
 import express from 'express';
-import { Server, Socket } from 'socket.io';
 
 // import task controller
 import * as task_controller from '../controller/taskController';
@@ -13,7 +10,7 @@ const router = express.Router();
 //get task by id
 router.get('/getTaskById', task_controller.get_task_by_id);
 
-// get task by user id
+// get tasks by user id
 router.get('/getTaskByUserId', task_controller.get_task_by_user_id);
 
 // modify task

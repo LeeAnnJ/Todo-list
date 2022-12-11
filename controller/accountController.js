@@ -1,23 +1,18 @@
+"use strict";
 // AccountController functions
 // Path: controller\accountController.ts
 // used in routes\index.ts to handle the request from client about account
-
-import { Request, Response } from 'express';
-import { Account } from '../model/account';
-import { db } from '../controller/dbRepo';
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.check_user_name = exports.delete_user = exports.change_avator = exports.alert_user = exports.create_account = exports.get_account_by_id = exports.login = void 0;
 // login
-export const login = (req: Request, res: Response) => {
+const login = (req, res) => {
     // TODO: login
     // read the user name and password hash from request
     res.send('login');
-    
     // var user_name = req.body.user_name;
     // var password_hash = req.body.password_hash;
-
     // // find the user in database
     // var acc = db.login(user_name, password_hash);
-
     // // if the user is found, return the user id
     // if (acc != null) {
     //     var acc_info = db.getUserById(acc);
@@ -35,10 +30,10 @@ export const login = (req: Request, res: Response) => {
     //         data: null,
     //     })
     // }
-}
-
+};
+exports.login = login;
 // get account by id
-export const get_account_by_id = (req: Request, res: Response) => {
+const get_account_by_id = (req, res) => {
     res.send('get account by id');
     // var client_id = req.body.client_id;
     // var acc_info = db.getUserById(client_id);
@@ -56,15 +51,14 @@ export const get_account_by_id = (req: Request, res: Response) => {
     //         data: null
     //     });
     // }
-}
-
+};
+exports.get_account_by_id = get_account_by_id;
 // createcount
-export const create_account = (req: Request, res: Response) => {
+const create_account = (req, res) => {
     // TODO: create account
     res.send('create account');
     // const username = req.body.username;
     // const passwd_hash = req.body.passwd_hash;
-
     // // check if the username is already used
     // var nameUsed = db.checkUserName(username);
     // if (nameUsed) {
@@ -93,10 +87,10 @@ export const create_account = (req: Request, res: Response) => {
     //         });
     //     }
     // }
-}
-
+};
+exports.create_account = create_account;
 // alert user massage
-export const alert_user = (req: Request, res: Response) => {
+const alert_user = (req, res) => {
     // TODO: alert user
     res.send('alert user');
     // const client_id = req.body.client_id;
@@ -114,14 +108,12 @@ export const alert_user = (req: Request, res: Response) => {
     //     if (new_avator !== "") {
     //         acc_now.avatar_path = new_avator;
     //     }
-
     //     // success
     //     res.json({
     //         "code": 200,
     //         "message": "success",
     //         "data": acc_now
     //     });
-
     // } else {
     //     res.json({
     //         "code": 400,
@@ -129,21 +121,20 @@ export const alert_user = (req: Request, res: Response) => {
     //         "data": null
     //     });
     // }
-}
-
+};
+exports.alert_user = alert_user;
 // change user avator
-export const change_avator = (req: Request, res: Response) => {
+const change_avator = (req, res) => {
     // TODO: change avator
     // 涉及静态文件的上传 我再想想怎么搞
     res.send('change avator');
-}
-
+};
+exports.change_avator = change_avator;
 // delete user
-export const delete_user = (req: Request, res: Response) => {
+const delete_user = (req, res) => {
     // TODO: delete user
     // res.send('delete user');
     var client_id = req.body.client_id;
-
     // // delete user
     // var result = db.deleteAccount(client_id);
     // if (result) {
@@ -159,11 +150,10 @@ export const delete_user = (req: Request, res: Response) => {
     //         "data": null
     //     });
     // }
-}
-
+};
+exports.delete_user = delete_user;
 // check user name
-export const check_user_name = (req: Request, res: Response) => {
-
+const check_user_name = (req, res) => {
     // var user_name = req.body.user_name;
     // var result = db.checkUserName(user_name);
     var result = true;
@@ -171,9 +161,11 @@ export const check_user_name = (req: Request, res: Response) => {
         res.json({
             "result": true
         });
-    } else {
+    }
+    else {
         res.json({
             "result": false
         });
     }
-}
+};
+exports.check_user_name = check_user_name;

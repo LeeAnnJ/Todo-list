@@ -19,6 +19,9 @@ import path from 'path';
 // import routers
 var indexRouter = require('./routes/index');
 var accountRouter = require('./routes/account');
+var taskRouter = require('./routes/task');
+var messageRouter = require('./routes/message');
+
 
 const app = express();
 
@@ -67,6 +70,8 @@ io.on('connection', (socket: Socket) => {
 // bind routers
 app.use('/', indexRouter);
 app.use('/account', accountRouter);
+app.use('/task', taskRouter);
+app.use('/message', messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

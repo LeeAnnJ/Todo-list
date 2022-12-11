@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
         "code": 200,
         "msg": "success",
         // index.html
-        "data": "index.html"
+        "data": null
     });
 });
 
@@ -32,7 +32,7 @@ router.get('/about', (req, res) => {
         "code": 200,
         "msg": "success",
         // about.html
-        // "data": "about.html"
+        // "data": null
     });
 });
 
