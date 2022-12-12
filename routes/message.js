@@ -35,3 +35,5 @@ router.get('/getMessage', message_controller.get_message);
 // change message status
 router.post('/postMessage', message_controller.post_message);
 // FIXME:  消息的生成应该是后端逻辑的干活
+// export
+module.exports = router;
