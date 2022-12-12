@@ -269,25 +269,30 @@ responseType: 'blob'
 {
     "register_id": "xxx",
     "name": "xxx",
+    "type" : 0,
     "priority": 0,
     "deadline":"xxxx",
     "note":"xxxx",
-    "belongs_folder_id": 000
+    "belongs_folder_id": 000,
+    "people":["xxx","xxx","xxx","xxx"]
 }
 ```
 参数说明：
 |字段|类型|是否必填|
 |:-:|:-:|:-:|
+|type|int|是，0为个人任务，1为群组任务|
 |priority|int:0 or 1|否|
 |deadline|datetime:"yyyy-mm-dd hh:mm"|否|
 |note|text|否|
 |belongs_folder_id|int| 否|
+|people|array|否，数组中每一项为共同参与人的id|
 
 返回数据：
 ```json
 {
     "task_id":"xxx",
-    "create_time":"xxx"
+    "create_time":"xxx",
+
 }
 ```
 ### 2. 根据任务id获取任务信息
@@ -583,7 +588,7 @@ responseType: 'blob'
 ### 2.修改消息的已读/未读状态
 
 
-接口请求地址：`/getMessage`，请求方式：`POST`
+接口请求地址：`/setReadState`，请求方式：`POST`
 
 请求参数说明：
 ```json
@@ -596,7 +601,7 @@ responseType: 'blob'
 
 ### 3. 为目标用户生成消息
 
-接口请求地址：`/getMessage`，请求方式：`GET`
+接口请求地址：`/createMessage`，请求方式：`GET`
 
 请求参数说明：
 ```json

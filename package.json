@@ -2,9 +2,9 @@
   "name": "vue3_cli_default",
   "version": "0.0.0",
   "scripts": {
-    "serve": "vite preview",
+    "serve": "vite preview --port 8001",
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite --port 8001"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",

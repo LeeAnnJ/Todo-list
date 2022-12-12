@@ -45,6 +45,13 @@
                   周期性任务
                 </el-menu-item>
 
+                <el-menu-item index="/period" class="menuItem">
+                  <el-icon>
+                    <UserFilled />
+                  </el-icon>
+                  群组任务
+                </el-menu-item>
+
                 <el-menu-item index="/allTask" class="menuItem">
                   <el-icon>
                     <HomeFilled />

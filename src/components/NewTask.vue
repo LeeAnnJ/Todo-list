@@ -16,15 +16,21 @@
       </el-form-item>
 
       <el-form-item label="参与人" :label-width="formLabelWidth">
+        <!-- 以后要变成多选框 -->
         <el-input v-model="form.people" autocomplete="off" />
       </el-form-item>
 
-      <el-form-item label="截至时间" :label-width="formLabelWidth">
-        <el-date-picker v-model="form.datetime" type="datetime" placeholder="Select date and time" />
+      <el-form-item label="截止时间" :label-width="formLabelWidth">
+        <el-date-picker v-model="form.deadline" type="datetime" placeholder="Select date and time" />
+      </el-form-item>
+
+      <el-form-item label="设为群组任务" :label-width="(formLabelWidth)">
+        <el-checkbox v-model="form.type" label="" size="large" />
+        <el-icon><Star /></el-icon>
       </el-form-item>
 
       <el-form-item label="设为重要任务" :label-width="(formLabelWidth)">
-        <el-checkbox v-model="form.importance" label="" size="large" />
+        <el-checkbox v-model="form.priority" label="" size="large" />
         <el-icon><Star /></el-icon>
       </el-form-item>
 
@@ -32,9 +38,14 @@
         <el-checkbox v-model="form.period" label="" size="large" />
         <el-icon><Calendar /></el-icon>
       </el-form-item>
+      
+      <!-- 这个v-model要注意一下 -->
+      <el-form-item label="所属任务列表" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" />
+      </el-form-item>
 
       <el-form-item label="任务描述" :label-width="formLabelWidth">
-        <el-input v-model="form.desc" :rows="2" type="textarea" placeholder="Please input" />
+        <el-input v-model="form.note" :rows="2" type="textarea" placeholder="Please input" />
       </el-form-item>
 
 
@@ -63,10 +74,11 @@ const formLabelWidth = '140px'
 const form = reactive({
   name: '',
   people: '',
-  datetime: '',
-  importance: '',
+  deadline: '',
+  priority: '',
+  type: '',
   period: '',
-  desc: ''
+  note: ''
 })
 
 </script>
