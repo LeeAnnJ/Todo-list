@@ -338,35 +338,33 @@ responseType: 'blob'
 成功响应编码：
 ```json
 {   
-    "tasks":{
-        "task": {
-            "task_id": "xxx",
-            "register_id": "xxx",
-            "create_time": "yyyy-mm-dd hh:mm",
-            "name": "xxx",
-            "type" :0,
-            "priority": 0,
-            "deadline": "yyyy-mm-dd hh:mm",
-            "group_belong": 0000,
-            "note": "xxxx",
-            "is_favor": 0,
-            "belongs_folder_id": "xxx"
-        },
-        "task": {
-             "task_id": "xxx",
-            "register_id": "xxx",
-            "create_time": "yyyy-mm-dd hh:mm",
-            "name": "xxx",
-            "type" :0,
-            "priority": 0,
-            "deadline": "yyyy-mm-dd hh:mm",
-            "group_belong": 0000,
-            "note": "xxxx",
-            "is_favor": 0,
-            "belongs_folder_id": "xxx"
-        },
-        ...
+    "tasks":[{
+        "task_id": "xxx",
+        "register_id": "xxx",
+        "create_time": "yyyy-mm-dd hh:mm",
+        "name": "xxx",
+        "type" :0,
+        "priority": 0,
+        "deadline": "yyyy-mm-dd hh:mm",
+        "group_belong": 0000,
+        "note": "xxxx",
+        "is_favor": 0,
+        "belongs_folder_id": "xxx"
+    },{
+        "task_id": "xxx",
+        "register_id": "xxx",
+        "create_time": "yyyy-mm-dd hh:mm",
+        "name": "xxx",
+        "type" :0,
+        "priority": 0,
+        "deadline": "yyyy-mm-dd hh:mm",
+        "group_belong": 0000,
+        "note": "xxxx",
+        "is_favor": 0,
+        "belongs_folder_id": "xxx"
     }
+        ...
+    ]
 }
 ```
 
@@ -416,17 +414,15 @@ responseType: 'blob'
 ```json
 {   
     "task_id":"xxx",
-    "subtasks":{
-        "subtask": {
-            "subtask_id": 000,
-            "name": "xxx"
-        },
-        "subtask": {
-            "subtask_id": 000,
-            "name": "xxx"
-        },
+    "subtasks":[{
+        "subtask_id": 000,
+        "name": "xxx"
+    },{
+        "subtask_id": 000,
+        "name": "xxx"
+    },
         ...
-    }
+    ]
 }
 ```
 
@@ -515,14 +511,19 @@ responseType: 'blob'
 ```json
 {   
     "task_id":"xxx",
-    "clients": {
-        "client":{
-            "client_id": 000,
-            "user_name": "xxx",
-            "avator_path": "xxx",
-            "is_owner": false
-        }
-    }
+    "clients": [{
+        "client_id": 000,
+        "user_name": "xxx",
+        "avator_path": "xxx",
+        "is_owner": false
+    },{
+        "client_id": 000,
+        "user_name": "xxx",
+        "avator_path": "xxx",
+        "is_owner": false
+    },
+        ...  
+    ]
 }
 ```
 **P.S.** 若用户是该任务的创建人，则`is_owner`字段为`true`
@@ -573,14 +574,20 @@ responseType: 'blob'
 ```json
 {   
     "client_id":"xxx",
-    "messages": {
-        "message":{
+    "messages": [
+        {
             "message_id": 000,
             "push_type": 0,
             "push_time": "yyyy-mm-dd hh:mm",
             "is_read": 0,
-        }
-    }
+        },{
+            "message_id": 000,
+            "push_type": 0,
+            "push_time": "yyyy-mm-dd hh:mm",
+            "is_read": 0,
+        },
+        ...
+    ]
 }
 ```
 (表格里好像没看到信息内容？)

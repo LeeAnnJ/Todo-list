@@ -1,10 +1,14 @@
 // 对应后端路径为/account的请求
 import Service from "../axios";
 
-async function getUserById(){
+/**
+ * 登录接口
+ * @returns 
+ */ 
+async function login(){
     return await Service.requestService({
-        url: '/account/getUserById',
-        method: 'get',
+        url: '/account/login',
+        method: 'post',
     })
 }
 
@@ -15,7 +19,39 @@ async function create(){
     })
 }
 
+async function getUserById(){
+    return await Service.requestService({
+        url: '/account/getUserById',
+        method: 'get',
+    })
+}
+
+async function alterUser(){
+    return await Service.requestService({
+        url: '/account/alterUser',
+        method: 'post',
+    })
+}
+
+async function changeAvator(){
+    return await Service.requestService({
+        url: 'account/changeAvator',
+        method: 'post',
+    })
+}
+
+async function deleteUser(){
+    return await Service.requestService({
+        url: 'account/deleteUser',
+        method: 'post',
+    })
+}
+
 export default{
+    login,
+    create,
     getUserById,
-    create
+    alterUser,
+    changeAvator,
+    deleteUser,
 }
