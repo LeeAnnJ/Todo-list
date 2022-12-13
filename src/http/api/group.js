@@ -1,15 +1,6 @@
 import Service from "../axios";
 /*
-getGroupById
-getGroupsByUserId
-createGroup
-deleteGroup
-getMembersByGroupId
-addMemberToGroup
-deleteMemberFromGroup
-getMembersByGroupId
-updateGroupInfo
-getTasksByGroupId
+group
 
 */
 
