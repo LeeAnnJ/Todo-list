@@ -9,7 +9,7 @@ import AllTask from '../pages/jump/allTask.vue';
 import DDL from '../pages/jump/ddl.vue';
 import Important from '../pages/jump/important.vue';
 import Period from '../pages/jump/period.vue';
-import DetailRouter from '../pages/task-detail/taskdetail.vue';
+import DetailRouter from '../pages/task-detail/TaskDetail.vue';
 import TestRouter from '../pages/test/test.vue';
 
 const routes = [
