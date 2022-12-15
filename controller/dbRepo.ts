@@ -148,18 +148,19 @@ class DbRepo {
     //////////////////////////// Account ////////////////////////////
 
     // login
-    public login(user_name: string, passwd_hash: string) {
+    public login(user_name: string, passwd_hash: string ) : number {
         // login
         this.connection.query('SELECT * FROM user_info WHERE user_name = \'' + mysql.escape(user_name) + '\' AND passwd_hash = \'' + mysql.escape(passwd_hash) + '\'', (err, result) => {
             if (err) {
                 console.log(err);
                 // return err;
-                return null;
+                return 0;
             }
             console.log(result);
             // return client_id
             return result.client_id;
         });
+        return 0;
     }
 
     // create a user account

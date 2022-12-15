@@ -144,12 +144,13 @@ class DbRepo {
             if (err) {
                 console.log(err);
                 // return err;
-                return null;
+                return 0;
             }
             console.log(result);
             // return client_id
             return result.client_id;
         });
+        return 0;
     }
     // create a user account
     createAccount(account) {
@@ -280,6 +281,7 @@ class DbRepo {
                     if (err) {
                         console.log(err);
                     }
+                    // TODO: Add the creater to the group
                     return result.group_id;
                 });
             }
@@ -319,6 +321,19 @@ class DbRepo {
         });
         return res;
     }
+    // get group creater
+    getGroupCreaterId(group_id) {
+        var sql = 'SELECT creater_id FROM group_info WHERE group_id = ' + group_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                return result;
+            }
+        });
+        return 0;
+    }
     // alert group info(by group_id)
     alertGroupInfo(group_new) {
         var sql = 'UPDATE group_info SET group_name = \'' + group_new.group_name + '\', group_description = \'' + group_new.group_description + '\' WHERE group_id = ' + group_new.group_id;
@@ -328,6 +343,57 @@ class DbRepo {
                 return false;
             }
             else {
+                return true;
+            }
+        });
+        return false;
+    }
+    // get groups of a user
+    getUserGroups(client_id) {
+        var sql = 'SELECT * FROM group_member WHERE client_id = ' + client_id;
+        var res = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                for (var i = 0; i < result.length; i++) {
+                    res.push(this.getGroupById(result[i].group_id));
+                }
+                // console.log(result);
+            }
+        });
+        return res;
+    }
+    // add a member to a group
+    addMemberToGroup(group_id, client_id) {
+        var values = {
+            group_id: group_id,
+            client_id: client_id
+        };
+        var sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + values.group_id + ', ' + values.client_id + ')';
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            }
+            else {
+                // FIXME: change the number of members in group_info
+                return true;
+            }
+        });
+        return false;
+    }
+    // delete a member from a group
+    deleteMemberFromGroup(group_id, client_id) {
+        var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            }
+            else {
+                // FIXME: change the number of members in group_info
                 return true;
             }
         });

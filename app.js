@@ -11,6 +11,8 @@ const express_1 = __importDefault(require("express"));
 const socket_io_1 = require("socket.io");
 // http-errors
 const http_errors_1 = __importDefault(require("http-errors"));
+// body-parser
+const body_parser_1 = __importDefault(require("body-parser"));
 // cookie-parser
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // morgan
@@ -24,6 +26,10 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+// 解析 application/json
+app.use(body_parser_1.default.json());
+// 解析 application/x-www-form-urlencoded
+app.use(body_parser_1.default.urlencoded());
 // allow cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

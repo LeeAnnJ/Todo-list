@@ -32,7 +32,7 @@ router.post('/deleteMemberFromGroup', group_controller.remove_member_from_group)
 router.get('/getMembersByGroupId', group_controller.get_members_of_group);
 
 // update group info
-router.post('/updateGroupInfo', group_controller.update_group);
+router.post('/updateGroupInfo', group_controller.alert_group_info);
 
 // get tasks of group
 router.get('/getTasksByGroupId', group_controller.get_tasks_of_group);
