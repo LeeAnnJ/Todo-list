@@ -26,6 +26,13 @@
     margin-right: 5px;
 }
 
+.menu{
+    /* border: 1px solid  #102e6c; */
+    width: 15%;
+    float: right;
+    font-size: 25px;
+}
+
 .box-card-taskintro{
     width: 100%;
     flex-direction: column;
@@ -43,11 +50,25 @@
 }
 
 .introcard-title{
+    /* border: 1px solid #000; */
     font-weight: 600;
     font-size: 20px;
     color: #102e6c;
     line-height: 36px;
     margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.introcard-title.name{
+    width: 80%;
+    margin-right: 20px;
+}
+
+.introcard-title.edit{
+    /* border: 1px solid #000; */
+    width: 80%;
+    margin-right: 20px;
 }
 
 .starIcon{
@@ -60,6 +81,7 @@
     padding: 0px; 
     float: right;
     font-size: 30px;
+    right: 0px;
 }
 
 .starIcon:hover {
@@ -118,6 +140,7 @@
     margin-bottom: 7px;
     padding: 0px 5px;
     font-weight: 700;
+    float: left;
 }
 
 .substep-tag.finish{

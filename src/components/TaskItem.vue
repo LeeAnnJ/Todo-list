@@ -11,7 +11,7 @@
         <el-popover trigger="hover" transition="all 0.5s">
 					<template #reference>
             <div class="menu" @mouseenter="focusOn">
-						  <el-icon v-if="isfocus"  ><MoreFilled /></el-icon>
+						  <el-icon v-if="isfocus" ><MoreFilled /></el-icon>
             </div>
 					</template>
             <div style="margin-top: 7px" @mouseenter="focusOn">
@@ -111,18 +111,18 @@
                 type:Boolean,
                 default: false
             },
-            content:{
-                type:Object,
-                default:{
-                    task_id: 0,
-                    register_id: 0,
-                    createTime: "2022-12-08",
-                    deadline: "暂无",
-                    circul: "暂无",
-                    is_favor: false,
-                    belongs_folder_id: 0
+                content:{
+                    type:Object,
+                    default:{
+                        task_id: 0,
+                        register_id: 0,
+                        createTime: "2022-12-08",
+                        deadline: "暂无",
+                        circul: "暂无",
+                        is_favor: false,
+                        belongs_folder_id: 0
+                    }
                 }
-            }
         },
         data(){
             return {

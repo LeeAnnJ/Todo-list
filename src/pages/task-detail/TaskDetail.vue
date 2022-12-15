@@ -1,49 +1,10 @@
 <template>
   <div>
     <!-- 顶栏 -->
-    <TopLine></TopLine>
+    <topLine></topLine>
     <el-container class="main">
       <!-- 任务详情栏 -->
-      <div class="card-slot">
-        <!-- 标题栏 -->
-        <div class="title">
-          <img class="title-icon" src="../../assets/icons/2_content.png" alt="some_text" />
-          <b style="float: left;">任务概况</b>
-        </div>
-        <!-- 任务名称 任务描述 -->
-        <el-card class="box-card-taskintro">
-          <div class="introcard-header">
-              <div class="introcard-title">
-                {{task.name}}
-                <el-button :class="task.priority? 'starIcon clicked':'starIcon'" @click="starClick">
-                  <el-icon><StarFilled /></el-icon>
-                </el-button>
-              </div>
-            {{task.note}} balabala balabala
-          </div>
-        </el-card>
-        <el-card class="taskdetail">
-          <el-icon class="icon" color="#256CF4"><CollectionTag /></el-icon>
-          创建于 {{task.create_time}}
-        </el-card>
-        <el-card class="taskdetail">
-          <el-icon class="icon" color="#256CF4"><Memo /></el-icon>
-          <span v-if="task.indaily">已添加至今日任务</span>
-          <span v-else>未添加至今日任务</span>
-        </el-card>
-        <el-card class="taskdetail">
-          <el-icon class="icon" color="#256CF4"><Clock /></el-icon>
-          截止时间: {{task.deadline}}
-        </el-card>
-        <el-card class="taskdetail">
-          <el-icon class="icon" color="#256CF4"><Refresh /></el-icon>
-          重复: {{task.circle}}
-        </el-card>
-        <el-card class="taskdetail">
-          <el-icon class="icon" color="#256CF4"><Document /></el-icon>
-          所属任务列表: {{task.belongs_folder}}
-        </el-card>
-      </div>
+      <detail-slot></detail-slot>
 
       <!-- 子步骤 -->
       <div class="card-slot">
@@ -53,9 +14,14 @@
           <b style="float: left;">子步骤（{{subnumber}}）</b>
         </div>
         <!-- 子步骤 -->
-        <el-card v-for="sub in subtasks" class="substep">
-          <div v-if="sub.isfinished" class="substep-tag">未完成</div>
-          <div v-else class="substep-tag finish">已完成</div>
+        <el-card v-for="sub in subtasks" class="substep" @mouseenter="focusOn(sub)" @mouseleave="focusLeave(sub)">
+          <div style = "flex-direction: row; height: 30px;">
+            <div v-if="sub.isfinished" class="substep-tag">未完成</div>
+            <div v-else class="substep-tag finish">已完成</div>
+            <div v-if="sub.isfocus" style="float:right; margin:2px 10px; font-size: 18px;">
+              <el-icon ><MoreFilled /></el-icon>
+            </div>
+          </div>
           <div style="padding-left: 15px;">{{sub.name}}</div>
         </el-card>
         <el-button class="add-button" round>
@@ -121,48 +87,43 @@
 
 <script>
     import TopLine from '../../components/TopLine.vue';
-    import { Document, StarFilled } from '@element-plus/icons-vue';
+    import DetailSLot from './DetailSlot.vue';
+    import { Document} from '@element-plus/icons-vue';
     
     export default {
         components :{
-          TopLine,
-          Document
+            "topLine": TopLine,
+            "detail-slot": DetailSLot,
+            Document,
         },
         data(){
             return {
-                task: {
-                    name: "任务名称",
-                    priority: true,
-                    note: "任务描述在这里",
-                    create_time: "2022年 12月 14日 17:30",
-                    indaily: false,
-                    deadline: "2022年 12 月 14日 20:00",
-                    circle: "每周二",
-                    belongs_folder: "中级实训"
-                },
                 subtasks:[{
                     subtask_id: "001",
                     isfinished: false,
                     name: "子步骤1",
+                    isfocus: false,
                 },{
                     subtask_id: "002",
                     isfinished: false,
                     name: "子步骤2 balabala balabala balabala",
+                    isfocus: false,
                 },{
                     subtask_id: "003",
                     isfinished: true,
                     name: "子步骤3",
+                    isfocus: false,
                 }],
                 trends:[{
                     avator_path: "user",
                     user_name: "张三",
                     detail: "添加了子步骤：子步骤3",
-                    time: "2022-12-14 20:51"
+                    time: "2022-12-14 20:51",
                 },{
                     avator_path: "user",
                     user_name: "李四",
                     detail: "加入了该任务",
-                    time: "2022-12-14 20:52"
+                    time: "2022-12-14 20:52",
                 }],
                 cooperators:[{
                     client_id:"001",
@@ -191,9 +152,8 @@
             }
         },
         methods: {
-            starClick(){
-                this.task.priority = !this.task.priority;
-            }
+            focusOn(item){item.isfocus=true},
+            focusLeave(item){item.isfocus=false;},
         }
     }
 </script>
