@@ -140,7 +140,6 @@ export const change_avator = (req: Request, res: Response) => {
 
 // delete user
 export const delete_user = (req: Request, res: Response) => {
-    // TODO: delete user
     // res.send('delete user');
     var client_id = req.body.client_id
 

@@ -14,42 +14,32 @@ export class Task {
     task_ddl: Date;
     task_group_id: number;
 
-    task_note: string;
     task_isfavorite: boolean;
     task_folder_id: number;
+    // 0: not started, 1: completed
     task_status: number;
     subtasks_count: number;
-    subtasks: SubTask[];
-    
 
-    constructor(task_id: number, task_creator: number, task_create_time: Date, task_name: string, task_description: string, task_type: boolean, task_priority: number, task_ddl: Date, task_group_id: number, task_note: string, task_isfavorite: boolean, task_folder_id: number, task_status: number) {
+    constructor(task_id:number, task_creater_id:number, task_name: string, task_description: string, task_type:boolean, task_priority: number, task_ddl: Date, task_group_id: number = 0, belongs_folder_id: number = 0)
+    {
         this.task_id = task_id;
-        this.task_creator = task_creator;
-        this.task_create_time = task_create_time;
+        this.task_creator = task_creater_id;
+        this.task_create_time = new Date();
         this.task_name = task_name;
         this.task_description = task_description;
         this.task_type = task_type;
-        this.task_priority = task_priority;
+        this.task_priority = task_priority; 
         this.task_ddl = task_ddl;
         this.task_group_id = task_group_id;
-        this.task_note = task_note;
-        this.task_isfavorite = task_isfavorite;
-        this.task_folder_id = task_folder_id;
-        this.task_status = task_status;
+
+        this.task_isfavorite = false;
+        this.task_folder_id = belongs_folder_id;
+        this.task_status = 0;
         this.subtasks_count = 0;
-        this.subtasks = [];
     }
 
-    // Two constructors for personal task and group task
+    // add subtask
 
-    // TODO: add group task constructor
-    // constructor
-
-
-    // TODO: add personal task constructor
-    // constructor
-
-    
 }
 
 // subtask

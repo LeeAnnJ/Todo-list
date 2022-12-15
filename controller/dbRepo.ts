@@ -97,6 +97,7 @@ import { Account } from '../model/account';
 import { Group, GroupAccount } from '../model/group';
 import { Folder } from '../model/folder';
 import { Task, SubTask } from '../model/task';
+import { Message } from '../model/message';
 
 // the database repository class
 class DbRepo {
@@ -501,8 +502,175 @@ class DbRepo {
         return false;
     }
 
+    // get tasks of a folder
+    public getFolderTasks(folder_id: number): Task[] {
+        var sql = 'SELECT * FROM task_info WHERE task_folder = ' + folder_id + ' AND task_group = 0';
+        var res: Task[] = [];
+
+
+        return res;
+    }
+
     //////////////////////////// Task ////////////////////////////
-    
+
+    // get tasks of a user
+    public getUserTasks(client_id: number): Task[] {
+        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id;
+        var res: Task[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    // TODO: task constructor
+                    // res.push(new Task(result[i].task_id, result[i].task_name, result[i].task_description, result[i].task_creator, result[i].task_group, result[i].task_folder, result[i].task_deadline, result[i].task_priority, result[i].task_status));
+                }
+            }
+        });
+        return res;
+    }
+
+    // create a task
+    public createTask(task: Task): number {
+        var values = {
+            client_id: task.task_creator,
+            task_id: task.task_id,
+            task_name: task.task_name,
+            task_description: task.task_description,
+            task_group: task.task_group_id,
+            task_folder: task.task_folder_id,
+            task_deadline: task.task_ddl,
+            task_priority: task.task_priority,
+            task_status: task.task_status
+        };
+        var sql = 'INSERT INTO task_info (client_id, task_name, task_description, task_group, task_folder, task_deadline, task_priority, task_status) VALUES (' + values.client_id + ', ' + values.task_name + ', ' + values.task_description + ', ' + values.task_group + ', ' + values.task_folder + ', ' + values.task_deadline + ', ' + values.task_priority + ', ' + values.task_status + ')';
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Task created');
+                // return task_id
+                sql = 'SELECT task_id FROM task_info WHERE task_name = \'' + values.task_name + '\' AND client_id = ' + values.client_id;
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return result.task_id;
+                });
+            }
+        });
+        return 0;
+    }
+
+    // get task by user_id
+    public getTaskByUserId(client_id: number): Task[] {
+        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id;
+        var res: Task[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    // TODO: task constructor
+                    // res.push(new Task(result[i].task_id, result[i].task_name, result[i].task_description, result[i].task_creator, result[i].task_group, result[i].task_folder, result[i].task_deadline, result[i].task_priority, result[i].task_status));
+                }
+            }
+        });
+        return res;
+    }
+
+    // get task by task_id
+    public getTaskByTaskId(task_id: number): Task {
+        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id;
+        var res: Task = new Task(0, 0, "", "", false, 0, new Date, 0);
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+            }
+        });
+        return res;
+    }
+
+    // alert task info
+    public alertTaskInfo(task_new: Task): boolean {
+        var sql = 'UPDATE task_info SET task_name = \'' + task_new.task_name + '\', task_description = \'' + task_new.task_description + '\', task_group = ' + task_new.task_group_id + ', task_folder = ' + task_new.task_folder_id + ', task_deadline = ' + task_new.task_ddl + ', task_priority = ' + task_new.task_priority + ', task_status = ' + task_new.task_status + ' WHERE task_id = ' + task_new.task_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            } else {
+                return true;
+            }
+        });
+        return false;
+    }
+
+    // delete a task
+    public deleteTask(task_id: number): boolean {
+        var sql = 'DELETE FROM task_info WHERE task_id = ' + task_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            } else {
+                return true;
+            }
+        });
+        return false;
+    }
+
+    // get tasks of a group
+    public getGroupTasks(group_id: number): Task[] {
+        var sql = 'SELECT * FROM task_info WHERE task_group = ' + group_id;
+        var res: Task[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    // TODO: task constructor
+                }
+            }
+        });
+        return res;
+    }
+
+    // get sub tasks of a task
+    public getSubTasksByTaskId(task_id: number): Task[] {
+        var sql = 'SELECT * FROM task_info WHERE task_group = ' + task_id;
+        var res: Task[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    // res.push(new SubTask(result[i].subtask_id, result[i].subtask_name, result[i].subtask_description, result[i].subtask_status, result[i].subtask_task_id));
+                }
+            }
+        });
+        return res;
+    }
+
+
+    //////////////////////////// Message ////////////////////////////
+
+    public get_client_mssage(client_id: number): Message[] {
+        var sql = 'SELECT * FROM message_info WHERE client_id = ' + client_id;
+        var res: Message[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    res.push(new Message(result[i].message_id, result[i].message_sender, result[i].message_receiver, result[i].message_type, result[i].message_content, result[i].send_time, result.message_status));
+                }
+            }
+        });
+        return res;
+    }
+
 }
 
 export const db = new DbRepo();

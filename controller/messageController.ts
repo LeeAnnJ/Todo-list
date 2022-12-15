@@ -5,6 +5,7 @@ import { db } from '../controller/dbRepo';
 // get message
 export const get_message = (req: Request, res: Response) => {
     res.send('get message');
+    
 }
 
 // get message by id
