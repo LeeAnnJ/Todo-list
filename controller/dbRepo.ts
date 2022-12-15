@@ -291,6 +291,7 @@ class DbRepo {
                     if (err) {
                         console.log(err);
                     }
+                    // TODO: Add the creater to the group
                     return result.group_id;
                 });
             }
@@ -330,6 +331,20 @@ class DbRepo {
         return res;
     }
 
+    // get group creater
+    public getGroupCreaterId(group_id: number): number {
+        var sql = 'SELECT creater_id FROM group_info WHERE group_id = ' + group_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                return result;
+            }
+        });
+        return 0;
+    }
+        
+
     // alert group info(by group_id)
     public alertGroupInfo(group_new: Group): boolean {
         var sql = 'UPDATE group_info SET group_name = \'' + group_new.group_name + '\', group_description = \'' + group_new.group_description + '\' WHERE group_id = ' + group_new.group_id;
@@ -343,6 +358,58 @@ class DbRepo {
         });
         return false;
     }
+
+    // get groups of a user
+    public getUserGroups(client_id: number): Group[] {
+        var sql = 'SELECT * FROM group_member WHERE client_id = ' + client_id;
+        var res: Group[] = [];
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    res.push(this.getGroupById(result[i].group_id));
+                }
+                // console.log(result);
+            }
+        });
+        return res;
+    }
+
+    // add a member to a group
+    public addMemberToGroup(group_id: number, client_id: number): boolean {
+        var values = {
+            group_id: group_id,
+            client_id: client_id
+        };
+        var sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + values.group_id + ', ' + values.client_id + ')';
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            } else {
+                // FIXME: change the number of members in group_info
+                return true;
+            }
+        });
+        return false;
+    }
+
+    // delete a member from a group
+    public deleteMemberFromGroup(group_id: number, client_id: number): boolean {
+        var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            } else {
+                // FIXME: change the number of members in group_info
+                return true;
+            }
+        });
+        return false;
+    }
+                
 
     // delete a group
     public deleteGroup(group_id: number): boolean {

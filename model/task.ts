@@ -39,9 +39,12 @@ export class Task {
         this.subtasks_count = 0;
         this.subtasks = [];
     }
-    // group task constructor
+
+    // Two constructors for personal task and group task
+
     // TODO: add group task constructor
     // constructor
+
 
     // TODO: add personal task constructor
     // constructor
