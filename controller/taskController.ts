@@ -3,7 +3,7 @@
 // Used in routes\task.ts to handle the request from client about task
 
 import { Request, Response } from 'express'
-import { Task } from '../model/task'
+import { SubTask, Task } from '../model/task'
 import { db } from '../controller/dbRepo'
 
 // create task
@@ -176,31 +176,106 @@ export const get_subtasks_by_task_id = (req: Request, res: Response) => {
 
 }
 
-export const get_subtask_by_task_ids = (req: Request, res: Response) => {
-    // TODO: get subtask by task ids
-    res.send('get subtask by task ids')
-}
-
 // add subtask to task
 export const add_subtask_to_task = (req: Request, res: Response) => {
     // TODO: add subtask to task
-    res.send('add subtask to task')
+    // res.send('add subtask to task')
+    var task_id = req.body.task.task_id
+    var subtask_name = req.body.subtask.name
+    var description = req.body.subtask.description
+    // var subtask_creator = req.body.subtask.register_id
+
+    var subtask = new SubTask(0, subtask_name, description, 0, task_id)
+
+    var subtask_id = db.addSubTask(subtask)
+    if (subtask_id !== -1) {
+        // add subtask success
+        res.json({
+            code: 200,
+            message: 'success',
+            data: {
+                subtask_id: subtask_id,
+            },
+        })
+    } else {
+        // add subtask failed
+        res.json({
+            code: 400,
+            message: 'failed',
+            data: {},
+        })
+    }
 }
 
 // delete subtask from task
 export const delete_subtask_from_task = (req: Request, res: Response) => {
     // TODO: delete subtask from task
-    res.send('delete subtask from task')
+    // res.send('delete subtask from task')
+
+    var subtask_id = req.body.subtask.subtask_id
+    var task_id = req.body.subtask.task_id
+    var result = db.deleteSubTask(task_id, subtask_id)
+
+    if (result) {
+        res.json({
+            code: 200,
+            message: 'success',
+            data: {},
+        })
+    } else {
+        res.json({
+            code: 400,
+            message: 'failed',
+            data: {},
+        })
+    }
 }
 
 // mark task as done
 export const mark_task_as_done = (req: Request, res: Response) => {
     // TODO: mark task as done
-    res.send('mark task as done')
+    // res.send('mark task as done')
+    var task_id = req.body.task.task_id
+    var task = db.getTaskByTaskId(task_id)
+    task.task_status = 1;
+    var result = db.alertTaskInfo(task)
+    if(result){
+        res.json({
+            code: 200,
+            message: 'success',
+            data: {},
+        })
+    } else {
+        res.json({
+            code: 400,
+            message: 'failed',
+            data: {},
+        })
+    }
 }
 
 // mark subtask as done
 export const mark_subtask_as_done = (req: Request, res: Response) => {
     // TODO: mark subtask as done
-    res.send('mark subtask as done')
+    // res.send('mark subtask as done')
+    var subtask_id = req.body.subtask.subtask_id
+    var task_id = req.body.subtask.task_id
+    var subtask = db.getSubTaskByIds(task_id, subtask_id)
+
+    subtask.subtask_status = 1
+    
+    var result = db.alertSubTaskInfo(subtask)
+    if(result){
+        res.json({
+            code: 200,
+            message: 'success',
+            data: {},
+        })
+    } else {
+        res.json({
+            code: 400,
+            message: 'failed',
+            data: {},
+        })
+    }
 }

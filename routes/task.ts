@@ -23,7 +23,7 @@ router.post('/deleteTask', task_controller.delete_task);
 router.get('/getSubTaskByTaskId', task_controller.get_subtasks_by_task_id);
 
 // get subtask by task id and subtask id
-router.get('/getSubTaskByIds', task_controller.get_subtask_by_task_ids);
+// router.get('/getSubTaskB', task_controller.get_subtask_by_task_ids);
 
 // add subtask to task
 router.post('/addSubTaskToTask', task_controller.add_subtask_to_task);

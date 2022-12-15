@@ -634,6 +634,70 @@ class DbRepo {
         });
         return res;
     }
+    getSubTaskByIds(task_id, subtask_id) {
+        var sql = 'SELECT * FROM subtask_info WHERE subtask_task_id = ' + task_id + ' AND subtask_id = ' + subtask_id;
+        var res = new task_1.SubTask(0, "", "", 0, 0);
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                // res = new SubTask(result[0].subtask_id, result[0].subtask_name, result[0].subtask_description, result[0].subtask_status, result[0].subtask_task_id);
+            }
+        });
+        return res;
+    }
+    // add a sub task
+    addSubTask(subtask) {
+        var sql = 'INSERT INTO subtask_info (subtask_name, subtask_description, subtask_status, subtask_task_id) VALUES (\'' + subtask.subtask_name + '\', \'' + subtask.subtask_description + '\', ' + subtask.subtask_status + ', ' + subtask.subtask_task_id + ')';
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                // return false;
+            }
+            else {
+                // return true;
+                sql = 'SELECT subtask_id FROM subtask_info WHERE subtask_name = \'' + subtask.subtask_name + '\' AND subtask_task_id = ' + subtask.subtask_task_id;
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        return result.subtask_id;
+                    }
+                });
+            }
+        });
+        return -1;
+    }
+    // delete a sub task
+    deleteSubTask(task_id, subtask_id) {
+        var sql = 'DELETE FROM subtask_info WHERE subtask_id = ' + subtask_id + ' AND task_id = ' + task_id + '';
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+        return false;
+    }
+    // alert sub task info
+    alertSubTaskInfo(subtask_new) {
+        var sql = 'UPDATE subtask_info SET subtask_name = \'' + subtask_new.subtask_name + '\', subtask_description = \'' + subtask_new.subtask_description + '\', subtask_status = ' + subtask_new.subtask_status + ' WHERE subtask_id = ' + subtask_new.subtask_id + ' AND subtask_task_id = ' + subtask_new.subtask_task_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+        return false;
+    }
     //////////////////////////// Message ////////////////////////////
     get_client_mssage(client_id) {
         var sql = 'SELECT * FROM message_info WHERE client_id = ' + client_id;
