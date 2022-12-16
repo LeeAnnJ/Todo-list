@@ -719,7 +719,7 @@ class DbRepo {
 
     //////////////////////////// Message ////////////////////////////
 
-    public get_client_mssage(client_id: number): Message[] {
+    public get_client_message(client_id: number): Message[] {
         var sql = 'SELECT * FROM message_info WHERE client_id = ' + client_id;
         var res: Message[] = [];
         this.connection.query(sql, (err, result) => {
@@ -733,7 +733,6 @@ class DbRepo {
         });
         return res;
     }
-
 }
 
 export const db = new DbRepo();

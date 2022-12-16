@@ -230,6 +230,25 @@ export const alert_group_info = (req: Request, res: Response) => {
 // get tasks of group
 export const get_tasks_of_group = (req: Request, res: Response) => {
     // TODO: get tasks of group -> about task.
-    res.send('get tasks of group')
+    // res.send('get tasks of group')
 
+    var group_id = req.body.group.group_id
+    var tasks = db.getGroupTasks(group_id)
+    if (tasks !== null) {
+        // get tasks success
+        res.json({
+            code: 200,
+            message: 'success',
+            data: {
+                tasks: tasks,
+            },
+        })
+    } else {
+        // get tasks failed
+        res.json({
+            code: 500,
+            message: 'failed',
+            data: {},
+        })
+    }
 }

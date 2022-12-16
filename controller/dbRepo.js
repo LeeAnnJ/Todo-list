@@ -699,7 +699,7 @@ class DbRepo {
         return false;
     }
     //////////////////////////// Message ////////////////////////////
-    get_client_mssage(client_id) {
+    get_client_message(client_id) {
         var sql = 'SELECT * FROM message_info WHERE client_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
