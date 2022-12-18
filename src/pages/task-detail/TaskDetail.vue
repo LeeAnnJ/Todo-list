@@ -82,12 +82,23 @@
           {{ coop.user_name }}
         </el-card>
 
-        <el-button class="add-button" round>
-          <el-icon>
-            <Plus />
-          </el-icon>
+        <el-button class="add-button" @click="dialogVisible2 = true">
+          <el-icon><Plus /></el-icon>
           添加共同参与人
         </el-button>
+
+        <el-dialog v-model="dialogVisible2" title="添加共同参与人" width="30%" draggable>
+          <span class="txt_CooperatorName">用户名：</span><span class="input_cooperatorName"><el-input v-model="cooperatorName" placeholder="请输入参与人用户名" /></span>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible2 = false">取消</el-button>
+            <el-button type="primary" @click="addCooperators">
+              确定
+            </el-button>
+          </span>
+        </template>
+        </el-dialog>
+
       </div>
 
       <!-- 共同参与人 -->
@@ -114,8 +125,6 @@
 import TopLine from '../../components/TopLine.vue';
 import DetailSLot from './DetailSlot.vue';
 import { Document } from '@element-plus/icons-vue';
-
-
 export default {
   components: {
     "topLine": TopLine,
@@ -126,6 +135,8 @@ export default {
     return {
       dialogVisible: false,
       subTaskName: '',
+      dialogVisible2:false,
+      cooperatorName:'',
       subtasks: [{
         subtask_id: "001",
         isfinished: false,
@@ -168,7 +179,6 @@ export default {
       }],
     }
   },
-
   computed: {
     subnumber: function () {
       return this.subtasks.length;
@@ -180,16 +190,12 @@ export default {
       return this.cooperators.length;
     }
   },
-
   methods: {
     focusOn(item) { item.isfocus = true },
-
     focusLeave(item) { item.isfocus = false; },
-
     openDialog() {
       this.dialogVisible = true;
     },
-
     addSubTask() {
       this.subtasks.push({
         name: this.subTaskName,
@@ -199,12 +205,14 @@ export default {
       this.subnumber++;
       this.dialogVisible = false;
       this.subTaskName = '';
-    }
+    },
+    addCooperators(){
+      this.cooperators.push({ avator_path: "user",user_name:this.cooperatorName}); 
+      this.coopernumber++; 
+      this.dialogVisible2 = false;
+      this.cooperatorName = '';
+    },
   },
-
-
-
-
 }
 </script>
 
@@ -212,9 +220,19 @@ export default {
 .el-card {
   border-radius: 8px;
 }
+.input_cooperatorName{
+    position: absolute;
+    width: 320px;
+    left:70px;
+    top: 70px;
+  }
+  .txt_CooperatorName{
+    position: absolute;
+    left: 10px;
+    top: 75px;
+  }
 </style>
 
 <style scoped>
 @import '../../assets/css/TaskDetail.css';
 </style>
-
