@@ -1,5 +1,5 @@
 .global{
-    border: 1px solid #303133;
+    border: 1px solid #707172;
     border-radius: 30px;
     margin-top: 15px;
     width: 250px;
@@ -18,7 +18,7 @@
 }
 
 .colorside{
-    border: 1px solid #333;
+    border: 1px solid #3b3b3c;
     border-right: none;
     background-color: #2564CF;
     width: 29px;
@@ -50,11 +50,6 @@
     font-size: 20px;
     text-align: left;
     margin: 0px 0px;
-}
-
-.menu{
-    border: 1px splid #000;
-    float: right;
 }
 
 .menu-item{

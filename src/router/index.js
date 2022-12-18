@@ -12,6 +12,8 @@ import Period from '../pages/jump/period.vue';
 import DetailRouter from '../pages/task-detail/TaskDetail.vue';
 import TestRouter from '../pages/test/test.vue';
 
+import SubtaskSlot from '../pages/task-detail/SubtaskSlot.vue';
+
 const routes = [
     {
     	path: '/',
@@ -49,7 +51,7 @@ const routes = [
     },
     {
     	path:'/ddl',
-    	name:'_ddl',
+    	name:'有截止日期的任务',
     	component: DDL
     },
     {
@@ -71,6 +73,11 @@ const routes = [
         path: '/test',
         name: '测试界面',
         component: TestRouter
+    },
+    {
+        path:'/subtask',
+        name:'临时测试子步骤',
+        component: SubtaskSlot,
     }
    
 ]

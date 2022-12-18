@@ -26,11 +26,25 @@
     margin-right: 5px;
 }
 
-.menu{
-    /* border: 1px solid  #102e6c; */
-    width: 15%;
-    float: right;
-    font-size: 25px;
+.menu-item{   
+    /* border: 1px solid #000; */
+    width: 95%;
+    height: 35px;
+    margin: 0px;
+}
+.menu-button{
+    width: 100%;
+    height: 100%;
+    border-radius: 0%;
+    border: none;
+    background-color: #fff;
+    color: #717377;
+    text-align: left;
+    font-weight: 600;
+}
+.menu-button:hover{
+    background-color: #c6e2ff;
+    color: #404044;
 }
 
 .box-card-taskintro{

@@ -13,22 +13,31 @@
           </div>
         </template>
         <div style="margin-top: 7px" @mouseenter="focusOn">
-          <div class="menu-item">收藏该任务</div>
-          <div class="menu-item">添加共同参与人</div>
-          <div class="menu-item">重命名</div>
-          <div class="menu-item">分组</div>
-          <div class="menu-item">删除该任务</div>
+          <div class="menu-item">
+            <button class="menu-button" >收藏该任务</button>
+          </div>
+          <div class="menu-item">
+            <button class="menu-button" >添加共同参与人</button>
+          </div>
+          <div class="menu-item">
+            <button class="menu-button" @click="startEdit">编辑内容</button>
+          </div>
+          <div class="menu-item">
+            <el-button class="menu-button" >分组</el-button>
+          </div>
+          <div class="menu-item">
+            <el-button class="menu-button" >删除该任务</el-button>
+          </div>
         </div>
       </el-popover>
-      <div v-else class="menu">
+      <el-button v-else class="edit-finish-icon" @click="finishEdit">
         <el-icon><Select /></el-icon>
-      </div>
+      </el-button>
     </div>
     <!-- 任务名称 任务描述 -->
     <el-card class="box-card-taskintro">
       <div class="introcard-header">
         <div class="introcard-title">
-          <!-- 把星星的位置调一下 -->
           <div v-if="!isedit" class = "introcard-title name">{{task.name}}</div>
           <div v-else class="introcard-title edit">
             <el-input size="large" 
@@ -127,7 +136,13 @@
         methods: {
             starClick(){
                 this.task.priority = !this.task.priority;
-                this.isedit = !this.isedit;
+                //this.isedit = true;
+            },
+            startEdit(){
+                this.isedit=true;
+            },
+            finishEdit(){
+                this.isedit = false;
             }
         }
     }
@@ -136,4 +151,26 @@
 
 <style scoped>
     @import '../../assets/css/TaskDetail.css';
+
+    .menu{
+    /* border: 1px solid  #102e6c; */
+    width: 15%;
+    float: right;
+    font-size: 25px;
+    }
+    .edit-finish-icon{
+    border:none;
+    /* border: 1px solid #000; */
+    width: 30px;
+    padding: 0px;
+    margin: 0px !important;
+    float: right;
+    font-size: 28px;
+    color:#73767a;
+    background-color: #F5F6F7;
+    }
+    .edit-finish-icon:hover{
+        color:#256cf4;
+        background-color: #e4e5e6;
+    }
 </style>
