@@ -7,49 +7,7 @@
       <detail-slot></detail-slot>
 
       <!-- 子步骤 -->
-      <div class="card-slot">
-        <!-- 标题栏 -->
-        <div class="title">
-          <img class="title-icon" src="../../assets/icons/9_application.png" alt="some_text" />
-          <b style="float: left;">子步骤（{{ subnumber }}）</b>
-        </div>
-        <!-- 子步骤 -->
-        <el-card v-for="sub in subtasks" class="substep" @mouseenter="focusOn(sub)" @mouseleave="focusLeave(sub)">
-          <div style="flex-direction: row; height: 30px;">
-            <div v-if="sub.isfinished" class="substep-tag">未完成</div>
-            <div v-else class="substep-tag finish">已完成</div>
-            <div v-if="sub.isfocus" style="float:right; margin:2px 10px; font-size: 18px;">
-              <el-icon>
-                <MoreFilled />
-              </el-icon>
-            </div>
-          </div>
-          <div style="padding-left: 15px;">{{ sub.name }}</div>
-        </el-card>
-
-
-        <el-button class="add-button" round @click="dialogVisible = true">
-          <el-icon>
-            <Plus />
-          </el-icon>
-          添加子步骤
-        </el-button>
-        <!-- 弹窗 -->
-        <el-dialog title="添加子步骤" v-model="dialogVisible" width="30%">
-          <!-- 输入框 -->
-          <el-input v-model="subTaskName" placeholder="请输入子步骤名称"></el-input>
-          <!-- 底部按钮 -->
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addSubTask">确 定</el-button>
-          </span>
-        </el-dialog>
-
-
-
-
-
-      </div>
+      <sub-task></sub-task>
 
       <!-- 动态 -->
       <div class="card-slot">
@@ -81,8 +39,8 @@
           <el-avatar :size="50" class="user-avatar">{{ coop.avator_path }}</el-avatar>
           {{ coop.user_name }}
         </el-card>
-
-        <el-button class="add-button" @click="dialogVisible2 = true">
+        <!-- 添加按钮 -->
+        <el-button round class="add-button" @click="dialogVisible2 = true">
           <el-icon><Plus /></el-icon>
           添加共同参与人
         </el-button>
@@ -98,25 +56,21 @@
           </span>
         </template>
         </el-dialog>
-
       </div>
 
-      <!-- 共同参与人 -->
+      <!-- 附件， -->
       <div class="card-slot">
         <!-- 标题栏 -->
         <div class="title">
           <img class="title-icon" src="../../assets/icons/6_classific.png" alt="text" />
           <b style="float: left;">附件（0）</b>
         </div>
-        <!-- 参与人 -->
+        <!-- 添加附件按钮 -->
         <el-button class="add-button" round>
-          <el-icon>
-            <Plus />
-          </el-icon>
+          <el-icon><Plus /></el-icon>
           添加附件
         </el-button>
       </div>
-
     </el-container>
   </div>
 </template>
@@ -125,114 +79,73 @@
 import TopLine from '../../components/TopLine.vue';
 import DetailSLot from './DetailSlot.vue';
 import { Document } from '@element-plus/icons-vue';
+import SubTaskSlot from './SubTaskSlot.vue';
+
 export default {
-  components: {
-    "topLine": TopLine,
-    "detail-slot": DetailSLot,
-    Document,
-  },
-  data() {
-    return {
-      dialogVisible: false,
-      subTaskName: '',
-      dialogVisible2:false,
-      cooperatorName:'',
-      subtasks: [{
-        subtask_id: "001",
-        isfinished: false,
-        name: "子步骤1",
-        isfocus: false,
-      }, {
-        subtask_id: "002",
-        isfinished: false,
-        name: "子步骤2 balabala balabala balabala",
-        isfocus: false,
-      }, {
-        subtask_id: "003",
-        isfinished: true,
-        name: "子步骤3",
-        isfocus: false,
-      }],
-      trends: [{
-        avator_path: "user",
-        user_name: "张三",
-        detail: "添加了子步骤：子步骤3",
-        time: "2022-12-14 20:51",
-      }, {
-        avator_path: "user",
-        user_name: "李四",
-        detail: "加入了该任务",
-        time: "2022-12-14 20:52",
-      }],
-      cooperators: [{
-        client_id: "001",
-        avator_path: "user",
-        user_name: "张三",
-      }, {
-        client_id: "002",
-        avator_path: "user",
-        user_name: "李四",
-      }, {
-        client_id: "003",
-        avator_path: "user",
-        user_name: "王五",
-      }],
-    }
-  },
-  computed: {
-    subnumber: function () {
-      return this.subtasks.length;
+    components: {
+        "topLine": TopLine,
+        "detail-slot": DetailSLot,
+        "sub-task": SubTaskSlot,
+        Document,
     },
-    trendnumber: function () {
-      return this.trends.length;
+    data() {
+          return {
+              
+              dialogVisible2:false,
+              cooperatorName:'',
+              trends:[{
+                  avator_path: "user",
+                  user_name: "张三",
+                  detail: "添加了子步骤：子步骤3",
+                  time: "2022-12-14 20:51",
+              },{
+                  avator_path: "user",
+                  user_name: "李四",
+                  detail: "加入了该任务",
+                  time: "2022-12-14 20:52",
+              }],
+              cooperators: [{
+                  client_id: "001",
+                  avator_path: "user",
+                  user_name: "张三",
+              },{
+                  client_id: "002",
+                  avator_path: "user",
+                  user_name: "李四",
+              },{
+                  client_id: "003",
+                  avator_path: "user",
+                  user_name: "王五",
+              }],
+          }
+      },
+      computed: {
+          trendnumber: function () {
+              return this.trends.length;
+          },
+          coopernumber: function () {
+              return this.cooperators.length;
+          }
+      },
+      methods: {
+        focusOn(item) { item.isfocus = true },
+        focusLeave(item) { item.isfocus = false; },
+        addCooperators(){
+            this.cooperators.push({ avator_path: "user",user_name:this.cooperatorName}); 
+            this.coopernumber++; 
+            this.dialogVisible2 = false;
+            this.cooperatorName = '';
+        },
     },
-    coopernumber: function () {
-      return this.cooperators.length;
-    }
-  },
-  methods: {
-    focusOn(item) { item.isfocus = true },
-    focusLeave(item) { item.isfocus = false; },
-    openDialog() {
-      this.dialogVisible = true;
-    },
-    addSubTask() {
-      this.subtasks.push({
-        name: this.subTaskName,
-        isfinished: true,
-        isfocus: false
-      });
-      this.subnumber++;
-      this.dialogVisible = false;
-      this.subTaskName = '';
-    },
-    addCooperators(){
-      this.cooperators.push({ avator_path: "user",user_name:this.cooperatorName}); 
-      this.coopernumber++; 
-      this.dialogVisible2 = false;
-      this.cooperatorName = '';
-    },
-  },
 }
 </script>
 
 <style>
-.el-card {
-  border-radius: 8px;
-}
-.input_cooperatorName{
-    position: absolute;
-    width: 320px;
-    left:70px;
-    top: 70px;
-  }
-  .txt_CooperatorName{
-    position: absolute;
-    left: 10px;
-    top: 75px;
-  }
+    .el-card {
+      border-radius: 8px;
+    }
 </style>
 
 <style scoped>
-@import '../../assets/css/TaskDetail.css';
+    @import '../../assets/css/TaskDetail.css';
 </style>

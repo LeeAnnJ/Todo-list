@@ -42,10 +42,20 @@
         />
       </div>
     </el-card>
-    <el-button class="add-button" round>
+    <el-button class="add-button" round @click="dialogVisible = true">
       <el-icon><Plus /></el-icon>
       添加子步骤
     </el-button>
+    <!-- 弹窗 -->
+    <el-dialog title="添加子步骤" v-model="dialogVisible" width="30%">
+      <!-- 输入框 -->
+      <el-input v-model="subTaskName" placeholder="请输入子步骤名称"></el-input>
+      <!-- 底部按钮 -->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSubTask">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -55,6 +65,8 @@
         props :{},
         data(){
             return{
+                subTaskName: '',
+                dialogVisible: false,
                 subtasks:[{
                     subtask_id: "001",
                     isfinished: false,
@@ -86,6 +98,16 @@
             focusLeave(item){item.isfocus=false;},
             startEdit(item){console.log("edit:",item.isedit); item.isedit=true;},
             finishEdit(item){item.isedit=false;},
+            addSubTask() {
+                this.subtasks.push({
+                    name: this.subTaskName,
+                    isfinished: true,
+                    isfocus: false
+                });
+                this.subnumber++;
+                this.dialogVisible = false;
+                this.subTaskName = '';
+            },
         },
     }
 </script>
