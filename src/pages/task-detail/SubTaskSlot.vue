@@ -8,24 +8,28 @@
     <!-- 子步骤 -->
     <el-card v-for="sub in subtasks" class="substep" @mouseenter="focusOn(sub)" @mouseleave="focusLeave(sub)">
       <div style = "flex-direction: row; height: 30px;">
-        <div v-if="sub.isfinished" class="substep-tag">未完成</div>
-        <div v-else class="substep-tag finish">已完成</div>
+        <div :class="sub.isfinished? 'substep-tag finish':'substep-tag'">
+          {{ sub.isfinished? "已完成":"未完成" }}
+        </div>
         <!-- 菜单部分 -->
         <el-popover v-if="!sub.isedit"  trigger="click" transition="all 0.5s">
           <template #reference>
-            <div v-if="sub.isfocus" class="menu-icon">
+            <div v-if="sub.isfocus" class="menu-icon" @mouseenter="focusOn(sub)">
               <el-icon><MoreFilled /></el-icon>
             </div>
           </template>
-          <div style="margin-top: 7px;" @mouseenter="focusOn">
-            <div class="menu-item">
-              <button class="menu-button" >完成子步骤</button>
+          <div style="margin-top: 7px;" @mouseenter="focusOn(sub)">
+            <div v-if="!sub.isfinished" class="menu-item">
+              <button class="menu-button" @click="finishSubtask(sub)">完成子步骤</button>
+            </div>
+            <div v-else class="menu-item">
+              <button class="menu-button" @click="cancelFinishSubtask(sub)">取消完成子步骤</button>
             </div>
             <div class="menu-item">
               <button class="menu-button" @click="startEdit(sub)">修改步骤内容</button>
             </div>
             <div class="menu-item">
-              <button class="menu-button">删除该任务</button>
+              <button class="menu-button" @click="deleteSubTask(sub)">删除该任务</button>
             </div>
           </div>
         </el-popover>
@@ -68,19 +72,19 @@
                 subTaskName: '',
                 dialogVisible: false,
                 subtasks:[{
-                    subtask_id: "001",
+                    subtask_id: 1,
                     isfinished: false,
                     name: "子步骤1",
                     isfocus: false,
                     isedit: false,
                 },{
-                    subtask_id: "002",
+                    subtask_id: 2,
                     isfinished: false,
                     name: "子步骤2 balabala balabala balabala",
                     isfocus: false,
                     isedit: false,
                 },{
-                    subtask_id: "003",
+                    subtask_id: 3,
                     isfinished: true,
                     name: "子步骤3",
                     isfocus: false,
@@ -100,14 +104,23 @@
             finishEdit(item){item.isedit=false;},
             addSubTask() {
                 this.subtasks.push({
+                    subtask_id: 0, //这个之后要换成后端的数据
                     name: this.subTaskName,
-                    isfinished: true,
+                    isfinished: false,
                     isfocus: false
                 });
-                this.subnumber++;
                 this.dialogVisible = false;
                 this.subTaskName = '';
             },
+            deleteSubTask(item){
+                this.subtasks = this.subtasks.filter(sub => sub.subtask_id != item.subtask_id);
+            },
+            finishSubtask(item){
+                item.isfinished = true;
+            },
+            cancelFinishSubtask(item){
+                item.isfinished = false;
+            }
         },
     }
 </script>

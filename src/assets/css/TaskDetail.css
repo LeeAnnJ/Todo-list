@@ -155,10 +155,12 @@
     padding: 0px 5px;
     font-weight: 700;
     float: left;
+    transition: all .2s ease-in-out;
 }
 
 .substep-tag.finish{
-  background-color: #97D077;
+    background-color: #97D077;
+    transition: all .2s ease-in-out;
 }
 
 .add-button{

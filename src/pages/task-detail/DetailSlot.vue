@@ -17,16 +17,13 @@
             <button class="menu-button" >收藏该任务</button>
           </div>
           <div class="menu-item">
-            <button class="menu-button" >添加共同参与人</button>
-          </div>
-          <div class="menu-item">
             <button class="menu-button" @click="startEdit">编辑内容</button>
           </div>
           <div class="menu-item">
-            <el-button class="menu-button" >分组</el-button>
+            <button class="menu-button" >分组</button>
           </div>
           <div class="menu-item">
-            <el-button class="menu-button" >删除该任务</el-button>
+            <button class="menu-button" >删除该任务</button>
           </div>
         </div>
       </el-popover>
@@ -154,9 +151,9 @@
 
     .menu{
     /* border: 1px solid  #102e6c; */
-    width: 15%;
-    float: right;
-    font-size: 25px;
+        width: 15%;
+        float: right;
+        font-size: 25px;
     }
     .edit-finish-icon{
     border:none;

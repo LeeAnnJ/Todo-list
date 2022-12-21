@@ -45,16 +45,20 @@
           添加共同参与人
         </el-button>
 
+        <!-- todo-升级成查找模式 -->
         <el-dialog v-model="dialogVisible2" title="添加共同参与人" width="30%" draggable>
-          <span class="txt_CooperatorName">用户名：</span><span class="input_cooperatorName"><el-input v-model="cooperatorName" placeholder="请输入参与人用户名" /></span>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible2 = false">取消</el-button>
-            <el-button type="primary" @click="addCooperators">
-              确定
-            </el-button>
+          <span class="txt_CooperatorName">用户名：</span>
+          <span class="input_cooperatorName">
+            <el-input v-model="cooperatorName" placeholder="请输入参与人用户名" />
           </span>
-        </template>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogVisible2 = false">取消</el-button>
+              <el-button type="primary" @click="addCooperators">
+                确定
+              </el-button>
+            </span>
+          </template>
         </el-dialog>
       </div>
 
@@ -131,8 +135,10 @@ export default {
         focusOn(item) { item.isfocus = true },
         focusLeave(item) { item.isfocus = false; },
         addCooperators(){
-            this.cooperators.push({ avator_path: "user",user_name:this.cooperatorName}); 
-            this.coopernumber++; 
+            this.cooperators.push({
+                avator_path: "user",
+                user_name:this.cooperatorName
+            }); 
             this.dialogVisible2 = false;
             this.cooperatorName = '';
         },

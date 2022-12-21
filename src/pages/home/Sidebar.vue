@@ -18,57 +18,34 @@
               <el-menu-item-group>
 
                 <el-menu-item index="/home" class="menuItem">
-                  <el-icon>
-                    <sunny />
-                  </el-icon>
+                  <el-icon><sunny /></el-icon>
                   我的一天
                 </el-menu-item>
 
                 <el-menu-item index="/important" class="menuItem">
-                  <el-icon>
-                    <Star />
-                  </el-icon>
+                  <el-icon><Star /></el-icon>
                   重要
                 </el-menu-item>
 
                 <el-menu-item index="/ddl" class="menuItem">
-                  <el-icon>
-                    <Calendar />
-                  </el-icon>
+                  <el-icon><Calendar /></el-icon>
                   有截止日期的任务
                 </el-menu-item>
 
                 <el-menu-item index="/period" class="menuItem">
-                  <el-icon>
-                    <UserFilled />
-                  </el-icon>
+                  <el-icon><UserFilled /></el-icon>
                   周期性任务
                 </el-menu-item>
 
                 <el-menu-item index="/period" class="menuItem">
-                  <el-icon>
-                    <UserFilled />
-                  </el-icon>
+                  <el-icon><SuitcaseLine /></el-icon>
                   群组任务
                 </el-menu-item>
 
                 <el-menu-item index="/allTask" class="menuItem">
-                  <el-icon>
-                    <HomeFilled />
-                  </el-icon>
+                  <el-icon><HomeFilled /></el-icon>
                   所有任务
                 </el-menu-item>
-
-
-
-
-
-
-
-
-
-
-
               </el-menu-item-group>
             </el-menu>
 
@@ -91,7 +68,6 @@
             </el-menu>
             <!-- </el-scrollbar> -->
           </el-aside>
-
         </el-container>
       </el-aside>
     </el-container>

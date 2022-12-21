@@ -52,6 +52,11 @@
     margin: 0px 0px;
 }
 
+.menu{
+    border: 1px splid #000;
+    float: right;
+}
+
 .menu-item{
     /* border: 1px solid #000; */
     padding:8px 0px 9px 8px;
