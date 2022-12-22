@@ -31,8 +31,8 @@
               <h1 style="text-align: left; margin: 0px 0px 10px 0px;">任务列表</h1>
             </div>
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
-              <div v-for="i in 5" class="item-container">
-                <task-item></task-item>
+              <div v-for="task in tasks" class="item-container" @click="turnDetail(task.task_id)">
+                <task-item :task_id="task.task_id" :done="task.done" :content="task.content"></task-item>
               </div>
               <div class="item-container">
                 <NewTask></NewTask>
@@ -60,11 +60,55 @@
         },
         data(){
             return {
-                
+                tasks: [{
+                    task_id: 0,
+                    done: false,
+                    content: {
+                        name: "任务一",
+                        register_id: 0,
+                        create_time: "2022-12-22 9:32",
+                        priority: false,
+                        deadline: "暂无",
+                        circul: "暂无",
+                        is_favor: false,
+                        belongs_folder_id: 0
+                    }
+                },{
+                  task_id: 1,
+                  done: false,
+                  content: {
+                      name: "任务二",
+                      register_id: 0,
+                      create_time: "2022-12-22 20:21",
+                      priority: false,
+                      deadline: "暂无",
+                      circul: "暂无",
+                      is_favor: false,
+                      belongs_folder_id: 0
+                  }
+                },{
+                  task_id: 2,
+                  done: true,
+                  content: {
+                      name: "任务三",
+                      register_id: 0,
+                      create_time: "2022-12-22 21:21",
+                      priority: false,
+                      deadline: "暂无",
+                      circul: "暂无",
+                      is_favor: false,
+                      belongs_folder_id: 0
+                  }
+                }],
             }
         },
         methods:{
-            
+            turnDetail(task_id){
+                console.log("turn detail",task_id);
+                this.$router.push({
+                  path:"/taskDetail"
+                });
+            }
         }
     }
 </script>

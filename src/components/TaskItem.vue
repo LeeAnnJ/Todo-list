@@ -6,27 +6,42 @@
     <div class="item-content">
       <!-- 任务名称 和 更多菜单-->
       <div class="title">
-        <b>{{name}}</b>
+        <b v-if="!isedit">{{content.name}}</b>
+        <el-input v-else class="title-input" v-model="content.name" placeholder="请输入任务名称" />
         <!-- 菜单部分 -->
-        <el-popover trigger="hover" transition="all 0.5s">
+        <el-popover v-if="!isedit" trigger="hover" transition="all 0.5s">
 					<template #reference>
             <div class="menu" @mouseenter="focusOn">
 						  <el-icon v-if="isfocus" ><MoreFilled /></el-icon>
             </div>
 					</template>
-            <div style="margin-top: 7px" @mouseenter="focusOn">
-              <div class="menu-item">收藏该任务</div>
-              <div class="menu-item">添加共同参与人</div>
-              <div class="menu-item">重命名</div>
-              <div class="menu-item">分组</div>
-              <div class="menu-item">删除该任务</div>
+          <div style="margin-top: 7px" @mouseenter="focusOn">
+            <div class="menu-item">
+              <button class="menu-button" >收藏该任务</button>
             </div>
+            <div class="menu-item">
+              <button class="menu-button" >添加共同参与人</button>
+            </div>
+            <div class="menu-item">
+              <button class="menu-button" @click="isedit=true;" >重命名</button>
+            </div>
+            <div class="menu-item">
+              <button class="menu-button" >分组</button>
+            </div>
+            <div class="menu-item">
+              <button class="menu-button" >删除该任务</button>
+            </div>
+          </div>
         </el-popover>
+        <!-- 修改任务名时的完成图标 -->
+        <el-button v-else class="menu finish" @click="editName">
+          <el-icon><Select /></el-icon>
+        </el-button>
       </div>
 
       <!-- 细节部分，后面共同参与人我想升级成头像 -->
       <div class="detail">
-        <div>创建时间: {{createTime}}</div>
+        <div>创建时间: {{content.create_time}}</div>
         <div v-if="(coordinator.length>0)">
           共同参与人: 
           <span v-for="name in coordinator" class="coordinator">{{name}}</span>
@@ -97,70 +112,75 @@
     import {ref} from 'vue';
 
 		export default{
-        name:"task-item",
-        props:{
-            name:{
-                type: String,
-                default: "任务名称"
-            },
-            prior:{
-                type: String,
-                default: false,
-            },
-            done:{
-                type:Boolean,
-                default: false
-            },
-                content:{
-                    type:Object,
-                    default:{
-                        task_id: 0,
-                        register_id: 0,
-                        createTime: "2022-12-08",
-                        deadline: "暂无",
-                        circul: "暂无",
-                        is_favor: false,
-                        belongs_folder_id: 0
-                    }
-                }
+    name: "task-item",
+    props: {
+        task_id: {
+            type: Number,
+            default: 0
         },
-        data(){
-            return {
-                createTime: "2022-12-08 9:19",
-                coordinator:[],
-                isImportant: this.prior,
-                isDone: this.done,
-                isfocus: false,
-                selectTime: ref(''),
-                selectcrl: ref(''),
-                dateVisible: false,
-                circulVisible: false,
-            }
+        done: {
+            type: Boolean,
+            default: false
         },
-        methods:{
-            starClick(){
-                // console.log("click star");
-                this.isImportant=!this.isImportant;
-                console.log(this.isImportant,this.prior);
-            },
-            focusOn(){this.isfocus=true;},
-            focusLeave(){this.isfocus=false;},
-            confirmDone(){
-                // console.log("click finish");
-                this.isDone=!this.isDone;
-            },
-            setDDL(){
-                if(this.selectTime != null) this.content.deadline=this.selectTime;
-                else this.content.deadline="暂无";
-                this.dateVisible = false;
-            },
-            setCircul(){
-                if(this.selectcrl!=null) this.circul=this.selectcrl;
-                else this.circul="暂无";
-                this.circulVisible=false;
+        content: {
+            type: Object,
+            default: {
+                name: "任务名称",
+                register_id: 0,
+                create_time: "2022-12-22 9:32",
+                priority: false,
+                deadline: "暂无",
+                circul: "暂无",
+                is_favor: false,
+                belongs_folder_id: 0
             }
         }
-    }
+    },
+    data() {
+        return {
+            coordinator: ["张三", "李四"],
+            isImportant: this.content.priority,
+            isDone: this.done,
+            isfocus: false,
+            isedit: false,
+            selectTime: ref(""),
+            selectcrl: ref(""),
+            dateVisible: false,
+            circulVisible: false,
+        };
+    },
+    methods: {
+        starClick() {
+            // console.log("click star");
+            this.isImportant = !this.isImportant;
+            //console.log(this.isImportant,this.content.priority);
+        },
+        focusOn() { this.isfocus = true; },
+        focusLeave() { this.isfocus = false; },
+        confirmDone() {
+            // console.log("click finish");
+            this.isDone = !this.isDone;
+        },
+        editName(){
+            this.isedit = false;
+        },
+        setDDL() {
+            if (this.selectTime != null)
+                this.content.deadline = this.selectTime;
+            else
+                this.content.deadline = "暂无";
+            this.dateVisible = false;
+        },
+        setCircul() {
+            if (this.selectcrl != null)
+                this.circul = this.selectcrl;
+            else
+                this.circul = "暂无";
+            this.circulVisible = false;
+        },
+    },
+    components: { Select }
+}
 
 </script>
 
