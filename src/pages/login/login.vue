@@ -35,15 +35,7 @@
               };
           },
           methods: {
-              handleClose(){
-                ElMessageBox.confirm('Are you sure to close this dialog?')
-                .then(() => {
-                    done()
-                })
-                .catch(() => {
-                  // catch error
-                })
-              }
+              
           },
       };
   

@@ -106,7 +106,8 @@
             turnDetail(task_id){
                 console.log("turn detail",task_id);
                 this.$router.push({
-                  path:"/taskDetail"
+                    name: "taskDetail",
+                    params: {id: task_id},
                 });
             }
         }

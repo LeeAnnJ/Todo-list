@@ -94,7 +94,7 @@ export default {
     },
     data() {
           return {
-              
+              task_id: 0,
               dialogVisible2:false,
               cooperatorName:'',
               trends:[{
@@ -129,7 +129,7 @@ export default {
           },
           coopernumber: function () {
               return this.cooperators.length;
-          }
+          },
       },
       methods: {
         focusOn(item) { item.isfocus = true },
@@ -143,6 +143,10 @@ export default {
             this.cooperatorName = '';
         },
     },
+    mounted(){
+        console.log(this.$route.params)
+        this.task_id=this.$route.params.id;
+    }
 }
 </script>
 

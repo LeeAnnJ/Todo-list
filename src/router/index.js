@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 // 页面对应的vue文件
 import HelloRouter from '../pages/hello/hello.vue';
-import HomeRouter from '../pages/home/home.vue';
+import HomeRouter from '../pages/home/Home.vue';
 import LoginRouter from '../pages/login/login.vue';
 import RegistorRouter from '../pages/registor/registor.vue';
 import AllTask from '../pages/jump/allTask.vue';
@@ -40,8 +40,8 @@ const routes = [
         component: HomeRouter
     },
     {
-    	path:'/taskDetail',
-    	name:'任务详情',
+    	path:'/taskDetail/:id',
+    	name:'taskDetail',
     	component: DetailRouter
     },
     {

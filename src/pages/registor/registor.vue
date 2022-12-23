@@ -6,10 +6,6 @@
         <el-form-item class="form-item" label="您的用户名">
           <el-input style="width: 400px;" v-model="loginForm.usrname" />       
         </el-form-item>
-        <el-form-item class="form-item" label="您的生日">
-          <el-date-picker v-model="loginForm.birthday" 
-            style="width: 400px;" placeholder="点击选择日期" />
-        </el-form-item>
         <el-form-item class="form-item" label="个人简介">
           <el-input v-model="loginForm.introduce" type="textarea" 
             style="width: 400px;" :rows="3" placeholder="请输入您的个人简介"/>
@@ -21,6 +17,7 @@
           <el-input style="width: 400px;" v-model="loginForm.confirmPassword" />       
         </el-form-item>
       </el-form>
+      <el-button class="regis-button">点击注册</el-button>
     </div>
   </div>
 </template>
@@ -33,7 +30,6 @@
             return{
                 loginForm: reactive({
                     usrname:'',
-                    birthday:'',
                     password:'',
                     introduce:'',
                     confirmPassword:'',
@@ -56,17 +52,25 @@
         border: double #989795;
         border-radius: 20px;
         background-color :#f9f9f9;
-        height: 800px;
+        height: 500px;
         width: 500px;
-        padding: 50px 10px 50px 100px;
+        padding: 50px 10px 50px 10px;
         margin-top: 10px;
     }
     .form{
-      /* border: 1px solid #000; */
-      width: 100%;
+        /* border: 1px solid #000; */
+        width: 100%;
+        margin-left: 50px;
     }
     .form-item{
         /* border: 1px solid #000; */
         margin-bottom: 30px;
+    }
+    .regis-button{
+        width: 250px;
+        height: 33px;
+        margin-top: 20px;
+        font-size: 17px;
+        font-weight: 600;
     }
 </style>
