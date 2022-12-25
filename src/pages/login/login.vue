@@ -69,13 +69,15 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-image: url('../../assets/backgroud.jpg');
+        background-size: cover;
     }
     .login-window{
         border: 1px solid #c8c9cc;
         border-radius: 8px;
         width: 350px;
         height: 300px;
-        background-color: #FAFAFA;
+        background-color: #fafafa69;
         vertical-align: middle;
     }
     .form{
