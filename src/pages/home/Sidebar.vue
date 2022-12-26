@@ -24,7 +24,7 @@
 
                 <el-menu-item index="/important" class="menuItem">
                   <el-icon><Star /></el-icon>
-                  重要
+                  重要任务
                 </el-menu-item>
 
                 <el-menu-item index="/ddl" class="menuItem">
@@ -33,11 +33,11 @@
                 </el-menu-item>
 
                 <el-menu-item index="/period" class="menuItem">
-                  <el-icon><UserFilled /></el-icon>
+                  <el-icon><RefreshRight /></el-icon>
                   周期性任务
                 </el-menu-item>
 
-                <el-menu-item index="/period" class="menuItem">
+                <el-menu-item index="/group" class="menuItem">
                   <el-icon><SuitcaseLine /></el-icon>
                   群组任务
                 </el-menu-item>

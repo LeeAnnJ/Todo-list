@@ -14,8 +14,8 @@
 					<div class="headline-other">
 						<div style="flex-direction:row; font-size: 20px;">
 							<h2 style="margin: 0px; line-height: 15px;">
-								<el-icon><Calendar /></el-icon>
-								有截止日期的任务
+								<el-icon><SuitcaseLine /></el-icon>
+								群组任务
 							</h2>
 						</div>
 					</div>
@@ -97,6 +97,11 @@ export default {
         }
     },
     methods: {
+        jumpDetail() {
+            this.$router.push({
+                path: "/taskDetail"
+            });
+        }
     }
 }
 
@@ -104,7 +109,6 @@ export default {
 
 <style scoped>
 	@import '../../assets/css/maincontent.css';
-
     .global {
         flex-direction: column;
         padding: 0px;

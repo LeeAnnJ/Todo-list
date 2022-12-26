@@ -11,8 +11,7 @@ import Important from '../pages/jump/important.vue';
 import Period from '../pages/jump/period.vue';
 import DetailRouter from '../pages/task-detail/TaskDetail.vue';
 import TestRouter from '../pages/test/test.vue';
-
-import SubtaskSlot from '../pages/task-detail/SubtaskSlot.vue';
+import GroupRouter from '../pages/jump/grouptask.vue';
 
 const routes = [
     {
@@ -70,15 +69,15 @@ const routes = [
     	component: Period
     },
     {
+        path: '/group',
+        name: '_group',
+        component: GroupRouter
+    },
+    {
         path: '/test',
         name: '测试界面',
         component: TestRouter
     },
-    {
-        path:'/subtask',
-        name:'临时测试子步骤',
-        component: SubtaskSlot,
-    }
    
 ]
 

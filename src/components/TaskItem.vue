@@ -1,5 +1,5 @@
 <template>
-  <div :class="isfocus? 'global up':'global'" @mouseenter="focusOn" @mouseleave="focusLeave">
+  <div :class="isfocus? 'global up':'global'" @mouseenter="focusOn" @mouseleave="focusLeave" @click="turnDetail(task_id)">
     <!-- 左边的颜色条 -->
     <div :class="isDone? 'colorside finish':'colorside'"></div>
     <!-- 主要内容 -->
@@ -178,6 +178,13 @@
                 this.circul = "暂无";
             this.circulVisible = false;
         },
+        turnDetail(task_id){
+            console.log("turn detail",task_id);
+            this.$router.push({
+                name: "taskDetail",
+                params: {id: task_id},
+            });
+        }
     },
     components: { Select }
 }
