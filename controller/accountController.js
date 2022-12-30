@@ -136,6 +136,7 @@ exports.alert_user = alert_user;
 const change_avator = (req, res) => {
     // TODO: change avator
     // 涉及静态文件的上传 我再想想怎么搞
+    // 还没搞懂头像怎么破
     res.send('change avator');
 };
 exports.change_avator = change_avator;

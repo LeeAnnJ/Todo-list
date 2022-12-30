@@ -46,4 +46,6 @@ router.post('/changeAvator', acc_controller.change_avator);
 // router.get('/getAvator', acc_controller.get_avator);
 // delete user
 router.post('/deleteUser', acc_controller.delete_user);
+// check user name
+router.get('/checkUserName', acc_controller.check_user_name);
 module.exports = router;

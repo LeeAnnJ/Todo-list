@@ -135,6 +135,7 @@ export const alert_user = (req: Request, res: Response) => {
 export const change_avator = (req: Request, res: Response) => {
     // TODO: change avator
     // 涉及静态文件的上传 我再想想怎么搞
+    // 还没搞懂头像怎么破
     res.send('change avator')
 }
 

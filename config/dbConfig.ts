@@ -5,19 +5,12 @@
 
 export const dbConfig = {
     development: {
-        host: "localhost",
-        user: "root",
+        host: 'localhost',
+        user: 'TO-DO-LIST',
         port: 3306,
-        password: "357480",
-        database: "to-do-list",
+        password: '123456',
+        database: 'to-do-list',
     },
-    production: {
-        host: "localhost",
-        user: "root",
-        port: 3306,
-        password: "357480",
-        database: "to-do-list",
-    }
 }
 
-module.exports = dbConfig;
+module.exports = dbConfig

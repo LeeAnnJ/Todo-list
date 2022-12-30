@@ -7,18 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConfig = void 0;
 exports.dbConfig = {
     development: {
-        host: "localhost",
-        user: "root",
+        host: 'localhost',
+        user: 'TO-DO-LIST',
         port: 3306,
-        password: "357480",
-        database: "to-do-list",
+        password: '123456',
+        database: 'to-do-list',
     },
-    production: {
-        host: "localhost",
-        user: "root",
-        port: 3306,
-        password: "357480",
-        database: "to-do-list",
-    }
 };
 module.exports = exports.dbConfig;

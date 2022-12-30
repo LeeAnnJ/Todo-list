@@ -3,101 +3,24 @@
 // it is a singleton class
 // In this project, we use the mysql database(when developing, we will use the mariaDB database when releasing)
 
-
-// database definition sentences
-/*
-CREATE TABLE `folder`  (
-  `client_id` bigint UNSIGNED NOT NULL,
-  `folder_id` int UNSIGNED NOT NULL,
-  `folder_name` varchar(64) NOT NULL,
-  `folder_description` varchar(255) NULL,
-  PRIMARY KEY (`client_id`, `folder_id`)
-);
-
-CREATE TABLE `group`  (
-  `group_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(64) NOT NULL,
-  `founder_id` bigint UNSIGNED NOT NULL,
-  `created_time` datetime NOT NULL,
-  `members_num` int UNSIGNED NOT NULL,
-  PRIMARY KEY (`group_id`)
-);
-
-CREATE TABLE `group_member`  (
-  `belongs_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `group_id` bigint UNSIGNED NOT NULL,
-  `client_id` bigint UNSIGNED NOT NULL,
-  PRIMARY KEY (`belongs_id`)
-);
-
-CREATE TABLE `message`  (
-  `message_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `client_id` bigint UNSIGNED NOT NULL,
-  `push_type` int NOT NULL DEFAULT 0,
-  `push_time` datetime NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`message_id`)
-);
-
-CREATE TABLE `subtask`  (
-  `task_id` bigint UNSIGNED NOT NULL,
-  `subtask_id` int UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`task_id`, `subtask_id`)
-);
-
-CREATE TABLE `table_1`  ();
-
-CREATE TABLE `task`  (
-  `task_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `register_id` bigint UNSIGNED NOT NULL,
-  `create_time` datetime NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 0,
-  `priorty` int NOT NULL DEFAULT 0,
-  `deadline` datetime NULL,
-  `group_beglong` bigint UNSIGNED NULL,
-  `note` text NULL,
-  `is_favor` tinyint(1) NOT NULL DEFAULT 0,
-  `belongs_folder_id` bigint UNSIGNED NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`task_id`)
-);
-
-CREATE TABLE `user_info`  (
-  `client_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(32) NOT NULL,
-  `passwd_hash` binary(256) NOT NULL,
-  `avator_path` varchar(255) NOT NULL DEFAULT /static/default.png,
-  `register_time` datetime NOT NULL,
-  `intro` text NULL,
-  PRIMARY KEY (`client_id`, `register_time`)
-);
-
-ALTER TABLE `folder` ADD CONSTRAINT `client_id` FOREIGN KEY (`client_id`) REFERENCES `user_info` (`client_id`);
-ALTER TABLE `group` ADD CONSTRAINT `foundered_id` FOREIGN KEY (`founder_id`) REFERENCES `user_info` (`client_id`);
-ALTER TABLE `group_member` ADD CONSTRAINT `group` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`);
-ALTER TABLE `group_member` ADD CONSTRAINT `client` FOREIGN KEY (`client_id`) REFERENCES `user_info` (`client_id`);
-ALTER TABLE `message` ADD FOREIGN KEY (`client_id`) REFERENCES `user_info` (`client_id`);
-ALTER TABLE `subtask` ADD CONSTRAINT `task_belong` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`);
-ALTER TABLE `task` ADD FOREIGN KEY (`register_id`) REFERENCES `user_info` (`client_id`);
-ALTER TABLE `task` ADD FOREIGN KEY (`group_beglong`) REFERENCES `group` (`group_id`);
-ALTER TABLE `task` ADD FOREIGN KEY (`belongs_folder_id`, `register_id`) REFERENCES `folder` (`client_id`, `folder_id`);
-*/
-
-
-// import the mysql module
+// require the mysql module
 import mysql from 'mysql';
+
 // import the database configuration
-import { dbConfig } from '../config/dbConfig';
+// import { dbConfig } from '../config/dbConfig';
+// var config = dbConfig.development;
+
+const dbConfig = require('../config/dbConfig');
 var config = dbConfig.development;
+
 // import the entity classes
 import { Account } from '../model/account';
 import { Group, GroupAccount } from '../model/group';
 import { Folder } from '../model/folder';
 import { Task, SubTask } from '../model/task';
 import { Message } from '../model/message';
+
+// 7 tables in total
 
 // the database repository class
 class DbRepo {
@@ -132,18 +55,14 @@ class DbRepo {
     // 但是连接直接指定了数据库，所以这个方法不需要
     public createDatabase(): void {
         // create a database
-        this.connection.query('CREATE DATABASE IF NOT EXISTS ' + config.database, (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log('Database created');
-        });
+        return undefined;
     }
 
     // create a table
     // 数据库直接在navicat制定了，所以只作为启动时的备用
     public createTable(): void {
         // TODO: create tables
+        return undefined;
     }
 
     //////////////////////////// Account ////////////////////////////
@@ -153,12 +72,10 @@ class DbRepo {
         // login
         this.connection.query('SELECT * FROM user_info WHERE user_name = \'' + mysql.escape(user_name) + '\' AND passwd_hash = \'' + mysql.escape(passwd_hash) + '\'', (err, result) => {
             if (err) {
-                console.log(err);
-                // return err;
+                // console.log(err);
                 return 0;
             }
-            console.log(result);
-            // return client_id
+            // console.log(result);
             return result.client_id;
         });
         return 0;
@@ -167,7 +84,6 @@ class DbRepo {
     // create a user account
     public createAccount(account: Account): number {
         var values = {
-            client_id: account.client_id,
             user_name: account.user_name,
             passwd_hash: account.password_hash,
             register_time: account.register_time
@@ -178,7 +94,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
-                console.log('Account created');
+                // console.log('Account created');
                 // return client_id
                 sql = 'SELECT client_id FROM user_info WHERE user_name = \'' + values.user_name + '\' AND passwd_hash = \'' + values.passwd_hash + '\'';
                 this.connection.query(sql, (err, result) => {
@@ -200,7 +116,7 @@ class DbRepo {
             if (err) {
                 console.log(err);
             } else {
-                res = new Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.introduction);
+                res = new Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
                 console.log(result);
             }
         });
@@ -209,7 +125,7 @@ class DbRepo {
 
     // alert user info(by client_id)
     public alertUserInfo(acc_new: Account): boolean {
-        var sql = 'UPDATE user_info SET user_name = \'' + acc_new.user_name + '\', passwd_hash = \'' + acc_new.password_hash + '\', avatar_path = \'' + acc_new.avatar_path + '\', introduction = \'' + acc_new.introduction + '\' WHERE client_id = ' + acc_new.client_id;
+        var sql = 'UPDATE user_info SET user_name = \'' + acc_new.user_name + '\', passwd_hash = \'' + acc_new.password_hash + '\', avatar_path = \'' + acc_new.avatar_path + '\', intro = \'' + acc_new.introduction + '\' WHERE client_id = ' + acc_new.client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -379,18 +295,21 @@ class DbRepo {
     }
 
     // add a member to a group
+    // FIXME: change the number of members in group_info
+    // Maybe we should use a Transaction to do this
+    // Mysql: START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES (1, 1); UPDATE group_info SET group_member_num = group_member_num + 1 WHERE group_id = 1; COMMIT;
     public addMemberToGroup(group_id: number, client_id: number): boolean {
         var values = {
             group_id: group_id,
             client_id: client_id
         };
-        var sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + values.group_id + ', ' + values.client_id + ')';
+        // var sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + values.group_id + ', ' + values.client_id + ')';
+        var sql = 'START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES ( ' + values.group_id + ', ' + values.client_id + '); UPDATE group_info SET group_member_num = group_member_num + 1 WHERE group_id = ' + values.group_id + '; COMMIT;';
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
                 return false;
             } else {
-                // FIXME: change the number of members in group_info
                 return true;
             }
         });
@@ -398,8 +317,13 @@ class DbRepo {
     }
 
     // delete a member from a group
+    // FIXME: change the number of members in group_info
+    // Maybe we should use a Transaction to do this
+    // Mysql: START TRANSACTION; DELETE FROM group_member WHERE group_id = 1 AND client_id = 1; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = 1; COMMIT;
     public deleteMemberFromGroup(group_id: number, client_id: number): boolean {
-        var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
+        // FIXME: Check if the user is the creater of the group
+        var sql = 'START TRANSACTION; DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id + '; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = ' + group_id + '; COMMIT;';
+        // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
