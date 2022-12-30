@@ -3,6 +3,11 @@
 // When deploying, we use MariaDB cloud server, so the connection string is the cloud server's IP address
 // The database name is "to-do-list"
 
+// You can use the following commands to create a user and grant privileges to the user
+// CREATE USER 'TO-DO-LIST'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+// GRANT ALL PRIVILEGES ON *.* TO 'TO-DO-LIST'@'%';
+
+
 export const dbConfig = {
     development: {
         host: 'localhost',
