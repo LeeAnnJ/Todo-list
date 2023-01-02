@@ -31,24 +31,25 @@ export const create_task = (req: Request, res: Response) => {
         folder_id,
     )
 
-    var task_id = db.createTask(task)
-    if (task_id !== 0) {
-        // create task success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {
-                task_id: task_id,
-            },
-        })
-    } else {
-        // create task failed
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    db.createTask(task, (task_id: number) => {
+        if (task_id !== 0) {
+            // create task success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: {
+                    task_id: task_id,
+                },
+            })
+        } else {
+            // create task failed
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // get task by id
@@ -57,23 +58,23 @@ export const get_task_by_id = (req: Request, res: Response) => {
     // res.send('get task by id');
 
     var task_id = req.body.task.task_id
-    var task = db.getTaskByTaskId(task_id)
-
-    if (task !== null) {
-        // get task success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: task,
-        })
-    } else {
-        // get task failed
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    db.getTaskByTaskId(task_id, (task: Task) => {
+        if (task !== null) {
+            // get task success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: task,
+            })
+        } else {
+            // get task failed
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // get task by user id
@@ -82,23 +83,23 @@ export const get_task_by_user_id = (req: Request, res: Response) => {
     // res.send('get task by user id');
 
     var user_id = req.body.user.client_id
-    var tasks = db.getTaskByUserId(user_id)
-
-    if (tasks !== null) {
-        // get task success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: tasks,
-        })
-    } else {
-        // get task failed
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    var tasks = db.getTaskByUserId(user_id, (tasks: Task[]) => {
+        if (tasks !== null) {
+            // get task success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: tasks,
+            })
+        } else {
+            // get task failed
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // modify task
@@ -107,20 +108,49 @@ export const modify_task = (req: Request, res: Response) => {
     // res.send('modify task');
 
     var task_id = req.body.task.task_id
-    var task = db.getTaskByTaskId(task_id)
+    db.getTaskByTaskId(task_id, (task: Task) => {
+        if (task !== null) {
+            task.task_name = req.body.task.name
+            task.task_description = req.body.task.note
+            task.task_priority = req.body.task.priority
+            task.task_type = req.body.task.type
+            task.task_ddl = new Date(req.body.task.deadline)
+            task.task_folder_id = req.body.belongs_folder_id
+            task.task_group_id = req.body.group_id
+            task.task_isfavorite = req.body.is_favor
 
-    if (task !== null) {
-        task.task_name = req.body.task.name
-        task.task_description = req.body.task.note
-        task.task_priority = req.body.task.priority
-        task.task_type = req.body.task.type
-        task.task_ddl = new Date(req.body.task.deadline)
-        task.task_folder_id = req.body.belongs_folder_id
-        task.task_group_id = req.body.group_id
-        task.task_isfavorite = req.body.is_favor
+            db.alertTaskInfo(task, (result: boolean) => {
+                if (result) {
+                    res.json({
+                        code: 200,
+                        message: 'success',
+                        data: {},
+                    })
+                } else {
+                    res.json({
+                        code: 400,
+                        message: 'failed: could not modify task',
+                        data: {},
+                    })
+                }
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'failed: could not find task',
+                data: {},
+            })
+        }
+    })
+}
 
-        var result = db.alertTaskInfo(task)
+// delete task
+export const delete_task = (req: Request, res: Response) => {
+    // TODO: delete task
+    // res.send('delete task')
 
+    var task_id = req.body.task.task_id
+    db.deleteTask(task_id, (result: boolean) => {
         if (result) {
             res.json({
                 code: 200,
@@ -130,40 +160,11 @@ export const modify_task = (req: Request, res: Response) => {
         } else {
             res.json({
                 code: 400,
-                message: 'failed: could not modify task',
+                message: 'failed',
                 data: {},
             })
         }
-    } else {
-        res.json({
-            code: 400,
-            message: 'failed: could not find task',
-            data: {},
-        })
-    }
-}
-
-// delete task
-export const delete_task = (req: Request, res: Response) => {
-    // TODO: delete task
-    // res.send('delete task')
-
-    var task_id = req.body.task.task_id
-    var result = db.deleteTask(task_id)
-
-    if (result) {
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {},
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    })
 }
 
 // get subtask by task id
@@ -172,8 +173,21 @@ export const get_subtasks_by_task_id = (req: Request, res: Response) => {
     // res.send('get subtask by task id')
 
     var task_id = req.body.task.task_id
-    var subtasks = db.getSubTasksByTaskId(task_id)
-
+    db.getSubTasksByTaskId(task_id, (subtasks: SubTask[]) => {
+        if (subtasks !== null) {
+            res.json({
+                code: 200,
+                message: 'success',
+                data: subtasks,
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // add subtask to task
@@ -187,24 +201,25 @@ export const add_subtask_to_task = (req: Request, res: Response) => {
 
     var subtask = new SubTask(0, subtask_name, description, 0, task_id)
 
-    var subtask_id = db.addSubTask(subtask)
-    if (subtask_id !== -1) {
-        // add subtask success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {
-                subtask_id: subtask_id,
-            },
-        })
-    } else {
-        // add subtask failed
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    db.addSubTask(subtask, (subtask_id: number) => {
+        if (subtask_id !== -1) {
+            // add subtask success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: {
+                    subtask_id: subtask_id,
+                },
+            })
+        } else {
+            // add subtask failed
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // delete subtask from task
@@ -214,21 +229,21 @@ export const delete_subtask_from_task = (req: Request, res: Response) => {
 
     var subtask_id = req.body.subtask.subtask_id
     var task_id = req.body.subtask.task_id
-    var result = db.deleteSubTask(task_id, subtask_id)
-
-    if (result) {
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {},
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    db.deleteSubTask(task_id, subtask_id, (result: boolean) => {
+        if (result) {
+            res.json({
+                code: 200,
+                message: 'success',
+                data: {},
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }
 
 // mark task as done
@@ -236,22 +251,24 @@ export const mark_task_as_done = (req: Request, res: Response) => {
     // TODO: mark task as done
     // res.send('mark task as done')
     var task_id = req.body.task.task_id
-    var task = db.getTaskByTaskId(task_id)
-    task.task_status = 1;
-    var result = db.alertTaskInfo(task)
-    if(result){
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {},
+    db.getTaskByTaskId(task_id, (task: Task) => {
+        task.task_status = 1
+        db.alertTaskInfo(task, (result: boolean) => {
+            if (result) {
+                res.json({
+                    code: 200,
+                    message: 'success',
+                    data: {},
+                })
+            } else {
+                res.json({
+                    code: 400,
+                    message: 'failed',
+                    data: {},
+                })
+            }
         })
-    } else {
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    })
 }
 
 // mark subtask as done
@@ -260,22 +277,22 @@ export const mark_subtask_as_done = (req: Request, res: Response) => {
     // res.send('mark subtask as done')
     var subtask_id = req.body.subtask.subtask_id
     var task_id = req.body.subtask.task_id
-    var subtask = db.getSubTaskByIds(task_id, subtask_id)
-
-    subtask.subtask_status = 1
-    
-    var result = db.alertSubTaskInfo(subtask)
-    if(result){
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {},
+    db.getSubTaskByIds(task_id, subtask_id, (subtask: SubTask) => {
+        subtask.subtask_status = 1
+        var result = db.alertSubTaskInfo(subtask, (result: boolean) => {
+            if (result) {
+                res.json({
+                    code: 200,
+                    message: 'success',
+                    data: {},
+                })
+            } else {
+                res.json({
+                    code: 400,
+                    message: 'failed',
+                    data: {},
+                })
+            }
         })
-    } else {
-        res.json({
-            code: 400,
-            message: 'failed',
-            data: {},
-        })
-    }
+    })
 }

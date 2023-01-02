@@ -5,6 +5,7 @@
 import { Request, Response } from 'express'
 import { Group, GroupAccount } from '../model/group'
 import { db } from '../controller/dbRepo'
+import { Task } from '../model/task'
 
 // create group
 export const create_group = (req: Request, res: Response) => {
@@ -116,7 +117,7 @@ export const get_members_of_group = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // get user's groups
@@ -142,7 +143,7 @@ export const get_user_groups = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // add member to group
@@ -167,7 +168,7 @@ export const add_member_to_group = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // remove member from group
@@ -193,7 +194,7 @@ export const remove_member_from_group = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // delete group
@@ -216,7 +217,7 @@ export const delete_group = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // update group
@@ -244,7 +245,7 @@ export const alert_group_info = (req: Request, res: Response) => {
                 data: {},
             })
         }
-    });
+    })
 }
 
 // get tasks of group
@@ -253,22 +254,23 @@ export const get_tasks_of_group = (req: Request, res: Response) => {
     // res.send('get tasks of group')
 
     var group_id = req.body.group.group_id
-    var tasks = db.getGroupTasks(group_id)
-    if (tasks !== null) {
-        // get tasks success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {
-                tasks: tasks,
-            },
-        })
-    } else {
-        // get tasks failed
-        res.json({
-            code: 500,
-            message: 'failed',
-            data: {},
-        })
-    }
+    var tasks = db.getGroupTasks(group_id, (tasks: Task[]) => {
+        if (tasks !== null) {
+            // get tasks success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: {
+                    tasks: tasks,
+                },
+            })
+        } else {
+            // get tasks failed
+            res.json({
+                code: 500,
+                message: 'failed',
+                data: {},
+            })
+        }
+    })
 }

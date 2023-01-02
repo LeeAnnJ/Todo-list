@@ -35,16 +35,15 @@ export const login = (req: Request, res: Response) => {
                 client: null,
             })
         }
-
     })
 }
 
 // get account by id
 export const get_account_by_id = (req: Request, res: Response) => {
     // res.send('get account by id')
-    console.log('get account by id');
+    console.log('get account by id')
 
-    var client_id = req.body.client_id;
+    var client_id = req.body.client_id
     db.getUserById(client_id, (acc_info: Account) => {
         if (acc_info.client_id !== 0) {
             // success
@@ -62,7 +61,7 @@ export const get_account_by_id = (req: Request, res: Response) => {
                 client: null,
             })
         }
-    });
+    })
 }
 
 // createcount
@@ -81,7 +80,7 @@ export const create_account = (req: Request, res: Response) => {
             })
         } else {
             // create account
-            var acc = new Account(0, username, passwd_hash, '', new Date(), '');
+            var acc = new Account(0, username, passwd_hash, '', new Date(), '')
             db.createAccount(acc, (acc_id: number) => {
                 if (acc_id !== 0) {
                     res.json({
@@ -98,9 +97,9 @@ export const create_account = (req: Request, res: Response) => {
                         data: null,
                     })
                 }
-            });
+            })
         }
-    });      
+    })
 }
 
 // alert user massage
@@ -128,23 +127,23 @@ export const alert_user = (req: Request, res: Response) => {
                         code: 200,
                         message: 'success',
                         data: null,
-                    });
+                    })
                 } else {
                     res.json({
                         code: 400,
                         message: 'fail',
                         data: null,
-                    });
+                    })
                 }
-            });
+            })
         } else {
             res.json({
                 code: 400,
                 message: 'fail to find the user',
                 data: null,
-            });
+            })
         }
-    });
+    })
 }
 
 // change user avator
@@ -167,15 +166,15 @@ export const delete_user = (req: Request, res: Response) => {
                 code: 200,
                 message: 'success',
                 data: null,
-            });
+            })
         } else {
             res.json({
                 code: 400,
                 message: 'fail',
                 data: null,
-            });
+            })
         }
-    });
+    })
 }
 
 // check user name

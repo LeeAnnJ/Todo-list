@@ -247,24 +247,25 @@ const get_tasks_of_group = (req, res) => {
     // TODO: get tasks of group -> about task.
     // res.send('get tasks of group')
     var group_id = req.body.group.group_id;
-    var tasks = dbRepo_1.db.getGroupTasks(group_id);
-    if (tasks !== null) {
-        // get tasks success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: {
-                tasks: tasks,
-            },
-        });
-    }
-    else {
-        // get tasks failed
-        res.json({
-            code: 500,
-            message: 'failed',
-            data: {},
-        });
-    }
+    var tasks = dbRepo_1.db.getGroupTasks(group_id, (tasks) => {
+        if (tasks !== null) {
+            // get tasks success
+            res.json({
+                code: 200,
+                message: 'success',
+                data: {
+                    tasks: tasks,
+                },
+            });
+        }
+        else {
+            // get tasks failed
+            res.json({
+                code: 500,
+                message: 'failed',
+                data: {},
+            });
+        }
+    });
 };
 exports.get_tasks_of_group = get_tasks_of_group;
