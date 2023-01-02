@@ -37,4 +37,4 @@ export class GroupAccount {
     }
 }
 
-module.exports = { Group, GroupAccount };
+// module.exports = { Group, GroupAccount };

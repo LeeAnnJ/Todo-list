@@ -15,4 +15,4 @@ export class Folder {
     }
 }
 
-module.exports = Folder;
+// module.exports = Folder;

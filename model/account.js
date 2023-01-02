@@ -4,7 +4,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Account = void 0;
 class Account {
-    constructor(client_id, user_name, password_hash, avatar_path, register_time, introduction) {
+    constructor(client_id, user_name, password_hash, avatar_path, register_time, introduction = "") {
         this.client_id = client_id;
         this.user_name = user_name;
         this.password_hash = password_hash;
@@ -13,9 +13,9 @@ class Account {
         this.introduction = introduction;
     }
     // get the client_id
-    getClientId() {
+    get clientId() {
         return this.client_id;
     }
 }
 exports.Account = Account;
-module.exports = Account;
+// module.exports = Account;

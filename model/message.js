@@ -15,4 +15,4 @@ class Message {
     }
 }
 exports.Message = Message;
-module.exports = Message;
+// module.exports = Message;

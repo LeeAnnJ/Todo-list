@@ -8,7 +8,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import http server and express
 const http_1 = require("http");
 const express_1 = __importDefault(require("express"));
-const socket_io_1 = require("socket.io");
 // http-errors
 const http_errors_1 = __importDefault(require("http-errors"));
 // body-parser
@@ -44,13 +43,21 @@ app.use((req, res, next) => {
 });
 // http server
 const httpServer = (0, http_1.createServer)(app);
-// socket.io server
-const io = new socket_io_1.Server(httpServer, {
-    cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
-    }
-});
+// // socket.io server
+// const io = new Server(httpServer, {
+//     cors: {
+//         origin: '*',
+//         methods: ['GET', 'POST']
+//     }
+// });
+// // 监听客户端连接
+// io.on('connection', (socket: Socket) => {
+//     console.log('客户端连接成功');
+//     // 监听客户端发送的消息
+//     socket.on('message', (data) => {
+//         console.log(data);
+//     });
+// });
 // listen on the port
 httpServer.listen(3000, () => {
     console.log('listening on *:3000');
@@ -75,9 +82,9 @@ app.use('/task', taskRouter);
 app.use('/message', messageRouter);
 app.use('/group', groupRouter);
 app.use('/', indexRouter);
-var server = app.listen(app.get('port'), '127.0.0.1', () => {
-    console.log('Express server listening on port ' + app.get('port'));
-});
+// var server = app.listen(app.get('port'), '127.0.0.1', () => {
+//     console.log('Express server listening on port ' + app.get('port'));
+// });
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));
@@ -89,6 +96,6 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.json({ error: err });
 });
 module.exports = app;
