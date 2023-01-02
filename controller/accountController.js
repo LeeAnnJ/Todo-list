@@ -68,35 +68,36 @@ const create_account = (req, res) => {
     const username = req.body.username;
     const passwd_hash = req.body.passwd_hash;
     // check if the username is already used
-    var nameUsed = dbRepo_1.db.checkUserName(username);
-    if (nameUsed) {
-        res.json({
-            code: 400,
-            message: 'username already used',
-            data: null,
-        });
-    }
-    else {
-        // create account
-        var acc = new account_1.Account(0, username, passwd_hash, '', new Date(), '');
-        var acc_id = dbRepo_1.db.createAccount(acc);
-        if (acc_id !== 0) {
-            res.json({
-                code: 200,
-                message: 'success',
-                data: {
-                    client_id: acc_id,
-                },
-            });
-        }
-        else {
+    dbRepo_1.db.checkUserName(username, (result) => {
+        if (result) {
             res.json({
                 code: 400,
-                message: 'fail',
+                message: 'username already used',
                 data: null,
             });
         }
-    }
+        else {
+            // create account
+            var acc = new account_1.Account(0, username, passwd_hash, '', new Date(), '');
+            var acc_id = dbRepo_1.db.createAccount(acc);
+            if (acc_id !== 0) {
+                res.json({
+                    code: 200,
+                    message: 'success',
+                    data: {
+                        client_id: acc_id,
+                    },
+                });
+            }
+            else {
+                res.json({
+                    code: 400,
+                    message: 'fail',
+                    data: null,
+                });
+            }
+        }
+    });
 };
 exports.create_account = create_account;
 // alert user massage
@@ -165,16 +166,17 @@ exports.delete_user = delete_user;
 // check user name
 const check_user_name = (req, res) => {
     var user_name = req.body.user_name;
-    var result = dbRepo_1.db.checkUserName(user_name);
-    if (result) {
-        res.json({
-            result: true,
-        });
-    }
-    else {
-        res.json({
-            result: false,
-        });
-    }
+    dbRepo_1.db.checkUserName(user_name, (result) => {
+        if (result) {
+            res.json({
+                result: true,
+            });
+        }
+        else {
+            res.json({
+                result: false,
+            });
+        }
+    });
 };
 exports.check_user_name = check_user_name;

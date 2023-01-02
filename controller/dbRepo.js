@@ -3,6 +3,15 @@
 // this class is responsible for all database operations
 // it is a singleton class
 // In this project, we use the mysql database(when developing, we will use the mariaDB database when releasing)
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -150,39 +159,40 @@ class DbRepo {
     // delete a user account
     deleteAccount(client_id) {
         var sql = 'DELETE FROM user_info WHERE client_id = ' + client_id;
-        this.connection.query(sql, (err, result) => {
+        var res = false;
+        this.connection.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
                 console.log(err);
-                return false;
+                res = false;
+                // return false;
             }
             else {
-                return true;
+                // return true;
+                res = true;
             }
-        });
-        return false;
+        }));
+        return res;
     }
     /**
      * check if the user name is already used
      * @param user_name user name.
      * @returns if the user name is already used or something wrong happened when checking , return true, else return false.
      */
-    checkUserName(user_name) {
+    checkUserName(user_name, callback) {
         var sql = 'SELECT * FROM user_info WHERE user_name = \'' + user_name + '\'';
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return true;
             }
             else {
-                if (result.length == 0) {
-                    return false;
+                if (result.length > 0) {
+                    callback(false);
                 }
                 else {
-                    return true;
+                    callback(true);
                 }
             }
         });
-        return true;
     }
     //////////////////////////// Group ////////////////////////////
     // create a group

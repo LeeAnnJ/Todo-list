@@ -71,33 +71,34 @@ export const create_account = (req: Request, res: Response) => {
     const passwd_hash = req.body.passwd_hash
 
     // check if the username is already used
-    var nameUsed = db.checkUserName(username)
-    if (nameUsed) {
-        res.json({
-            code: 400,
-            message: 'username already used',
-            data: null,
-        })
-    } else {
-        // create account
-        var acc = new Account(0, username, passwd_hash, '', new Date(), '')
-        var acc_id = db.createAccount(acc)
-        if (acc_id !== 0) {
-            res.json({
-                code: 200,
-                message: 'success',
-                data: {
-                    client_id: acc_id,
-                },
-            })
-        } else {
+    db.checkUserName(username, (result: Boolean) => {
+        if (result) {
             res.json({
                 code: 400,
-                message: 'fail',
+                message: 'username already used',
                 data: null,
             })
+        } else {
+            // create account
+            var acc = new Account(0, username, passwd_hash, '', new Date(), '')
+            var acc_id = db.createAccount(acc)
+            if (acc_id !== 0) {
+                res.json({
+                    code: 200,
+                    message: 'success',
+                    data: {
+                        client_id: acc_id,
+                    },
+                })
+            } else {
+                res.json({
+                    code: 400,
+                    message: 'fail',
+                    data: null,
+                })
+            }
         }
-    }
+    })
 }
 
 // alert user massage
@@ -166,14 +167,15 @@ export const delete_user = (req: Request, res: Response) => {
 // check user name
 export const check_user_name = (req: Request, res: Response) => {
     var user_name = req.body.user_name
-    var result = db.checkUserName(user_name)
-    if (result) {
-        res.json({
-            result: true,
-        })
-    } else {
-        res.json({
-            result: false,
-        })
-    }
+    db.checkUserName(user_name, (result: Boolean) => {
+        if (result) {
+            res.json({
+                result: true,
+            })
+        } else {
+            res.json({
+                result: false,
+            })
+        }
+    })
 }

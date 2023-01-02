@@ -128,7 +128,6 @@ class DbRepo {
                 console.log('get user by id_1\n');
             } else {
                 console.log("get user by id_2\n");
-                
                 res = new Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
                 console.log(result);
             }
@@ -167,15 +166,18 @@ class DbRepo {
     // delete a user account
     public deleteAccount(client_id: number): boolean {
         var sql = 'DELETE FROM user_info WHERE client_id = ' + client_id;
-        this.connection.query(sql, (err, result) => {
+        var res: boolean = false;
+        this.connection.query(sql, async (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                res = false;
+                // return false;
             } else {
-                return true;
+                // return true;
+                res = true;
             }
         });
-        return false;
+        return res;
     }
 
     /**
@@ -183,21 +185,19 @@ class DbRepo {
      * @param user_name user name.
      * @returns if the user name is already used or something wrong happened when checking , return true, else return false.
      */
-    public checkUserName(user_name: string): boolean {
+    public checkUserName(user_name: string, callback: Function) {
         var sql = 'SELECT * FROM user_info WHERE user_name = \'' + user_name + '\'';
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return true;
             } else {
-                if (result.length == 0) {
-                    return false;
+                if (result.length > 0) {
+                    callback(false);
                 } else {
-                    return true;
+                    callback(true);
                 }
             }
         });
-        return true;
     }
 
     //////////////////////////// Group ////////////////////////////
