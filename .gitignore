@@ -134,3 +134,6 @@ dist
 .idea/*
 
 package-lock.json
+
+# link to database
+config/

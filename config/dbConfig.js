@@ -11,9 +11,9 @@ exports.dbConfig = void 0;
 exports.dbConfig = {
     development: {
         host: 'localhost',
-        user: 'TO-DO-LIST',
+        user: 'root',
         port: 3306,
-        password: '123456',
+        password: 'sysu',
         database: 'to-do-list',
     },
 };
