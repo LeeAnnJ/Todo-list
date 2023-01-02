@@ -16,24 +16,27 @@ export const login = (req: Request, res: Response) => {
     var passwd_hash = req.body.passwd_hash
 
     // check if the user name and password hash is correct
-    var acc_id = db.login(user_name, passwd_hash)
-    if (acc_id !== 0) {
-        // success
-        var acc_info = db.getUserById(acc_id)
-        res.json({
-            code: 200,
-            message: 'success',
-            client: {
-                acc_info,
-            },
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'fail',
-            client: null,
-        })
-    }
+    db.login(user_name, passwd_hash, (acc_id: number) => {
+        if (acc_id !== 0) {
+            // success
+            db.getUserById(acc_id, (acc_info: Account) => {
+                res.json({
+                    code: 200,
+                    message: 'success',
+                    client: {
+                        acc_info,
+                    },
+                })
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail',
+                client: null,
+            })
+        }
+
+    })
 }
 
 // get account by id
@@ -42,30 +45,28 @@ export const get_account_by_id = (req: Request, res: Response) => {
     console.log('get account by id');
 
     var client_id = req.body.client_id;
-    var acc_info = db.getUserById(client_id);
-    console.log(acc_info);
-
-    if (acc_info.client_id !== 0) {
-        // success
-        res.json({
-            code: 200,
-            message: 'success',
-            client: {
-                acc_info,
-            },
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'fail',
-            client: null,
-        })
-    }
+    db.getUserById(client_id, (acc_info: Account) => {
+        if (acc_info.client_id !== 0) {
+            // success
+            res.json({
+                code: 200,
+                message: 'success',
+                client: {
+                    acc_info,
+                },
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail',
+                client: null,
+            })
+        }
+    });
 }
 
 // createcount
 export const create_account = (req: Request, res: Response) => {
-    // TODO: create account
     // res.send('create account')
     const username = req.body.username
     const passwd_hash = req.body.passwd_hash
@@ -80,25 +81,26 @@ export const create_account = (req: Request, res: Response) => {
             })
         } else {
             // create account
-            var acc = new Account(0, username, passwd_hash, '', new Date(), '')
-            var acc_id = db.createAccount(acc)
-            if (acc_id !== 0) {
-                res.json({
-                    code: 200,
-                    message: 'success',
-                    data: {
-                        client_id: acc_id,
-                    },
-                })
-            } else {
-                res.json({
-                    code: 400,
-                    message: 'fail',
-                    data: null,
-                })
-            }
+            var acc = new Account(0, username, passwd_hash, '', new Date(), '');
+            db.createAccount(acc, (acc_id: number) => {
+                if (acc_id !== 0) {
+                    res.json({
+                        code: 200,
+                        message: 'success',
+                        data: {
+                            client_id: acc_id,
+                        },
+                    })
+                } else {
+                    res.json({
+                        code: 400,
+                        message: 'fail',
+                        data: null,
+                    })
+                }
+            });
         }
-    })
+    });      
 }
 
 // alert user massage
@@ -106,34 +108,43 @@ export const alert_user = (req: Request, res: Response) => {
     // TODO: alert user
     // res.send('alert user')
     const client_id = req.body.client_id
-    var acc_now = db.getUserById(client_id)
-    if (acc_now.client_id !== 0) {
-        var new_user_name = req.body.content.new_user_name
-        var new_password_hash = req.body.content.new_password_hash
-        var new_avator = req.body.content.new_avator
-        if (new_user_name !== '') {
-            acc_now.user_name = new_user_name
+    db.getUserById(client_id, (acc_now: Account) => {
+        if (acc_now.client_id !== 0) {
+            var new_user_name = req.body.content.new_user_name
+            var new_password_hash = req.body.content.new_password_hash
+            var new_avator = req.body.content.new_avator
+            if (new_user_name !== '') {
+                acc_now.user_name = new_user_name
+            }
+            if (new_password_hash !== '') {
+                acc_now.password_hash = new_password_hash
+            }
+            if (new_avator !== '') {
+                acc_now.avatar_path = new_avator
+            }
+            db.alertUserInfo(acc_now, (result: Boolean) => {
+                if (result) {
+                    res.json({
+                        code: 200,
+                        message: 'success',
+                        data: null,
+                    });
+                } else {
+                    res.json({
+                        code: 400,
+                        message: 'fail',
+                        data: null,
+                    });
+                }
+            });
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail to find the user',
+                data: null,
+            });
         }
-        if (new_password_hash !== '') {
-            acc_now.password_hash = new_password_hash
-        }
-        if (new_avator !== '') {
-            acc_now.avatar_path = new_avator
-        }
-
-        // success
-        res.json({
-            code: 200,
-            message: 'success',
-            data: acc_now,
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'fail to find the user',
-            data: null,
-        })
-    }
+    });
 }
 
 // change user avator
@@ -150,18 +161,21 @@ export const delete_user = (req: Request, res: Response) => {
     var client_id = req.body.client_id
 
     // delete user
-    var result = db.deleteAccount(client_id)
-    if (result) {
-        res.json({
-            code: 200,
-            message: 'success',
-        })
-    } else {
-        res.json({
-            code: 400,
-            message: 'fail',
-        })
-    }
+    db.deleteAccount(client_id, (result: Boolean) => {
+        if (result) {
+            res.json({
+                code: 200,
+                message: 'success',
+                data: null,
+            });
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail',
+                data: null,
+            });
+        }
+    });
 }
 
 // check user name

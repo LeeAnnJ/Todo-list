@@ -76,21 +76,20 @@ class DbRepo {
     //////////////////////////// Account ////////////////////////////
 
     // login
-    public login(user_name: string, passwd_hash: string ) : number {
+    public login(user_name: string, passwd_hash: string, callback: Function) {
         // login
         this.connection.query('SELECT * FROM user_info WHERE user_name = \'' + mysql.escape(user_name) + '\' AND passwd_hash = \'' + mysql.escape(passwd_hash) + '\'', (err, result) => {
-            if (err) {
-                // console.log(err);
-                return 0;
+            if (err || result.length == 0) {
+                callback(0);
             }
-            // console.log(result);
-            return result.client_id;
+            callback(result[0].client_id);
+            // return result.client_id;
         });
-        return 0;
+        // return 0;
     }
 
     // create a user account
-    public createAccount(account: Account): number {
+    public createAccount(account: Account, callback: Function) {
         var values = {
             user_name: account.user_name,
             passwd_hash: account.password_hash,
@@ -100,6 +99,7 @@ class DbRepo {
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
+                callback(0);
             }
             else {
                 // console.log('Account created');
@@ -108,76 +108,68 @@ class DbRepo {
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err);
+                        callback(0);
                     }
-                    return result.client_id;
+                    callback(result[0].client_id);
                 });
             }
         });
-        return 0;
+        // return 0;
     }
 
     // get user by id
-    public getUserById(client_id: number): Account {
-        console.log(client_id);
-        
+    public getUserById(client_id: number, callback: Function) {
         var sql = "SELECT * FROM user_info WHERE client_id = " + client_id;
         const date = new Date();
         var res = new Account(0, '', '', '', date, '');
         this.connection.query(sql, (err, result) => {
             if (err) {
-                console.log('get user by id_1\n');
+                console.log(err);
             } else {
-                console.log("get user by id_2\n");
                 res = new Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
                 console.log(result);
             }
+            callback(res);
         });
-        return res;
     }
 
     // alert user info(by client_id)
-    public alertUserInfo(acc_new: Account): boolean {
+    public alertUserInfo(acc_new: Account, callback: Function) {
         var sql = 'UPDATE user_info SET user_name = \'' + acc_new.user_name + '\', passwd_hash = \'' + acc_new.password_hash + '\', avatar_path = \'' + acc_new.avatar_path + '\', intro = \'' + acc_new.introduction + '\' WHERE client_id = ' + acc_new.client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
 
     // change user avatar
-    public changeAvatar(client_id: number, avatar_path: string): boolean {
+    public changeAvatar(client_id: number, avatar_path: string, callback: Function) {
         var sql = 'UPDATE user_info SET avatar_path = \'' + avatar_path + '\' WHERE client_id = ' + client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
 
     // delete a user account
-    public deleteAccount(client_id: number): boolean {
+    public deleteAccount(client_id: number, callback: Function) {
         var sql = 'DELETE FROM user_info WHERE client_id = ' + client_id;
-        var res: boolean = false;
         this.connection.query(sql, async (err, result) => {
             if (err) {
                 console.log(err);
-                res = false;
-                // return false;
+                callback(false);
             } else {
-                // return true;
-                res = true;
+                callback(true);
             }
         });
-        return res;
     }
 
     /**
@@ -203,35 +195,41 @@ class DbRepo {
     //////////////////////////// Group ////////////////////////////
 
     // create a group
-    public createGroup(group: Group): number {
+    public createGroup(group: Group, callback: Function) {
         var values = {
             group_name: group.group_name,
             group_description: group.group_description,
             group_creator: group.group_creator,
             group_create_time: group.group_create_time
         };
+        // FIXME: use Transaction to add the group and the creater to the group
         var sql = 'INSERT INTO group_info (group_name, group_description, group_creator, group_create_time) VALUES (' + values.group_name + ', ' + values.group_description + ', ' + values.group_creator + ', ' + values.group_create_time + ')';
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
+                callback(0);
             } else {
-                console.log('Group created');
-                // return group_id
                 sql = 'SELECT group_id FROM group_info WHERE group_name = \'' + values.group_name + '\' AND group_creator = ' + values.group_creator;
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err);
                     }
                     // TODO: Add the creater to the group
-                    return result.group_id;
+                    callback(result[0].group_id);
+                    sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + result[0].group_id + ', ' + values.group_creator + ')';
+                    this.connection.query(sql, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
                 });
             }
         });
-        return 0;
+
     };
 
     // get group by id
-    public getGroupById(group_id: number): Group {
+    public getGroupById(group_id: number, callback: Function ){
         var sql = 'SELECT * FROM group_info WHERE group_id = ' + group_id;
         var res = new Group(0, '', '', new Date(), 0);
         this.connection.query(sql, (err, result) => {
@@ -241,12 +239,12 @@ class DbRepo {
                 res = new Group(result.group_id, result.group_name, result.group_description, result.group_creator, result.group_create_time);
                 console.log(result);
             }
+            callback(res);
         });
-        return res;
     }
 
     // get members of a group
-    public getGroupMembers(group_id: number): Account[] {
+    public getGroupMembers(group_id: number, callback: Function){
         var sql = 'SELECT * FROM group_member WHERE group_id = ' + group_id;
         var res: Account[] = [];
         this.connection.query(sql, (err, result) => {
@@ -254,44 +252,44 @@ class DbRepo {
                 console.log(err);
             } else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(this.getUserById(result[i].client_id));
+                    this.getUserById(result[i].client_id, (acc: Account) => {
+                        res.push(acc);
+                    });
                 }
-                console.log(result);
             }
+            callback(res);
         });
-        return res;
     }
 
     // get group creater
-    public getGroupCreaterId(group_id: number): number {
+    public getGroupCreaterId(group_id: number, callback: Function) {
         var sql = 'SELECT creater_id FROM group_info WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
+                callback(0);
             } else {
-                return result;
-            }
+                callback(result[0].creater_id);
+            } 
         });
-        return 0;
     }
-        
+
 
     // alert group info(by group_id)
-    public alertGroupInfo(group_new: Group): boolean {
+    public alertGroupInfo(group_new: Group, callback: Function) {
         var sql = 'UPDATE group_info SET group_name = \'' + group_new.group_name + '\', group_description = \'' + group_new.group_description + '\' WHERE group_id = ' + group_new.group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
 
     // get groups of a user
-    public getUserGroups(client_id: number): Group[] {
+    public getUserGroups(client_id: number, callback: Function){
         var sql = 'SELECT * FROM group_member WHERE client_id = ' + client_id;
         var res: Group[] = [];
         this.connection.query(sql, (err, result) => {
@@ -299,19 +297,20 @@ class DbRepo {
                 console.log(err);
             } else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(this.getGroupById(result[i].group_id));
+                    this.getGroupById(result[i].group_id, (group: Group) => {
+                        res.push(group);
+                    });
                 }
-                // console.log(result);
             }
+            callback(res);
         });
-        return res;
     }
 
     // add a member to a group
     // FIXME: change the number of members in group_info
     // Maybe we should use a Transaction to do this
     // Mysql: START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES (1, 1); UPDATE group_info SET group_member_num = group_member_num + 1 WHERE group_id = 1; COMMIT;
-    public addMemberToGroup(group_id: number, client_id: number): boolean {
+    public addMemberToGroup(group_id: number, client_id: number, callback: Function){
         var values = {
             group_id: group_id,
             client_id: client_id
@@ -321,47 +320,44 @@ class DbRepo {
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
 
     // delete a member from a group
     // FIXME: change the number of members in group_info
     // Maybe we should use a Transaction to do this
     // Mysql: START TRANSACTION; DELETE FROM group_member WHERE group_id = 1 AND client_id = 1; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = 1; COMMIT;
-    public deleteMemberFromGroup(group_id: number, client_id: number): boolean {
+    public deleteMemberFromGroup(group_id: number, client_id: number, callback: Function) {
         // FIXME: Check if the user is the creater of the group
         var sql = 'START TRANSACTION; DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id + '; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = ' + group_id + '; COMMIT;';
         // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
                 // FIXME: change the number of members in group_info
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
-                
+
 
     // delete a group
-    public deleteGroup(group_id: number): boolean {
+    public deleteGroup(group_id: number, callback: Function) {
         var sql = 'DELETE FROM group_info WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
-                return false;
+                callback(false);
             } else {
-                return true;
+                callback(true);
             }
         });
-        return false;
     }
 
 
