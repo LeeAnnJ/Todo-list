@@ -9,7 +9,7 @@ export class Account {
     register_time: Date;
     introduction: string;
 
-    constructor(client_id: number, user_name: string, password_hash: string, avatar_path: string, register_time: Date, introduction: string) {
+    constructor(client_id: number, user_name: string, password_hash: string, avatar_path: string, register_time: Date, introduction: string = "") {
         this.client_id = client_id;
         this.user_name = user_name;
         this.password_hash = password_hash;
@@ -19,10 +19,9 @@ export class Account {
     }
 
     // get the client_id
-    getClientId(): number {
+    get clientId(): number {
         return this.client_id;
-    }
-    
+    }    
 }
 
-module.exports = Account;
+// module.exports = Account;

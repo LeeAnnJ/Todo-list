@@ -14,6 +14,11 @@ const mysql_1 = __importDefault(require("mysql"));
 // import { dbConfig } from '../config/dbConfig';
 // var config = dbConfig.development;
 const dbConfig = require('../config/dbConfig');
+// const Account = require('../model/account');
+// const {Group, GroupAccount} = require('../model/group');
+// const Folder = require('../model/folder');
+// const {Task, Subtask} = require('../model/task');
+// const Message = require('../model/message');
 var config = dbConfig.development;
 // import the entity classes
 const account_1 = require("../model/account");
@@ -98,13 +103,16 @@ class DbRepo {
     }
     // get user by id
     getUserById(client_id) {
-        var sql = 'SELECT * FROM user_info WHERE client_id = ' + client_id;
-        var res = new account_1.Account(0, '', '', '', new Date(), '');
+        console.log(client_id);
+        var sql = "SELECT * FROM user_info WHERE client_id = " + client_id;
+        const date = new Date();
+        var res = new account_1.Account(0, '', '', '', date, '');
         this.connection.query(sql, (err, result) => {
             if (err) {
-                console.log(err);
+                console.log('get user by id_1\n');
             }
             else {
+                console.log("get user by id_2\n");
                 res = new account_1.Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
                 console.log(result);
             }

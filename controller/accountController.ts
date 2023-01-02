@@ -39,8 +39,12 @@ export const login = (req: Request, res: Response) => {
 // get account by id
 export const get_account_by_id = (req: Request, res: Response) => {
     // res.send('get account by id')
-    var client_id = req.body.client_id
-    var acc_info = db.getUserById(client_id)
+    console.log('get account by id');
+
+    var client_id = req.body.client_id;
+    var acc_info = db.getUserById(client_id);
+    console.log(acc_info);
+
     if (acc_info.client_id !== 0) {
         // success
         res.json({
