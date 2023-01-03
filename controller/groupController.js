@@ -266,4 +266,3 @@ const get_tasks_of_group = (req, res) => {
     });
 };
 exports.get_tasks_of_group = get_tasks_of_group;
-// alert 
