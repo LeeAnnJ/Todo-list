@@ -26,11 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 解析 application/json
-app.use(bodyParser.json());
-// 解析 application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded());
-
 // allow cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -94,9 +89,9 @@ app.use('/', indexRouter);
 //     console.log('Express server listening on port ' + app.get('port'));
 // });
 
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
+
     next(createError(404));
 });
 

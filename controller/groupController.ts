@@ -45,7 +45,6 @@ export const create_group = (req: Request, res: Response) => {
 // get group by id
 export const get_group_by_id = (req: Request, res: Response) => {
     // var group = req.body.group;
-    // res.send('get group by id');
 
     var group_id = req.body.group.group_id
     db.getGroupById(group_id, (group: Group) => {
@@ -67,7 +66,7 @@ export const get_group_by_id = (req: Request, res: Response) => {
     })
 }
 
-// get the creater of group
+// get the task owner of group
 export const get_task_owner_of_group = (req: Request, res: Response) => {
     // TODO: get task owner of group
     // res.send('get task owner of group');
@@ -221,10 +220,8 @@ export const delete_group = (req: Request, res: Response) => {
 }
 
 // update group
-export const alert_group_info = (req: Request, res: Response) => {
+export const update_group = (req: Request, res: Response) => {
     // TODO: update group
-    // res.send('update group')
-    // var group_id = req.body.group.group_id
     var group = req.body.group
 
     db.alertGroupInfo(group, (isSucc: Boolean) => {
