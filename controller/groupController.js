@@ -3,7 +3,7 @@
 // Path: controller\groupController.ts
 // used in routes\group.ts to handle the request from client about group
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.get_tasks_of_group = exports.update_group = exports.delete_group = exports.remove_member_from_group = exports.add_member_to_group = exports.get_user_groups = exports.get_members_of_group = exports.get_task_owner_of_group = exports.get_group_by_id = exports.create_group = void 0;
+exports.get_tasks_of_group = exports.alert_group_info = exports.delete_group = exports.remove_member_from_group = exports.add_member_to_group = exports.get_user_groups = exports.get_members_of_group = exports.get_task_owner_of_group = exports.get_group_by_id = exports.create_group = void 0;
 const group_1 = require("../model/group");
 const dbRepo_1 = require("../controller/dbRepo");
 // create group
@@ -39,6 +39,7 @@ exports.create_group = create_group;
 // get group by id
 const get_group_by_id = (req, res) => {
     // var group = req.body.group;
+    // res.send('get group by id');
     var group_id = req.body.group.group_id;
     dbRepo_1.db.getGroupById(group_id, (group) => {
         if (group !== null) {
@@ -60,7 +61,7 @@ const get_group_by_id = (req, res) => {
     });
 };
 exports.get_group_by_id = get_group_by_id;
-// get the task owner of group
+// get the creater of group
 const get_task_owner_of_group = (req, res) => {
     // TODO: get task owner of group
     // res.send('get task owner of group');
@@ -214,8 +215,10 @@ const delete_group = (req, res) => {
 };
 exports.delete_group = delete_group;
 // update group
-const update_group = (req, res) => {
+const alert_group_info = (req, res) => {
     // TODO: update group
+    // res.send('update group')
+    // var group_id = req.body.group.group_id
     var group = req.body.group;
     dbRepo_1.db.alertGroupInfo(group, (isSucc) => {
         if (isSucc) {
@@ -238,7 +241,7 @@ const update_group = (req, res) => {
         }
     });
 };
-exports.update_group = update_group;
+exports.alert_group_info = alert_group_info;
 // get tasks of group
 const get_tasks_of_group = (req, res) => {
     // TODO: get tasks of group -> about task.
@@ -266,4 +269,3 @@ const get_tasks_of_group = (req, res) => {
     });
 };
 exports.get_tasks_of_group = get_tasks_of_group;
-// alert 
