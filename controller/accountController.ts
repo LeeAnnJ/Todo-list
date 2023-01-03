@@ -41,9 +41,11 @@ export const login = (req: Request, res: Response) => {
 // get account by id
 export const get_account_by_id = (req: Request, res: Response) => {
     // res.send('get account by id')
-    console.log('get account by id')
+    console.log(req)
 
-    var client_id = req.body.client_id
+    var client_id = parseInt(req.query["client_id"] as string)
+
+    console.log(client_id)
     db.getUserById(client_id, (acc_info: Account) => {
         var resJson = JSON.stringify(acc_info)
         if (acc_info.client_id !== 0) {
