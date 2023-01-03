@@ -43,17 +43,14 @@ const get_account_by_id = (req, res) => {
     console.log('get account by id');
     var client_id = req.body.client_id;
     dbRepo_1.db.getUserById(client_id, (acc_info) => {
+        var resJson = JSON.stringify(acc_info);
         if (acc_info.client_id !== 0) {
             // success
             res.json({
                 code: 200,
                 message: 'success',
                 client: {
-                    client_id: acc_info.client_id,
-                    user_name: acc_info.user_name,
-                    avatar_path: acc_info.avatar_path,
-                    register_time: acc_info.register_time,
-                    introduction: acc_info.introduction,
+                    acc_info,
                 },
             });
         }
