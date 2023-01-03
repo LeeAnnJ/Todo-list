@@ -143,6 +143,7 @@ class DbRepo {
             if (err) {
                 console.log(err)
             } else {
+                result = result[0]
                 res = new Account(
                     result.client_id,
                     result.user_name,
@@ -295,6 +296,7 @@ class DbRepo {
             if (err) {
                 console.log(err)
             } else {
+                result = result[0]
                 res = new Group(
                     result.group_id,
                     result.group_name,

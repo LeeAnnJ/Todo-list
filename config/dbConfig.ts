@@ -11,9 +11,9 @@
 export const dbConfig = {
     development: {
         host: 'localhost',
-        user: 'root',
+        user: 'TO-DO-LIST',
         port: 3306,
-        password: 'sysu',
+        password: '123456',
         database: 'to-do-list',
     },
 }

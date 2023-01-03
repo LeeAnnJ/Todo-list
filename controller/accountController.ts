@@ -51,7 +51,11 @@ export const get_account_by_id = (req: Request, res: Response) => {
                 code: 200,
                 message: 'success',
                 client: {
-                    acc_info,
+                    client_id: acc_info.client_id,
+                    user_name: acc_info.user_name,
+                    avatar_path: acc_info.avatar_path,
+                    register_time: acc_info.register_time,
+                    introduction: acc_info.introduction,
                 },
             })
         } else {

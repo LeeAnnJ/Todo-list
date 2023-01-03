@@ -136,6 +136,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
+                result = result[0];
                 res = new account_1.Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
                 console.log(result);
             }
@@ -274,6 +275,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
+                result = result[0];
                 res = new group_1.Group(result.group_id, result.group_name, result.group_description, result.group_creator, result.group_create_time);
                 console.log(result);
             }
