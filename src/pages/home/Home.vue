@@ -120,5 +120,4 @@
         flex-direction: row;
         margin: 0px;
     }
-    
 </style>

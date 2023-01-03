@@ -8,15 +8,18 @@
     <div>
       <el-input v-model="inputText" style="width:200px" />
       <el-button @click="modifyvuex">测试修改vuex</el-button>
-      <br>测试vuex:{{user_name}}
+      <el-button @click="calcuSM3">测试SM3结果</el-button>
+      <br>测试vuex:{{user_name}}<br>
+      测试SM3:{{getdata}}
     </div>
 	</div>
 </template>
 
 <script>
     import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-	  import testGet from '../../http/api/test';
-	  import account from '../../http/api/account';
+	import testGet from '../../http/api/test';
+	import account from '../../http/api/account';
+    import{ sm3 } from 'sm-crypto';
     
     export default{
         data(){
@@ -37,7 +40,7 @@
             },
             testRequest(){
                 let that = this;
-                account.getUserById().then(res=>{
+                account.checkUserName(that.inputText).then(res=>{
                     that.getdata = JSON.stringify(res.data);
                     // console.log("请求数据：",res)
                 },error => {
@@ -45,9 +48,11 @@
                     console.log(error);
                 });
             },
-            
             modifyvuex(){
                 this.alterName(this.inputText);
+            },
+            calcuSM3(){
+                this.getdata=sm3(this.inputText);
             }
         }
     }

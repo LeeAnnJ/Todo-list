@@ -16,13 +16,24 @@ async function create(){
     return await Service.requestService({
         url: '/account/create',
         method: 'post',
+        data:{
+            "account":{
+                "user_name":"123",
+                "password_hash":"223",
+                "introduction":"balabala",
+            }
+        }
     })
 }
 
-async function getUserById(){
+async function getUserById(client_id){
+    console.log( client_id);
     return await Service.requestService({
         url: '/account/getUserById',
         method: 'get',
+        params :{ 
+            "client_id":client_id
+        }
     })
 }
 
@@ -47,6 +58,16 @@ async function deleteUser(){
     })
 }
 
+async function checkUserName(user_name){
+    return await Service.requestService({
+        url: 'account/checkUserName',
+        method: 'get',
+        data: {
+            "user_name": user_name
+        },
+    })
+}
+
 export default{
     login,
     create,
@@ -54,4 +75,5 @@ export default{
     alterUser,
     changeAvator,
     deleteUser,
+    checkUserName,
 }

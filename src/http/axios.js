@@ -4,7 +4,7 @@ function requestService(config){
     // 请求配置
     const service =axios.create({
         baseURL: 'http://localhost:3000', // 后端根url 之后请求直接写接口url就行
-        timeout: 5000 //超时时间
+        timeout: 5000, //超时时间
     });
 
     // request拦截器
