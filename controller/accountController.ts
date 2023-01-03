@@ -70,8 +70,9 @@ export const get_account_by_id = (req: Request, res: Response) => {
 // createcount
 export const create_account = (req: Request, res: Response) => {
     // res.send('create account')
-    const username = req.body.username
-    const passwd_hash = req.body.passwd_hash
+    const username = req.body.account.username
+    const passwd_hash = req.body.account.passwd_hash
+    const intro = req.body.account.introduction || ''
 
     // check if the username is already used
     db.checkUserName(username, (result: Boolean) => {
@@ -83,7 +84,7 @@ export const create_account = (req: Request, res: Response) => {
             })
         } else {
             // create account
-            var acc = new Account(0, username, passwd_hash, '', new Date(), '')
+            var acc = new Account(0, username, passwd_hash, '', new Date(), intro)
             db.createAccount(acc, (acc_id: number) => {
                 if (acc_id !== 0) {
                     res.json({
