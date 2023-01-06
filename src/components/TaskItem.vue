@@ -7,7 +7,7 @@
       <!-- 任务名称 和 更多菜单-->
       <div class="title">
         <b v-if="!isedit">{{content.name}}</b>
-        <el-input v-else class="title-input" v-model="content.name" placeholder="请输入任务名称" />
+        <el-input v-else class="title-input" v-model="content.name" placeholder="请输入任务名称" @click.stop />
         <!-- 菜单部分 -->
         <el-popover v-if="!isedit" trigger="hover" transition="all 0.5s">
 					<template #reference>
@@ -20,7 +20,7 @@
               <button class="menu-button" >收藏该任务</button>
             </div>
             <div class="menu-item">
-              <button class="menu-button" >添加共同参与人</button>
+              <button class="menu-button" @click="corpVisible=true;">添加共同参与人</button>
             </div>
             <div class="menu-item">
               <button class="menu-button" @click="isedit=true;" >重命名</button>
@@ -29,15 +29,27 @@
               <button class="menu-button" >分组</button>
             </div>
             <div class="menu-item">
-              <button class="menu-button" >删除该任务</button>
+              <button class="menu-button" @click="deleteTask">删除该任务</button>
             </div>
           </div>
         </el-popover>
         <!-- 修改任务名时的完成图标 -->
-        <el-button v-else class="menu finish" @click="editName">
+        <el-button v-else class="menu finish" @click.stop="editName">
           <el-icon><Select /></el-icon>
         </el-button>
       </div>
+
+      <!-- 添加共同参与人的对话框 -->
+      <el-dialog v-model="corpVisible" width="35%" @click.stop="">
+        <span>添加共同参与人</span>
+        <el-input v-model="corpInput" placeholder="请输入用户名" ></el-input>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="(this.corpVisible = false)">取消</el-button>
+            <el-button type="primary" @click="">确认</el-button>
+          </span>
+        </template>
+      </el-dialog>
 
       <!-- 细节部分，后面共同参与人我想升级成头像 -->
       <div class="detail">
@@ -49,7 +61,7 @@
         <div v-else>共同参与人: 暂无</div>
       </div>
       <!-- 下方图标操作 -->
-      <div class="iconGroup">
+      <div class="iconGroup" @click.stop="">
         <!-- 截止时间 -->
         <el-popover trigger="click" :title="('截止时间:'+content.deadline)">
 					<template #reference>
@@ -69,8 +81,8 @@
 					/>
           <template #footer>
             <span class="dialog-footer">
-              <el-button @click="(this.dataVisible = false)">Cancel</el-button>
-              <el-button type="primary" @click="setDDL">Confirm</el-button>
+              <el-button @click="(this.dataVisible = false)">取消</el-button>
+              <el-button type="primary" @click="setDDL">确认</el-button>
             </span>
           </template>
         </el-dialog>
@@ -88,8 +100,8 @@
           周期性的数据设置我还不知道，先放一放
           <template #footer>
             <span class="dialog-footer">
-              <el-button @click="(this.circleVisible = false)">Cancel</el-button>
-              <el-button type="primary" @click="setCircul">Confirm</el-button>
+              <el-button @click="(this.circleVisible = false)">取消</el-button>
+              <el-button type="primary" @click="setCircul">确认</el-button>
             </span>
           </template>
         </el-dialog>
@@ -109,6 +121,7 @@
 
 <script>
     import { Calendar, Clock, Select, StarFilled} from '@element-plus/icons-vue';
+    import { ElMessageBox } from 'element-plus'
     import {ref} from 'vue';
 
 		export default{
@@ -141,12 +154,14 @@
             coordinator: ["张三", "李四"],
             isImportant: this.content.priority,
             isDone: this.done,
+            corpInput: "",
             isfocus: false,
             isedit: false,
             selectTime: ref(""),
             selectcrl: ref(""),
             dateVisible: false,
             circulVisible: false,
+            corpVisible: false
         };
     },
     methods: {
@@ -184,6 +199,23 @@
                 name: "taskDetail",
                 params: {id: task_id},
             });
+        },
+        deleteTask(){
+            ElMessageBox.confirm(
+                '确定删除此任务？',
+                '提示',
+                {
+                  confirmButtonText: '确认',
+                  cancelButtonText: '取消',
+                  type: 'info'
+                }
+            )
+              .then(()=>{
+                  console.log("确认删除任务");
+              })
+              .catch(()=>{
+                  console.log("error!");
+              })
         }
     },
     components: { Select }
