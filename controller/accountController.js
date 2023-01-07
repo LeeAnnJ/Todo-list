@@ -184,7 +184,7 @@ const delete_user = (req, res) => {
 exports.delete_user = delete_user;
 // check user name
 const check_user_name = (req, res) => {
-    var user_name = req.body.user_name;
+    var user_name = req.query['user_name'];
     dbRepo_1.db.checkUserName(user_name, (result) => {
         if (result) {
             res.json({

@@ -183,7 +183,7 @@ export const delete_user = (req: Request, res: Response) => {
 
 // check user name
 export const check_user_name = (req: Request, res: Response) => {
-    var user_name = req.body.user_name
+    var user_name = req.query['user_name'] as string
     db.checkUserName(user_name, (result: Boolean) => {
         if (result) {
             res.json({

@@ -57,7 +57,8 @@ export const get_task_by_id = (req: Request, res: Response) => {
     // TODO: get task by id
     // res.send('get task by id');
 
-    var task_id = req.body.task.task_id
+    // var task_id = req.body.task.task_id
+    var task_id = parseInt(req.query['task_id'] as string)
     db.getTaskByTaskId(task_id, (task: Task) => {
         if (task !== null) {
             // get task success
@@ -82,8 +83,9 @@ export const get_task_by_user_id = (req: Request, res: Response) => {
     // TODO: get task by user id
     // res.send('get task by user id');
 
-    var user_id = req.body.user.client_id
-    var tasks = db.getTaskByUserId(user_id, (tasks: Task[]) => {
+    // var user_id = req.body.user.client_id
+    var user_id = parseInt(req.query['user_id'] as string)
+    db.getTaskByUserId(user_id, (tasks: Task[]) => {
         if (tasks !== null) {
             // get task success
             res.json({
@@ -172,7 +174,8 @@ export const get_subtasks_by_task_id = (req: Request, res: Response) => {
     // TODO: get subtask by task id
     // res.send('get subtask by task id')
 
-    var task_id = req.body.task.task_id
+    // var task_id = req.body.task.task_id
+    var task_id = parseInt(req.query['task_id'] as string)
     db.getSubTasksByTaskId(task_id, (subtasks: SubTask[]) => {
         if (subtasks !== null) {
             res.json({

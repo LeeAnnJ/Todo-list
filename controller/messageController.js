@@ -5,7 +5,8 @@ const dbRepo_1 = require("../controller/dbRepo");
 // get message
 const get_message = (req, res) => {
     // res.send('get message');
-    var client_id = req.body.client_id;
+    // var client_id = req.body.client_id
+    var client_id = parseInt(req.query["client_id"]);
     dbRepo_1.db.get_client_message(client_id, (message_list) => {
         if (message_list.length !== 0) {
             // success

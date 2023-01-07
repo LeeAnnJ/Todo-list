@@ -3,7 +3,7 @@
 // Path: controller\groupController.ts
 // used in routes\group.ts to handle the request from client about group
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.get_tasks_of_group = exports.alert_group_info = exports.delete_group = exports.remove_member_from_group = exports.add_member_to_group = exports.get_user_groups = exports.get_members_of_group = exports.get_task_owner_of_group = exports.get_group_by_id = exports.create_group = void 0;
+exports.get_tasks_of_group = exports.update_group = exports.delete_group = exports.remove_member_from_group = exports.add_member_to_group = exports.get_user_groups = exports.get_members_of_group = exports.get_task_owner_of_group = exports.get_group_by_id = exports.create_group = void 0;
 const group_1 = require("../model/group");
 const dbRepo_1 = require("../controller/dbRepo");
 // create group
@@ -38,9 +38,7 @@ const create_group = (req, res) => {
 exports.create_group = create_group;
 // get group by id
 const get_group_by_id = (req, res) => {
-    // var group = req.body.group;
-    // res.send('get group by id');
-    var group_id = req.body.group.group_id;
+    var group_id = parseInt(req.query['group_id']);
     dbRepo_1.db.getGroupById(group_id, (group) => {
         if (group !== null) {
             // get group success
@@ -61,7 +59,7 @@ const get_group_by_id = (req, res) => {
     });
 };
 exports.get_group_by_id = get_group_by_id;
-// get the creater of group
+// get the task owner of group
 const get_task_owner_of_group = (req, res) => {
     // TODO: get task owner of group
     // res.send('get task owner of group');
@@ -91,7 +89,8 @@ exports.get_task_owner_of_group = get_task_owner_of_group;
 // get the members of group
 const get_members_of_group = (req, res) => {
     // res.send('get members of group');
-    var group_id = req.body.group.group_id;
+    // var group_id = req.body.group.group_id
+    var group_id = parseInt(req.query['group_id']);
     dbRepo_1.db.getGroupMembers(group_id, (members) => {
         if (members !== null) {
             // get members success
@@ -117,7 +116,8 @@ exports.get_members_of_group = get_members_of_group;
 // get user's groups
 const get_user_groups = (req, res) => {
     // res.send('get user groups');
-    var user_id = req.body.user.client_id;
+    var user_id = parseInt(req.query['user_id']);
+    // var user_id = req.body.user.client_id
     dbRepo_1.db.getUserGroups(user_id, (groups) => {
         if (groups !== null) {
             // get user groups success
@@ -215,10 +215,8 @@ const delete_group = (req, res) => {
 };
 exports.delete_group = delete_group;
 // update group
-const alert_group_info = (req, res) => {
+const update_group = (req, res) => {
     // TODO: update group
-    // res.send('update group')
-    // var group_id = req.body.group.group_id
     var group = req.body.group;
     dbRepo_1.db.alertGroupInfo(group, (isSucc) => {
         if (isSucc) {
@@ -241,12 +239,13 @@ const alert_group_info = (req, res) => {
         }
     });
 };
-exports.alert_group_info = alert_group_info;
+exports.update_group = update_group;
 // get tasks of group
 const get_tasks_of_group = (req, res) => {
     // TODO: get tasks of group -> about task.
     // res.send('get tasks of group')
-    var group_id = req.body.group.group_id;
+    // var group_id = req.body.group.group_id
+    var group_id = parseInt(req.query['group_id']);
     var tasks = dbRepo_1.db.getGroupTasks(group_id, (tasks) => {
         if (tasks !== null) {
             // get tasks success
