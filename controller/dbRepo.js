@@ -474,6 +474,20 @@ class DbRepo {
             }
         });
     }
+    // get folder info by folder_id
+    getFolderInfo(folder_id, callback) {
+        var sql = 'SELECT * FROM folder_info WHERE folder_id = ' + folder_id;
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(null);
+            }
+            else {
+                var folder = new folder_1.Folder(result[0].folder_id, result[0].folder_name, result[0].folder_description, result[0].folder_creator);
+                callback(folder);
+            }
+        });
+    }
     // alert folder info(by client_i and folder_id)
     alertFolderInfo(folder_new, callback) {
         var sql = "UPDATE folder_info SET folder_name = '" +

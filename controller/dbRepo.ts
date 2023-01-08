@@ -520,6 +520,26 @@ class DbRepo {
         })
     }
 
+    // get folder info by folder_id
+    public getFolderInfo(folder_id: number, callback: Function) {
+        var sql = 'SELECT * FROM folder_info WHERE folder_id = ' + folder_id
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                callback(null)
+            } else {
+                var folder = new Folder(
+                    result[0].folder_id,
+                    result[0].folder_name,
+                    result[0].folder_description,
+                    result[0].folder_creator,
+                )
+                callback(folder)
+            }
+        })
+    }
+    
+
     // alert folder info(by client_i and folder_id)
     public alertFolderInfo(folder_new: Folder, callback: Function) {
         var sql =

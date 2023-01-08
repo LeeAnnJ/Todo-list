@@ -70,11 +70,13 @@ const accountRouter = require('./routes/account');
 const taskRouter = require('./routes/task');
 const messageRouter = require('./routes/message');
 const groupRouter = require('./routes/group');
+const folderRouter = require('./routes/folder');
 // bind routers
 app.use('/account', accountRouter);
 app.use('/task', taskRouter);
 app.use('/message', messageRouter);
 app.use('/group', groupRouter);
+app.use('/list', folderRouter);
 app.use('/', indexRouter);
 // var server = app.listen(app.get('port'), '127.0.0.1', () => {
 //     console.log('Express server listening on port ' + app.get('port'));
