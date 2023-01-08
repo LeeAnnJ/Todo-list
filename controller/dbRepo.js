@@ -94,12 +94,14 @@ class DbRepo {
             passwd_hash: account.password_hash,
             register_time: account.register_time,
         };
-        var sql = "INSERT INTO user_info (user_name, passwd_hash, register_time) VALUES ('" +
+        var sql = "INSERT INTO user_info (user_name, passwd_hash, register_time, intro) VALUES ('" +
             values.user_name +
             "', '" +
             values.passwd_hash +
             "', '" +
             values.register_time +
+            "', '" +
+            account.introduction +
             "')";
         this.connection.query(sql, (err, result) => {
             if (err) {

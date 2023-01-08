@@ -41,7 +41,6 @@ export const login = (req: Request, res: Response) => {
 // get account by id
 export const get_account_by_id = (req: Request, res: Response) => {
     // res.send('get account by id')
-    console.log(req)
 
     var client_id = parseInt(req.query["client_id"] as string)
 

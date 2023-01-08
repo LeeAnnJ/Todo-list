@@ -40,7 +40,6 @@ exports.login = login;
 // get account by id
 const get_account_by_id = (req, res) => {
     // res.send('get account by id')
-    console.log(req);
     var client_id = parseInt(req.query["client_id"]);
     console.log(client_id);
     dbRepo_1.db.getUserById(client_id, (acc_info) => {
@@ -68,14 +67,12 @@ exports.get_account_by_id = get_account_by_id;
 // createcount
 const create_account = (req, res) => {
     // res.send('create account')
-    const username = req.body.account.user_name;
-    const passwd_hash = req.body.account.password_hash;
+    const username = req.body.account.username;
+    const passwd_hash = req.body.account.passwd_hash;
     const intro = req.body.account.introduction || '';
     // check if the username is already used
-    console.log("body:",req.body);
     dbRepo_1.db.checkUserName(username, (result) => {
-        if (!result) {
-            console.log(result);
+        if (result) {
             res.json({
                 code: 400,
                 message: 'username already used',
@@ -84,9 +81,7 @@ const create_account = (req, res) => {
         }
         else {
             // create account
-            var date = new Date();
-            date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-            var acc = new account_1.Account(0, username, passwd_hash, '', date, intro);
+            var acc = new account_1.Account(0, username, passwd_hash, '', new Date(), intro);
             dbRepo_1.db.createAccount(acc, (acc_id) => {
                 if (acc_id !== 0) {
                     res.json({
