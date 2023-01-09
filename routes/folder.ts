@@ -21,3 +21,5 @@ router.post('/alertTaskList', folder_controller.alert_folder);
 
 // delete folder
 router.post('/deleteTaskList', folder_controller.delete_folder);
+
+module.exports = router;
