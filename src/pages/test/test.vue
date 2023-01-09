@@ -12,6 +12,10 @@
       <br>测试vuex:{{user_name}}<br>
       测试SM3:{{getdata}}
     </div>
+    <div>
+      <el-button>日期格式调整</el-button>
+      {{dateTime}}
+    </div>
 	</div>
 </template>
 
@@ -26,6 +30,7 @@
             return{
               getdata: '暂未请求',
               inputText: "",
+              dateTime: "",
             }
         },
         computed:{
@@ -40,7 +45,7 @@
             },
             testRequest(){
                 let that = this;
-                account.checkUserName(that.inputText).then(res=>{
+                account.create().then(res=>{
                     that.getdata = JSON.stringify(res.data);
                     // console.log("请求数据：",res)
                 },error => {

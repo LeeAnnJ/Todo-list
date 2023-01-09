@@ -2,6 +2,7 @@
   <div>
     <!-- 顶栏 -->
     <topLine></topLine>
+    <task-head></task-head>
     <el-container class="main">
       <!-- 任务详情栏 -->
       <detail-slot></detail-slot>
@@ -81,6 +82,7 @@
 
 <script>
 import TopLine from '../../components/TopLine.vue';
+import TaskHead from './DetailHead.vue';
 import DetailSLot from './DetailSlot.vue';
 import { Document } from '@element-plus/icons-vue';
 import SubTaskSlot from './SubTaskSlot.vue';
@@ -88,6 +90,7 @@ import SubTaskSlot from './SubTaskSlot.vue';
 export default {
     components: {
         "topLine": TopLine,
+        "task-head": TaskHead,
         "detail-slot": DetailSLot,
         "sub-task": SubTaskSlot,
         Document,
