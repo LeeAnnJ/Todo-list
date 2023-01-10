@@ -6,6 +6,8 @@ import { Request, Response } from 'express'
 import { Account } from '../model/account'
 import { db } from '../controller/dbRepo'
 
+let fs = require('fs')
+
 // login
 export const login = (req: Request, res: Response) => {
     // TODO: login
@@ -151,10 +153,41 @@ export const alert_user = (req: Request, res: Response) => {
 
 // change user avator
 export const change_avator = (req: Request, res: Response) => {
-    // TODO: change avator
-    // 涉及静态文件的上传 我再想想怎么搞
-    // 还没搞懂头像怎么破
-    res.send('change avator')
+    const multer = require('multer')
+    const upload = multer({ dest: 'public/' })
+    // upload the avator to the piblic folder
+
+    // read the avator from the request
+    var avator_file = req.body.avator_file
+    var client_id = req.body.client_id
+
+    // save the avator to the public folder
+    var avator_path = 'public/' + client_id + '.jpg'
+    fs.writeFile(avator_path, avator_file, (err: any) => {
+        if (err) {
+            res.json({
+                code: 500,
+                message: 'fail',
+                data: null,
+            })
+        }
+    })
+    // change the avator path in the database
+    db.changeAvatar(client_id, avator_path, (result: Boolean) => {
+        if (result) {
+            res.json({
+                code: 200,
+                message: 'success',
+                data: null,
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail',
+                data: null,
+            })
+        }
+    })
 }
 
 // delete user
