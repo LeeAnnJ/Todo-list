@@ -98,9 +98,7 @@ class DbRepo {
             values.user_name +
             "', '" +
             values.passwd_hash +
-            "', '" +
-            values.register_time +
-            "', '" +
+            "', NOW(), '" +
             account.introduction +
             "')";
         this.connection.query(sql, (err, result) => {

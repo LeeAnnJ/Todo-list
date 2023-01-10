@@ -72,7 +72,7 @@ const create_account = (req, res) => {
     const intro = req.body.account.introduction || '';
     // check if the username is already used
     dbRepo_1.db.checkUserName(username, (result) => {
-        if (result) {
+        if (!result) {
             res.json({
                 code: 400,
                 message: 'username already used',

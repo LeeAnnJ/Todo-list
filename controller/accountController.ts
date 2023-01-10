@@ -75,7 +75,7 @@ export const create_account = (req: Request, res: Response) => {
 
     // check if the username is already used
     db.checkUserName(username, (result: Boolean) => {
-        if (result) {
+        if (!result) {
             res.json({
                 code: 400,
                 message: 'username already used',
