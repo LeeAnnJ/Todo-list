@@ -10,10 +10,10 @@ import { db } from '../controller/dbRepo'
 export const login = (req: Request, res: Response) => {
     // TODO: login
     // read the user name and password hash from request
-    res.send('login')
+    // res.send('login')
 
-    var user_name = req.body.user_name
-    var passwd_hash = req.body.passwd_hash
+    var user_name = req.body.user_name || ''
+    var passwd_hash = req.body.passwd_hash || ''
 
     // check if the user name and password hash is correct
     db.login(user_name, passwd_hash, (acc_id: number) => {

@@ -73,19 +73,17 @@ class DbRepo {
     //////////////////////////// Account ////////////////////////////
     // login
     login(user_name, passwd_hash, callback) {
+        console.log("login");
+        var sql = "SELECT * FROM user_info WHERE user_name = '" + user_name + "' AND passwd_hash =  cast('" + passwd_hash + "' AS BINARY(255))";
         // login
-        this.connection.query("SELECT * FROM user_info WHERE user_name = '" +
-            mysql_1.default.escape(user_name) +
-            "' AND passwd_hash = '" +
-            mysql_1.default.escape(passwd_hash) +
-            "'", (err, result) => {
+        this.connection.query(sql, (err, result) => {
             if (err || result.length == 0) {
                 callback(0);
             }
-            callback(result[0].client_id);
-            // return result.client_id;
+            else {
+                callback(result[0].client_id);
+            }
         });
-        // return 0;
     }
     // create a user account
     createAccount(account, callback) {
@@ -110,10 +108,8 @@ class DbRepo {
                 // console.log('Account created');
                 // return client_id
                 sql =
-                    "SELECT client_id FROM user_info WHERE user_name = '" +
+                    "SELECT * FROM user_info WHERE user_name = '" +
                         values.user_name +
-                        "' AND passwd_hash = '" +
-                        values.passwd_hash +
                         "'";
                 this.connection.query(sql, (err, result) => {
                     if (err) {

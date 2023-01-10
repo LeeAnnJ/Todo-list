@@ -10,9 +10,9 @@ const dbRepo_1 = require("../controller/dbRepo");
 const login = (req, res) => {
     // TODO: login
     // read the user name and password hash from request
-    res.send('login');
-    var user_name = req.body.user_name;
-    var passwd_hash = req.body.passwd_hash;
+    // res.send('login')
+    var user_name = req.body.user_name || '';
+    var passwd_hash = req.body.passwd_hash || '';
     // check if the user name and password hash is correct
     dbRepo_1.db.login(user_name, passwd_hash, (acc_id) => {
         if (acc_id !== 0) {

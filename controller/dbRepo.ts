@@ -76,22 +76,17 @@ class DbRepo {
 
     // login
     public login(user_name: string, passwd_hash: string, callback: Function) {
+        console.log("login");
+        var sql = "SELECT * FROM user_info WHERE user_name = '" + user_name + "' AND passwd_hash =  cast('" + passwd_hash + "' AS BINARY(255))";
         // login
-        this.connection.query(
-            "SELECT * FROM user_info WHERE user_name = '" +
-            mysql.escape(user_name) +
-            "' AND passwd_hash = '" +
-            mysql.escape(passwd_hash) +
-            "'",
-            (err, result) => {
-                if (err || result.length == 0) {
-                    callback(0)
-                }
+        this.connection.query(sql, (err, result) => {
+            if (err || result.length == 0) {
+                callback(0)
+            } else {
                 callback(result[0].client_id)
-                // return result.client_id;
-            },
+            }
+        },
         )
-        // return 0;
     }
 
     // create a user account
@@ -117,10 +112,8 @@ class DbRepo {
                 // console.log('Account created');
                 // return client_id
                 sql =
-                    "SELECT client_id FROM user_info WHERE user_name = '" +
+                    "SELECT * FROM user_info WHERE user_name = '" +
                     values.user_name +
-                    "' AND passwd_hash = '" +
-                    values.passwd_hash +
                     "'"
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -536,7 +529,7 @@ class DbRepo {
             }
         })
     }
-    
+
 
     // alert folder info(by client_i and folder_id)
     public alertFolderInfo(folder_new: Folder, callback: Function) {
