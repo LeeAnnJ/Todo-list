@@ -4,9 +4,7 @@ import { db } from '../controller/dbRepo'
 
 // get message
 export const get_message = (req: Request, res: Response) => {
-    // res.send('get message');
-    // var client_id = req.body.client_id
-    var client_id = parseInt(req.query["client_id"] as string)
+    var client_id = parseInt(req.query['client_id'] as string)
     db.get_client_message(client_id, (message_list: Message[]) => {
         if (message_list.length !== 0) {
             // success

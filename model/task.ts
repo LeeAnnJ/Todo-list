@@ -57,22 +57,17 @@ export class SubTask {
     subtask_task_id: number
     subtask_id: number
     subtask_name: string
-    // subtask_description: string
     subtask_status: number
 
     constructor(
         subtask_id: number,
         subtask_name: string,
-        // subtask_description: string,
         subtask_status: number,
         subtask_task_id: number,
     ) {
         this.subtask_id = subtask_id
         this.subtask_name = subtask_name
-        // this.subtask_description = subtask_description
         this.subtask_status = subtask_status
         this.subtask_task_id = subtask_task_id
     }
 }
-
-// module.exports = { Task, SubTask };

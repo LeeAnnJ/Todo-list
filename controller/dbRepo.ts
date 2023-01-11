@@ -68,7 +68,6 @@ class DbRepo {
     // create a table
     // 数据库直接在navicat制定了，所以只作为启动时的备用
     public createTable(): void {
-        // TODO: create tables
         return undefined
     }
 
@@ -265,7 +264,6 @@ class DbRepo {
                     if (err) {
                         console.log(err)
                     }
-                    // TODO: Add the creater to the group
                     callback(result[0].group_id)
                     sql =
                         'INSERT INTO group_member (group_id, client_id) VALUES (' +
@@ -578,7 +576,6 @@ class DbRepo {
                 console.log(err)
             } else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(
                         new Task(
                             result[i].task_id,
@@ -611,7 +608,6 @@ class DbRepo {
                 console.log(err)
             } else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(
                         new Task(
                             result[i].task_id,
@@ -695,7 +691,6 @@ class DbRepo {
                 console.log(err)
             } else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(
                         new Task(
                             result[i].task_id,

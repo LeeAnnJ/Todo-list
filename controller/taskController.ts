@@ -8,8 +8,6 @@ import { db } from '../controller/dbRepo'
 
 // create task
 export const create_task = (req: Request, res: Response) => {
-    // TODO: create task
-    // res.send('create task');
     var task_name = req.body.task.name
     var task_creator = req.body.task.register_id
     var task_description = req.body.task.note
@@ -54,10 +52,6 @@ export const create_task = (req: Request, res: Response) => {
 
 // get task by id
 export const get_task_by_id = (req: Request, res: Response) => {
-    // TODO: get task by id
-    // res.send('get task by id');
-
-    // var task_id = req.body.task.task_id
     var task_id = parseInt(req.query['task_id'] as string)
     db.getTaskByTaskId(task_id, (task: Task) => {
         if (task !== null) {
@@ -80,10 +74,6 @@ export const get_task_by_id = (req: Request, res: Response) => {
 
 // get task by user id
 export const get_task_by_user_id = (req: Request, res: Response) => {
-    // TODO: get task by user id
-    // res.send('get task by user id');
-
-    // var user_id = req.body.user.client_id
     var user_id = parseInt(req.query['user_id'] as string)
     db.getTaskByUserId(user_id, (tasks: Task[]) => {
         if (tasks !== null) {
@@ -106,9 +96,6 @@ export const get_task_by_user_id = (req: Request, res: Response) => {
 
 // modify task
 export const modify_task = (req: Request, res: Response) => {
-    // TODO: modify task
-    // res.send('modify task');
-
     var task_id = req.body.task.task_id
     db.getTaskByTaskId(task_id, (task: Task) => {
         if (task !== null) {
@@ -148,9 +135,6 @@ export const modify_task = (req: Request, res: Response) => {
 
 // delete task
 export const delete_task = (req: Request, res: Response) => {
-    // TODO: delete task
-    // res.send('delete task')
-
     var task_id = req.body.task.task_id
     db.deleteTask(task_id, (result: boolean) => {
         if (result) {
@@ -171,10 +155,6 @@ export const delete_task = (req: Request, res: Response) => {
 
 // get subtask by task id
 export const get_subtasks_by_task_id = (req: Request, res: Response) => {
-    // TODO: get subtask by task id
-    // res.send('get subtask by task id')
-
-    // var task_id = req.body.task.task_id
     var task_id = parseInt(req.query['task_id'] as string)
     db.getSubTasksByTaskId(task_id, (subtasks: SubTask[]) => {
         if (subtasks !== null) {
@@ -195,8 +175,6 @@ export const get_subtasks_by_task_id = (req: Request, res: Response) => {
 
 // add subtask to task
 export const add_subtask_to_task = (req: Request, res: Response) => {
-    // TODO: add subtask to task
-    // res.send('add subtask to task')
     var task_id = req.body.task.task_id
     var subtask_name = req.body.subtask.name
 
@@ -225,9 +203,6 @@ export const add_subtask_to_task = (req: Request, res: Response) => {
 
 // delete subtask from task
 export const delete_subtask_from_task = (req: Request, res: Response) => {
-    // TODO: delete subtask from task
-    // res.send('delete subtask from task')
-
     var subtask_id = req.body.subtask.subtask_id
     var task_id = req.body.subtask.task_id
     db.deleteSubTask(task_id, subtask_id, (result: boolean) => {
@@ -249,8 +224,6 @@ export const delete_subtask_from_task = (req: Request, res: Response) => {
 
 // mark task as done
 export const mark_task_as_done = (req: Request, res: Response) => {
-    // TODO: mark task as done
-    // res.send('mark task as done')
     var task_id = req.body.task.task_id
     db.getTaskByTaskId(task_id, (task: Task) => {
         task.task_status = 1
@@ -274,13 +247,11 @@ export const mark_task_as_done = (req: Request, res: Response) => {
 
 // mark subtask as done
 export const mark_subtask_as_done = (req: Request, res: Response) => {
-    // TODO: mark subtask as done
-    // res.send('mark subtask as done')
     var subtask_id = req.body.subtask.subtask_id
     var task_id = req.body.subtask.task_id
     db.getSubTaskByIds(task_id, subtask_id, (subtask: SubTask) => {
         subtask.subtask_status = 1
-        var result = db.alertSubTaskInfo(subtask, (result: boolean) => {
+        db.alertSubTaskInfo(subtask, (result: boolean) => {
             if (result) {
                 res.json({
                     code: 200,

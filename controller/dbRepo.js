@@ -67,7 +67,6 @@ class DbRepo {
     // create a table
     // 数据库直接在navicat制定了，所以只作为启动时的备用
     createTable() {
-        // TODO: create tables
         return undefined;
     }
     //////////////////////////// Account ////////////////////////////
@@ -247,7 +246,6 @@ class DbRepo {
                     if (err) {
                         console.log(err);
                     }
-                    // TODO: Add the creater to the group
                     callback(result[0].group_id);
                     sql =
                         'INSERT INTO group_member (group_id, client_id) VALUES (' +
@@ -529,7 +527,6 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
                 }
             }
@@ -547,7 +544,6 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status));
                 }
             }
@@ -618,7 +614,6 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
                     res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
                 }
             }

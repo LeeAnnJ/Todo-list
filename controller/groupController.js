@@ -61,8 +61,6 @@ const get_group_by_id = (req, res) => {
 exports.get_group_by_id = get_group_by_id;
 // get the task owner of group
 const get_task_owner_of_group = (req, res) => {
-    // TODO: get task owner of group
-    // res.send('get task owner of group');
     var group_id = req.body.group.group_id;
     dbRepo_1.db.getGroupCreaterId(group_id, (task_owner) => {
         if (task_owner !== 0) {
@@ -88,8 +86,6 @@ const get_task_owner_of_group = (req, res) => {
 exports.get_task_owner_of_group = get_task_owner_of_group;
 // get the members of group
 const get_members_of_group = (req, res) => {
-    // res.send('get members of group');
-    // var group_id = req.body.group.group_id
     var group_id = parseInt(req.query['group_id']);
     dbRepo_1.db.getGroupMembers(group_id, (members) => {
         if (members !== null) {
@@ -115,7 +111,6 @@ const get_members_of_group = (req, res) => {
 exports.get_members_of_group = get_members_of_group;
 // get user's groups
 const get_user_groups = (req, res) => {
-    // res.send('get user groups');
     var user_id = parseInt(req.query['user_id']);
     // var user_id = req.body.user.client_id
     dbRepo_1.db.getUserGroups(user_id, (groups) => {
@@ -142,8 +137,6 @@ const get_user_groups = (req, res) => {
 exports.get_user_groups = get_user_groups;
 // add member to group
 const add_member_to_group = (req, res) => {
-    // TODO: add member to group
-    // res.send('add member to group');
     var group_id = req.body.group.group_id;
     var member_id = req.body.group.member_id;
     dbRepo_1.db.addMemberToGroup(group_id, member_id, (isSucc) => {
@@ -167,8 +160,6 @@ const add_member_to_group = (req, res) => {
 exports.add_member_to_group = add_member_to_group;
 // remove member from group
 const remove_member_from_group = (req, res) => {
-    // TODO: remove member from group
-    // res.send('remove member from group');
     var group_id = req.body.group.group_id;
     var member_id = req.body.group.member_id;
     dbRepo_1.db.deleteMemberFromGroup(group_id, member_id, (isSucc) => {
@@ -192,8 +183,6 @@ const remove_member_from_group = (req, res) => {
 exports.remove_member_from_group = remove_member_from_group;
 // delete group
 const delete_group = (req, res) => {
-    // TODO: delete group
-    // res.send('delete group')
     var group_id = req.body.group.group_id;
     dbRepo_1.db.deleteGroup(group_id, (isSucc) => {
         if (isSucc) {
@@ -216,7 +205,6 @@ const delete_group = (req, res) => {
 exports.delete_group = delete_group;
 // update group
 const update_group = (req, res) => {
-    // TODO: update group
     var group = req.body.group;
     dbRepo_1.db.alertGroupInfo(group, (isSucc) => {
         if (isSucc) {
@@ -242,11 +230,8 @@ const update_group = (req, res) => {
 exports.update_group = update_group;
 // get tasks of group
 const get_tasks_of_group = (req, res) => {
-    // TODO: get tasks of group -> about task.
-    // res.send('get tasks of group')
-    // var group_id = req.body.group.group_id
     var group_id = parseInt(req.query['group_id']);
-    var tasks = dbRepo_1.db.getGroupTasks(group_id, (tasks) => {
+    dbRepo_1.db.getGroupTasks(group_id, (tasks) => {
         if (tasks !== null) {
             // get tasks success
             res.json({
