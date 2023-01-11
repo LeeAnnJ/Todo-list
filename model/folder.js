@@ -12,4 +12,4 @@ class Folder {
     }
 }
 exports.Folder = Folder;
-module.exports = Folder;
+// module.exports = Folder;

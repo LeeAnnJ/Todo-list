@@ -1,5 +1,5 @@
 "use strict";
-// the routers about account is difined here
+// the routers about folder is difined here
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -28,24 +28,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import account controller
-const acc_controller = __importStar(require("../controller/accountController"));
+// import folder controller
+const folder_controller = __importStar(require("../controller/folderController"));
 const router = express_1.default.Router();
-// login
-router.post('/login', acc_controller.login);
-// createAccount
-router.post('/create', acc_controller.create_account);
-// getUserById
-router.get('/getUserById', acc_controller.get_account_by_id);
-// alertUser
-router.post('/alertUser', acc_controller.alert_user);
-// changeUserAvator
-router.post('/changeAvator', acc_controller.change_avator);
-// get avator直接交给静态文件处理 就不写路由了
-// 但是要对应的传递blob数据 不知道静态文件能不能处理blob数据
-// router.get('/getAvator', acc_controller.get_avator);
-// delete user
-router.post('/deleteUser', acc_controller.delete_user);
-// check user name
-router.get('/checkUserName', acc_controller.check_user_name);
+// // get tasklist by folder id
+// router.get('/getTaskList', folder_controller.);
+// get user folders
+router.get('/getUserTaskLists', folder_controller.get_user_folders);
+// create folder
+router.post('/createTaskList', folder_controller.create_folder);
+// alert folder
+router.post('/alertTaskList', folder_controller.alert_folder);
+// delete folder
+router.post('/deleteTaskList', folder_controller.delete_folder);
 module.exports = router;
