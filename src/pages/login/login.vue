@@ -1,6 +1,9 @@
+<!-- todo-实现敲回车登录 -->
 <template>
   <div class="login-main">
-    <!-- <div>新顶栏开发中...</div> -->
+    <div>
+        <h2>登录</h2>
+    </div>
     <div class="login-window">
       <el-form class="form" 
         label-position='top' 
@@ -24,7 +27,15 @@
   
 <script lang="ts" setup>
     import {ref, reactive} from 'vue';
-    import type { FormInstance, FormRules } from 'element-plus'
+    import { useStore } from 'vuex';
+    import { useRouter } from 'vue-router';
+    import type { FormInstance, FormRules } from 'element-plus';
+    import { ElMessage } from 'element-plus';
+    import{ sm3 } from 'sm-crypto';
+    import account from '../../http/api/account';
+
+    const router = useRouter();
+    const store = useStore();
 
     const ruleFormRef = ref<FormInstance>()
     const loginForm = reactive({
@@ -49,7 +60,31 @@
         if(!formEl) return;
         await formEl.validate( (valid,fields) => {
             if(valid) {
-                console.log('successful submit')
+                // console.log('successful submit')
+                let password = sm3(loginForm.password);
+                account.login(loginForm.user_name, password).then(res=>{
+                    if(res.data.message=="success"){
+                        let data = res.data.client.acc_info;
+                        // console.log(res);
+                        let account={
+                            client_id: data.client_id,
+                            user_name: data.user_name,
+                            avator_path: data.avatar_path,
+                            register_time: data.register_time,
+                            intro: data.introduction
+                        };
+                        store.commit("alterAccount",account);
+                        console.log(store.state.account.client_id);
+                        router.push({
+                            path:"/taskDetail"
+                        });
+                    }
+                    else{
+                        ElMessage.error('您的用户名或密码输入有误，请重试！');
+                    }
+                },error => {
+                    console.log(error);
+                });
             } else {
                 console.log('error submit!',fields)
             }

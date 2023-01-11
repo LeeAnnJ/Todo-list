@@ -30,7 +30,15 @@
 
 <script lang="ts" setup>
     import { ref, reactive } from 'vue';
+    import { useStore } from 'vuex';
+    import { useRouter } from 'vue-router';
     import type { FormInstance, FormRules } from 'element-plus';
+    import { ElMessage } from 'element-plus';
+    import{ sm3 } from 'sm-crypto';
+    import account from '../../http/api/account';
+    
+    const router = useRouter();
+    const store = useStore();
 
     const ruleFormRef = ref<FormInstance>()
     const regisForm = reactive({
@@ -82,7 +90,34 @@
         if(!formEl) return;
         await formEl.validate( (valid,fields) =>{
             if(valid) {
-                console.log('successful submit')
+                console.log('successful submit');
+                var now = new Date();
+                var date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+                let user = {
+                  client_id: '',
+                  username: regisForm.user_name,
+                  passwd_hash: sm3(regisForm.password),
+                  introduction: regisForm.introduce,
+                  register_time: date,
+                  avator_path: '/static/default.png',
+                }
+                account.create(user).then(res=>{
+                    if(res.data.message=="success"){
+                        let client_id = res.data.data.client_id;
+                        // console.log(res);
+                        user.client_id=client_id;
+                        store.commit("alterAccount",user);
+                        console.log(store.state.account.client_id);
+                        router.push({
+                            path:"/taskDetail"
+                        });
+                    }
+                    else{
+                        ElMessage.error('注册失败！');
+                    }
+                },error => {
+                    console.log(error);
+                });
             }
             else {
                 console.log('error submit!',fields)

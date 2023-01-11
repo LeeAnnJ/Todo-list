@@ -9,12 +9,12 @@
     </div>
     <div class="right-group">
       <div class="right-option">
-        <el-button >
-          <el-icon><Share /></el-icon>
+        <el-button class="button-share">
+          <el-icon style="width:100%;height:100%;"><Share /></el-icon>
         </el-button>
       </div>
       <div class="right-option">
-        <el-button>切换任务</el-button>
+        <el-button class="button-change">切换任务</el-button>
       </div>      
     </div>
   </div>
@@ -31,7 +31,7 @@
     }
 </script>
 
-<style>
+<style scoped>
   .head{
       position: absolute;
       top: 55px;
@@ -66,17 +66,38 @@
       color: #333;
   }
   .right-group{
-      border: 1px solid #000;
+      /* border: 1px solid #000; */
       height: 100%;
       width: 30%;
       float: right;
       display: flex;
       align-items: center;
       flex-direction: row-reverse;
-      padding-right: 2%;
+      padding-right: 3%;
   }
   .right-option{
-      border: 1px solid #000;
+      /* border: 1px solid #000; */
       margin-left: 15px;
+  }
+  .button-share{
+      border: none;
+      font-size: 18px;
+      width: 40px;
+      padding: 0px;
+  }
+  .button-share:hover,:focus,:active{
+      background-color: #fff;
+  }
+  .button-change{
+      height: 25px;
+      width: 70px;
+      border: 1px solid #b1b3b8;
+      border-radius: 5mm;
+      color: #73767a;
+      padding: 0px;
+      margin-top: 2px;
+  }
+  .button-change:hover,:focus,:active{
+      background-color: #fff;
   }
 </style>

@@ -7,10 +7,10 @@
 		</div>
     <div>
       <el-input v-model="inputText" style="width:200px" />
-      <el-button @click="modifyvuex">测试修改vuex</el-button>
+      <el-button @click="modifyvuex">测试修改vuex中的user_name</el-button>
       <el-button @click="calcuSM3">测试SM3结果</el-button>
-      <br>测试vuex:{{user_name}}<br>
-      测试SM3:{{getdata}}
+      <br>测试vuex:{{JSON.stringify(account)}}<br>
+      测试SM3:{{SM3data}}
     </div>
     <div>
       <el-button>日期格式调整</el-button>
@@ -29,15 +29,17 @@
         data(){
             return{
               getdata: '暂未请求',
+              SM3data:'',
               inputText: "",
               dateTime: "",
             }
         },
         computed:{
-            ...mapState(["user_name"]),
+            ...mapState(["account"]),
         },
         methods:{
             ...mapMutations(["alterName"]),
+            ...mapMutations(["alterAccount"]),
             jumpDetail(){
                 this.$router.push({
                   path:"/taskDetail"
@@ -45,9 +47,27 @@
             },
             testRequest(){
                 let that = this;
-                account.create().then(res=>{
+                let user_name = "hahahah";
+                let password = "d07e27c8d0695a8e6c25b2182bee0b38efc027ed8aa01a178c11ccf42964f5fc"
+                let intro = "testtest";
+                let req = {
+                    username: user_name,
+                    passwd_hash: password,
+                    introduction: intro,
+                }
+                account.create(req).then(res=>{
                     that.getdata = JSON.stringify(res.data);
-                    // console.log("请求数据：",res)
+                    // {"code":200,"message":"success","data":{"client_id":11}}
+                    // {"code":400,"message":"username already used","data":null}
+                    //console.log(res);
+                    // let account={
+                    //     client_id: data.client_id,
+                    //     user_name: data.user_name,
+                    //     avator_path: data.avatar_path,
+                    //     register_time: data.register_time,
+                    //     intro: data.introduction
+                    // };
+                    // that.alterAccount(account);
                 },error => {
                     that.getdata="请求失败！";
                     console.log(error);
@@ -57,7 +77,7 @@
                 this.alterName(this.inputText);
             },
             calcuSM3(){
-                this.getdata=sm3(this.inputText);
+                this.SM3data=sm3(this.inputText);
             }
         }
     }

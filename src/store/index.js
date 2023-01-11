@@ -3,7 +3,13 @@ import { createStore } from 'vuex'
 export default createStore({
     // 1、 存储所有全局数据
     state: {
-        user_name:'testusername'
+        account: {
+            client_id:'unknown',
+            user_name:'testusername',
+            avator_path: '',
+            register_time: '',
+            intro: ''
+        }
     },
     // 2、 需要通过计算获取state里的内容获取的数据
     // 只能读取不可修改
@@ -15,7 +21,15 @@ export default createStore({
     // 因此说:对于异步操作需要放到action里，简单的直接赋值操作可以直接放到mutation里
     mutations: {
         alterName(state,newname){
-            state.user_name = newname;
+            state.account.user_name = newname;
+        },
+        alterAccount(state,data){
+            // console.log("store account");
+            state.account.client_id = data.client_id;
+            state.account.user_name = data.user_name;
+            state.account.avator_path = data.avator_path;
+            state.account.register_time = data.register_time;
+            state.account.intro = data.intro;
         }
     },
     // 3、定义对state的各种操作

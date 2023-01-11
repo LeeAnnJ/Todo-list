@@ -5,22 +5,36 @@ import Service from "../axios";
  * 登录接口
  * @returns 
  */ 
-async function login(){
+async function login(username,password){
     return await Service.requestService({
         url: '/account/login',
         method: 'post',
+        data:{
+            user_name: username,
+            passwd_hash: password,
+        }
     })
 }
 
-async function create(){
+/**
+ * 成功返回数据：
+ * ```json 
+ * {"code":200,"message":"success","data":{"client_id":"xx"}}
+ * ```  
+ * 失败返回数据：
+ * ```json
+ * {"code":400,"message":"username already used","data":null}
+ * ```
+ */
+async function create(req){
     return await Service.requestService({
         url: '/account/create',
         method: 'post',
         data:{
             account:{
-                username:"张三",
-                passwd_hash:"F6860DFD05EE2D65375B1E83E81DF9F48890ABB278E81C3CB6C9E5BE9FDE8FB3",
-                introduction:"测试介绍",
+                username: req.username,
+                passwd_hash: req.passwd_hash,
+                introduction: req.introduction,
             }
         }
     })
