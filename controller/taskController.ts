@@ -199,10 +199,8 @@ export const add_subtask_to_task = (req: Request, res: Response) => {
     // res.send('add subtask to task')
     var task_id = req.body.task.task_id
     var subtask_name = req.body.subtask.name
-    var description = req.body.subtask.description
-    // var subtask_creator = req.body.subtask.register_id
 
-    var subtask = new SubTask(0, subtask_name, description, 0, task_id)
+    var subtask = new SubTask(0, subtask_name, 0, task_id)
 
     db.addSubTask(subtask, (subtask_id: number) => {
         if (subtask_id !== -1) {

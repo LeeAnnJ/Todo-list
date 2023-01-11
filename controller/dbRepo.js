@@ -73,8 +73,12 @@ class DbRepo {
     //////////////////////////// Account ////////////////////////////
     // login
     login(user_name, passwd_hash, callback) {
-        console.log("login");
-        var sql = "SELECT * FROM user_info WHERE user_name = '" + user_name + "' AND passwd_hash =  cast('" + passwd_hash + "' AS BINARY(255))";
+        console.log('login');
+        var sql = "SELECT * FROM user_info WHERE user_name = '" +
+            user_name +
+            "' AND passwd_hash =  cast('" +
+            passwd_hash +
+            "' AS BINARY(255))";
         // login
         this.connection.query(sql, (err, result) => {
             if (err || result.length == 0) {
@@ -108,9 +112,7 @@ class DbRepo {
                 // console.log('Account created');
                 // return client_id
                 sql =
-                    "SELECT * FROM user_info WHERE user_name = '" +
-                        values.user_name +
-                        "'";
+                    "SELECT * FROM user_info WHERE user_name = '" + values.user_name + "'";
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err);
@@ -528,7 +530,7 @@ class DbRepo {
             else {
                 for (var i = 0; i < result.length; i++) {
                     // TODO: task constructor
-                    // res.push(
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
                 }
             }
             callback(res);
@@ -546,7 +548,7 @@ class DbRepo {
             else {
                 for (var i = 0; i < result.length; i++) {
                     // TODO: task constructor
-                    // res.push(new Task(result[i].task_id, result[i].task_name, result[i].task_description, result[i].task_creator, result[i].task_group, result[i].task_folder, result[i].task_deadline, result[i].task_priority, result[i].task_status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status));
                 }
             }
             callback(res);
@@ -558,6 +560,7 @@ class DbRepo {
             client_id: task.task_creator,
             task_id: task.task_id,
             task_name: task.task_name,
+            task_type: task.task_type,
             task_description: task.task_description,
             task_group: task.task_group_id,
             task_folder: task.task_folder_id,
@@ -565,21 +568,21 @@ class DbRepo {
             task_priority: task.task_priority,
             task_status: task.task_status,
         };
-        var sql = 'INSERT INTO task_info (client_id, task_name, task_description, task_group, task_folder, task_deadline, task_priority, task_status) VALUES (' +
+        var sql = 'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`) VALUES (' +
             values.client_id +
-            ', ' +
+            ', NOW(), "' +
             values.task_name +
-            ', ' +
-            values.task_description +
-            ', ' +
-            values.task_group +
-            ', ' +
-            values.task_folder +
-            ', ' +
-            values.task_deadline +
+            '", ' +
+            values.task_type +
             ', ' +
             values.task_priority +
-            ', ' +
+            ', "' +
+            values.task_deadline +
+            '", ' +
+            values.task_group +
+            ', "' +
+            values.task_description +
+            '", 0, ' +
             values.task_status +
             ')';
         this.connection.query(sql, (err, result) => {
@@ -616,7 +619,7 @@ class DbRepo {
             else {
                 for (var i = 0; i < result.length; i++) {
                     // TODO: task constructor
-                    // res.push(new Task(result[i].task_id, result[i].task_name, result[i].task_description, result[i].task_creator, result[i].task_group, result[i].task_folder, result[i].task_deadline, result[i].task_priority, result[i].task_status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
                 }
             }
             callback(res);
@@ -625,35 +628,45 @@ class DbRepo {
     // get task by task_id
     getTaskByTaskId(task_id, callback) {
         var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id;
-        var res = new task_1.Task(0, 0, '', '', false, 0, new Date(), 0);
         this.connection.query(sql, (err, result) => {
+            var res = new task_1.Task(0, 0, '', '', false, 0, new Date(), 0);
             if (err) {
                 console.log(err);
             }
             else {
-                // TODO: task constructor
+                res = new task_1.Task(result[0].task_id, result[0].register_id, result[0].create_time, result[0].name, result[0].type, result[0].priority, result[0].deadline, result[0].group_belonging, result[0].belongs_folder_id, result[0].note, result[0].status);
             }
             callback(res);
         });
     }
     // alert task info
     alertTaskInfo(task_new, callback) {
-        var sql = "UPDATE task_info SET task_name = '" +
-            task_new.task_name +
-            "', task_description = '" +
-            task_new.task_description +
-            "', task_group = " +
-            task_new.task_group_id +
-            ', task_folder = ' +
-            task_new.task_folder_id +
-            ', task_deadline = ' +
-            task_new.task_ddl +
-            ', task_priority = ' +
-            task_new.task_priority +
-            ', task_status = ' +
-            task_new.task_status +
-            ' WHERE task_id = ' +
-            task_new.task_id;
+        var sql = 'UPDATE task_info SET ';
+        if (task_new.task_name != '') {
+            sql += 'name = "' + task_new.task_name + '", ';
+        }
+        sql += 'type = ' + task_new.task_type + ', ';
+        if (task_new.task_priority != -1) {
+            sql += 'priority = ' + task_new.task_priority + ', ';
+        }
+        if (task_new.task_ddl != null) {
+            sql += 'deadline = "' + task_new.task_ddl + '", ';
+        }
+        if (task_new.task_group_id != -1) {
+            sql += 'group_belonging = ' + task_new.task_group_id + ', ';
+        }
+        if (task_new.task_folder_id != -1) {
+            sql += 'belongs_folder_id = ' + task_new.task_folder_id + ', ';
+        }
+        if (task_new.task_description != '') {
+            sql += 'note = "' + task_new.task_description + '", ';
+        }
+        if (task_new.task_status != -1) {
+            sql += 'status = ' + task_new.task_status + ', ';
+        }
+        // remove the last ', '
+        sql = sql.substring(0, sql.length - 2);
+        sql += ' WHERE task_id = ' + task_new.task_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -679,7 +692,7 @@ class DbRepo {
     }
     // get tasks of a group
     getGroupTasks(group_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE task_group = ' + group_id;
+        var sql = 'SELECT * FROM task_info WHERE group_brlonging = ' + group_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -687,7 +700,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    // TODO: task constructor
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
                 }
             }
             callback(res);
@@ -695,7 +708,7 @@ class DbRepo {
     }
     // get sub tasks of a task
     getSubTasksByTaskId(task_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE task_group = ' + task_id;
+        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -703,34 +716,32 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    // res.push(new SubTask(result[i].subtask_id, result[i].subtask_name, result[i].subtask_description, result[i].subtask_status, result[i].subtask_task_id));
+                    res.push(new task_1.SubTask(result[i].subtask_id, result[i].name, result[i].status, result[i].task_id));
                 }
             }
             callback(res);
         });
     }
     getSubTaskByIds(task_id, subtask_id, callback) {
-        var sql = 'SELECT * FROM subtask_info WHERE subtask_task_id = ' +
+        var sql = 'SELECT * FROM subtask_info WHERE task_id = ' +
             task_id +
             ' AND subtask_id = ' +
             subtask_id;
-        var res = new task_1.SubTask(0, '', '', 0, 0);
+        var res = new task_1.SubTask(0, '', 0, 0);
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
             }
             else {
-                // res = new SubTask(result[0].subtask_id, result[0].subtask_name, result[0].subtask_description, result[0].subtask_status, result[0].subtask_task_id);
+                res = new task_1.SubTask(result[0].subtask_id, result[0].name, result[0].status, result[0].task_id);
             }
             callback(res);
         });
     }
     // add a sub task
     addSubTask(subtask, callback) {
-        var sql = "INSERT INTO subtask_info (subtask_name, subtask_description, subtask_status, subtask_task_id) VALUES ('" +
+        var sql = "INSERT INTO subtask_info (name, status, task_id) VALUES ('" +
             subtask.subtask_name +
-            "', '" +
-            subtask.subtask_description +
             "', " +
             subtask.subtask_status +
             ', ' +
@@ -745,7 +756,7 @@ class DbRepo {
                 sql =
                     "SELECT subtask_id FROM subtask_info WHERE subtask_name = '" +
                         subtask.subtask_name +
-                        "' AND subtask_task_id = " +
+                        "' AND task_id = " +
                         subtask.subtask_task_id;
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -778,15 +789,13 @@ class DbRepo {
     }
     // alert sub task info
     alertSubTaskInfo(subtask_new, callback) {
-        var sql = "UPDATE subtask_info SET subtask_name = '" +
+        var sql = "UPDATE subtask_info SET name = '" +
             subtask_new.subtask_name +
-            "', subtask_description = '" +
-            subtask_new.subtask_description +
-            "', subtask_status = " +
+            "', status = " +
             subtask_new.subtask_status +
             ' WHERE subtask_id = ' +
             subtask_new.subtask_id +
-            ' AND subtask_task_id = ' +
+            ' AND task_id = ' +
             subtask_new.subtask_task_id;
         this.connection.query(sql, (err, result) => {
             if (err) {

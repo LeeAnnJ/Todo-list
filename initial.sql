@@ -47,7 +47,7 @@ CREATE TABLE `task`  (
   `type` tinyint(1) NOT NULL DEFAULT 0,
   `priorty` int NOT NULL DEFAULT 0,
   `deadline` datetime NULL,
-  `group_beglong` bigint UNSIGNED NULL,
+  `group_belonging` bigint UNSIGNED NULL,
   `note` text NULL,
   `is_favor` tinyint(1) NOT NULL DEFAULT 0,
   `belongs_folder_id` bigint UNSIGNED NULL,

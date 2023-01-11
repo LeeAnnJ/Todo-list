@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.check_user_name = exports.delete_user = exports.change_avator = exports.alert_user = exports.create_account = exports.get_account_by_id = exports.login = void 0;
 const account_1 = require("../model/account");
 const dbRepo_1 = require("../controller/dbRepo");
+let fs = require('fs');
 // login
 const login = (req, res) => {
     // TODO: login
@@ -152,10 +153,40 @@ const alert_user = (req, res) => {
 exports.alert_user = alert_user;
 // change user avator
 const change_avator = (req, res) => {
-    // TODO: change avator
-    // 涉及静态文件的上传 我再想想怎么搞
-    // 还没搞懂头像怎么破
-    res.send('change avator');
+    const multer = require('multer');
+    const upload = multer({ dest: 'public/' });
+    // upload the avator to the piblic folder
+    // read the avator from the request
+    var avator_file = req.body.avator_file;
+    var client_id = req.body.client_id;
+    // save the avator to the public folder
+    var avator_path = 'public/' + client_id + '.jpg';
+    fs.writeFile(avator_path, avator_file, (err) => {
+        if (err) {
+            res.json({
+                code: 500,
+                message: 'fail',
+                data: null,
+            });
+        }
+    });
+    // change the avator path in the database
+    dbRepo_1.db.changeAvatar(client_id, avator_path, (result) => {
+        if (result) {
+            res.json({
+                code: 200,
+                message: 'success',
+                data: null,
+            });
+        }
+        else {
+            res.json({
+                code: 400,
+                message: 'fail',
+                data: null,
+            });
+        }
+    });
 };
 exports.change_avator = change_avator;
 // delete user
