@@ -1,5 +1,5 @@
 "use strict";
-// the routers about task is difined here
+// the routers about folder is difined here
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -28,29 +28,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import task controller
-const task_controller = __importStar(require("../controller/taskController"));
+// import folder controller
+const folder_controller = __importStar(require("../controller/folderController"));
 const router = express_1.default.Router();
-// create task
-router.post('createTask', task_controller.create_task);
-//get task by id
-router.get('/getTaskById', task_controller.get_task_by_id);
-// get tasks by user id
-router.get('/getTaskByUserId', task_controller.get_task_by_user_id);
-// modify task
-router.post('/modifyTask', task_controller.modify_task);
-// delete task
-router.post('/deleteTask', task_controller.delete_task);
-// get subtasks by task id
-router.get('/getSubTaskByTaskId', task_controller.get_subtasks_by_task_id);
-// get subtask by task id and subtask id
-// router.get('/getSubTaskB', task_controller.get_subtask_by_task_ids);
-// add subtask to task
-router.post('/addSubTaskToTask', task_controller.add_subtask_to_task);
-// delete subtask from task
-router.post('/deleteSubTaskFromTask', task_controller.delete_subtask_from_task);
-// mark task as done
-router.post('/markTaskAsDone', task_controller.mark_task_as_done);
-// mark subtask as done
-router.post('/markSubTaskAsDone', task_controller.mark_subtask_as_done);
+// // get tasklist by folder id
+// router.get('/getTaskList', folder_controller.);
+// get user folders
+router.get('/getUserTaskLists', folder_controller.get_user_folders);
+// create folder
+router.post('/createTaskList', folder_controller.create_folder);
+// alert folder
+router.post('/alertTaskList', folder_controller.alert_folder);
+// delete folder
+router.post('/deleteTaskList', folder_controller.delete_folder);
 module.exports = router;

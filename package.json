@@ -13,7 +13,9 @@
     "http-errors": "~1.6.3",
     "jade": "^1.11.0",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "typenode": "^4.8.4",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

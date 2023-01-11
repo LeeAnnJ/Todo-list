@@ -28,13 +28,13 @@ router.post('/addMemberToGroup', group_controller.add_member_to_group);
 // delete member from group
 router.post('/deleteMemberFromGroup', group_controller.remove_member_from_group);
 
-// get members of group by group id
-router.get('/getMembersByGroupId', group_controller.get_members_of_group);
-
 // update group info
 router.post('/updateGroupInfo', group_controller.update_group);
 
 // get tasks of group
 router.get('/getTasksByGroupId', group_controller.get_tasks_of_group);
+
+// get the task owner of group
+router.get('/getTaskOwnerOfGroup',group_controller.get_task_owner_of_group);
 
 module.exports = router;
