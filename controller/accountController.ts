@@ -10,9 +10,6 @@ let fs = require('fs')
 
 // login
 export const login = (req: Request, res: Response) => {
-    // TODO: login
-    // read the user name and password hash from request
-    // res.send('login')
 
     var user_name = req.body.user_name || ''
     var passwd_hash = req.body.passwd_hash || ''
@@ -109,8 +106,6 @@ export const create_account = (req: Request, res: Response) => {
 
 // alert user massage
 export const alert_user = (req: Request, res: Response) => {
-    // TODO: alert user
-    // res.send('alert user')
     const client_id = req.body.client_id
     db.getUserById(client_id, (acc_now: Account) => {
         if (acc_now.client_id !== 0) {

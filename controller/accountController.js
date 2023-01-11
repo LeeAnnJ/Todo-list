@@ -9,9 +9,6 @@ const dbRepo_1 = require("../controller/dbRepo");
 let fs = require('fs');
 // login
 const login = (req, res) => {
-    // TODO: login
-    // read the user name and password hash from request
-    // res.send('login')
     var user_name = req.body.user_name || '';
     var passwd_hash = req.body.passwd_hash || '';
     // check if the user name and password hash is correct
@@ -107,8 +104,6 @@ const create_account = (req, res) => {
 exports.create_account = create_account;
 // alert user massage
 const alert_user = (req, res) => {
-    // TODO: alert user
-    // res.send('alert user')
     const client_id = req.body.client_id;
     dbRepo_1.db.getUserById(client_id, (acc_now) => {
         if (acc_now.client_id !== 0) {

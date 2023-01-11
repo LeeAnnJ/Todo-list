@@ -7,7 +7,7 @@ const folder_1 = require("../model/folder");
 const dbRepo_1 = require("../controller/dbRepo");
 // get floders of a user
 const get_user_folders = (req, res) => {
-    const client_id = parseInt(req.query["client_id"]);
+    const client_id = parseInt(req.query['client_id']);
     dbRepo_1.db.getUserFolders(client_id, (folders) => {
         res.json({
             code: 200,
@@ -50,8 +50,6 @@ exports.create_folder = create_folder;
 // alter a folder
 const alert_folder = (req, res) => {
     const folder_id = parseInt(req.body.folder.folder_id);
-    // const folder_name = req.body.folder.folder_name
-    // const folder_description = req.body.folder.folder_description || ''
     dbRepo_1.db.getFolderInfo(folder_id, (folder) => {
         if (folder !== null) {
             // get folder info success

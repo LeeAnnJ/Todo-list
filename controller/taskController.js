@@ -8,8 +8,6 @@ const task_1 = require("../model/task");
 const dbRepo_1 = require("../controller/dbRepo");
 // create task
 const create_task = (req, res) => {
-    // TODO: create task
-    // res.send('create task');
     var task_name = req.body.task.name;
     var task_creator = req.body.task.register_id;
     var task_description = req.body.task.note;
@@ -43,9 +41,6 @@ const create_task = (req, res) => {
 exports.create_task = create_task;
 // get task by id
 const get_task_by_id = (req, res) => {
-    // TODO: get task by id
-    // res.send('get task by id');
-    // var task_id = req.body.task.task_id
     var task_id = parseInt(req.query['task_id']);
     dbRepo_1.db.getTaskByTaskId(task_id, (task) => {
         if (task !== null) {
@@ -69,9 +64,6 @@ const get_task_by_id = (req, res) => {
 exports.get_task_by_id = get_task_by_id;
 // get task by user id
 const get_task_by_user_id = (req, res) => {
-    // TODO: get task by user id
-    // res.send('get task by user id');
-    // var user_id = req.body.user.client_id
     var user_id = parseInt(req.query['user_id']);
     dbRepo_1.db.getTaskByUserId(user_id, (tasks) => {
         if (tasks !== null) {
@@ -95,8 +87,6 @@ const get_task_by_user_id = (req, res) => {
 exports.get_task_by_user_id = get_task_by_user_id;
 // modify task
 const modify_task = (req, res) => {
-    // TODO: modify task
-    // res.send('modify task');
     var task_id = req.body.task.task_id;
     dbRepo_1.db.getTaskByTaskId(task_id, (task) => {
         if (task !== null) {
@@ -137,8 +127,6 @@ const modify_task = (req, res) => {
 exports.modify_task = modify_task;
 // delete task
 const delete_task = (req, res) => {
-    // TODO: delete task
-    // res.send('delete task')
     var task_id = req.body.task.task_id;
     dbRepo_1.db.deleteTask(task_id, (result) => {
         if (result) {
@@ -160,9 +148,6 @@ const delete_task = (req, res) => {
 exports.delete_task = delete_task;
 // get subtask by task id
 const get_subtasks_by_task_id = (req, res) => {
-    // TODO: get subtask by task id
-    // res.send('get subtask by task id')
-    // var task_id = req.body.task.task_id
     var task_id = parseInt(req.query['task_id']);
     dbRepo_1.db.getSubTasksByTaskId(task_id, (subtasks) => {
         if (subtasks !== null) {
@@ -184,8 +169,6 @@ const get_subtasks_by_task_id = (req, res) => {
 exports.get_subtasks_by_task_id = get_subtasks_by_task_id;
 // add subtask to task
 const add_subtask_to_task = (req, res) => {
-    // TODO: add subtask to task
-    // res.send('add subtask to task')
     var task_id = req.body.task.task_id;
     var subtask_name = req.body.subtask.name;
     var subtask = new task_1.SubTask(0, subtask_name, 0, task_id);
@@ -213,8 +196,6 @@ const add_subtask_to_task = (req, res) => {
 exports.add_subtask_to_task = add_subtask_to_task;
 // delete subtask from task
 const delete_subtask_from_task = (req, res) => {
-    // TODO: delete subtask from task
-    // res.send('delete subtask from task')
     var subtask_id = req.body.subtask.subtask_id;
     var task_id = req.body.subtask.task_id;
     dbRepo_1.db.deleteSubTask(task_id, subtask_id, (result) => {
@@ -237,8 +218,6 @@ const delete_subtask_from_task = (req, res) => {
 exports.delete_subtask_from_task = delete_subtask_from_task;
 // mark task as done
 const mark_task_as_done = (req, res) => {
-    // TODO: mark task as done
-    // res.send('mark task as done')
     var task_id = req.body.task.task_id;
     dbRepo_1.db.getTaskByTaskId(task_id, (task) => {
         task.task_status = 1;
@@ -263,13 +242,11 @@ const mark_task_as_done = (req, res) => {
 exports.mark_task_as_done = mark_task_as_done;
 // mark subtask as done
 const mark_subtask_as_done = (req, res) => {
-    // TODO: mark subtask as done
-    // res.send('mark subtask as done')
     var subtask_id = req.body.subtask.subtask_id;
     var task_id = req.body.subtask.task_id;
     dbRepo_1.db.getSubTaskByIds(task_id, subtask_id, (subtask) => {
         subtask.subtask_status = 1;
-        var result = dbRepo_1.db.alertSubTaskInfo(subtask, (result) => {
+        dbRepo_1.db.alertSubTaskInfo(subtask, (result) => {
             if (result) {
                 res.json({
                     code: 200,

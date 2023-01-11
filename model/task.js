@@ -23,15 +23,11 @@ class Task {
 exports.Task = Task;
 // subtask
 class SubTask {
-    constructor(subtask_id, subtask_name, 
-    // subtask_description: string,
-    subtask_status, subtask_task_id) {
+    constructor(subtask_id, subtask_name, subtask_status, subtask_task_id) {
         this.subtask_id = subtask_id;
         this.subtask_name = subtask_name;
-        // this.subtask_description = subtask_description
         this.subtask_status = subtask_status;
         this.subtask_task_id = subtask_task_id;
     }
 }
 exports.SubTask = SubTask;
-// module.exports = { Task, SubTask };

@@ -1,14 +1,13 @@
 // folder controller funstions
 // Path: controller\folderController.ts
 
-
 import { Request, Response } from 'express'
 import { Folder } from '../model/folder'
 import { db } from '../controller/dbRepo'
 
 // get floders of a user
 export const get_user_folders = (req: Request, res: Response) => {
-    const client_id = parseInt(req.query["client_id"] as string)
+    const client_id = parseInt(req.query['client_id'] as string)
     db.getUserFolders(client_id, (folders: Folder[]) => {
         res.json({
             code: 200,
@@ -17,7 +16,7 @@ export const get_user_folders = (req: Request, res: Response) => {
                 folders,
             },
         })
-    });
+    })
 }
 
 // create a folder
@@ -52,16 +51,20 @@ export const create_folder = (req: Request, res: Response) => {
 // alter a folder
 export const alert_folder = (req: Request, res: Response) => {
     const folder_id = parseInt(req.body.folder.folder_id as string)
-    // const folder_name = req.body.folder.folder_name
-    // const folder_description = req.body.folder.folder_description || ''
 
     db.getFolderInfo(folder_id, (folder: Folder) => {
         if (folder !== null) {
             // get folder info success
             const folder_name = req.body.folder.folder_name || folder.folder_name
-            const folder_description = req.body.folder.folder_description || folder.folder_description
+            const folder_description =
+                req.body.folder.folder_description || folder.folder_description
             const folder_creator = folder.client_id
-            const new_folder = new Folder(folder_creator, folder_id, folder_name, folder_description)
+            const new_folder = new Folder(
+                folder_creator,
+                folder_id,
+                folder_name,
+                folder_description,
+            )
             db.alertFolderInfo(new_folder, (result: boolean) => {
                 if (result) {
                     // alter folder success
