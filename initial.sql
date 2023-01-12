@@ -52,6 +52,7 @@ CREATE TABLE `task`  (
   `group_belonging` bigint UNSIGNED NULL,
   `note` text NULL,
   `is_favor` tinyint(1) NOT NULL DEFAULT 0,
+  `cycle` int NOT NULL DEFAULT 0,
   `belongs_folder_id` bigint UNSIGNED NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`task_id`)

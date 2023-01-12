@@ -547,7 +547,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -564,7 +564,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -583,8 +583,9 @@ class DbRepo {
             task_deadline: task.task_ddl,
             task_priority: task.task_priority,
             task_status: task.task_status,
+            task_cycle: task.cycle,
         };
-        var sql = 'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`) VALUES (' +
+        var sql = 'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -600,6 +601,8 @@ class DbRepo {
             values.task_description +
             '", 0, ' +
             values.task_status +
+            ', ' +
+            values.task_cycle +
             ')';
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -634,7 +637,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -649,7 +652,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
-                res = new task_1.Task(result[0].task_id, result[0].register_id, result[0].create_time, result[0].name, result[0].type, result[0].priority, result[0].deadline, result[0].group_belonging, result[0].belongs_folder_id, result[0].note, result[0].status);
+                res = new task_1.Task(result[0].task_id, result[0].register_id, result[0].create_time, result[0].name, result[0].type, result[0].priority, result[0].deadline, result[0].group_belonging, result[0].belongs_folder_id, result[0].note, result[0].status, result[0].cycle);
             }
             callback(res);
         });
@@ -678,6 +681,9 @@ class DbRepo {
         }
         if (task_new.task_status != -1) {
             sql += 'status = ' + task_new.task_status + ', ';
+        }
+        if (task_new.cycle != -1) {
+            sql += 'cycle = ' + task_new.cycle + ', ';
         }
         // remove the last ', '
         sql = sql.substring(0, sql.length - 2);
@@ -715,7 +721,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].note, result[i].status, result[i].cycle));
                 }
             }
             callback(res);

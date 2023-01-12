@@ -610,6 +610,7 @@ class DbRepo {
                             result[i].belongs_folder_id,
                             result[i].note,
                             result[i].status,
+                            result[i].cycle
                         ),
                     )
                 }
@@ -641,6 +642,7 @@ class DbRepo {
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -662,9 +664,10 @@ class DbRepo {
             task_deadline: task.task_ddl,
             task_priority: task.task_priority,
             task_status: task.task_status,
+            task_cycle: task.cycle,
         }
         var sql =
-            'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`) VALUES (' +
+            'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -680,6 +683,8 @@ class DbRepo {
             values.task_description +
             '", 0, ' +
             values.task_status +
+            ', ' +
+            values.task_cycle +
             ')'
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -725,6 +730,7 @@ class DbRepo {
                             result[i].belongs_folder_id,
                             result[i].note,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -753,6 +759,7 @@ class DbRepo {
                     result[0].belongs_folder_id,
                     result[0].note,
                     result[0].status,
+                    result[0].cycle,
                 )
             }
             callback(res)
@@ -783,6 +790,9 @@ class DbRepo {
         }
         if (task_new.task_status != -1) {
             sql += 'status = ' + task_new.task_status + ', '
+        }
+        if (task_new.cycle != -1) {
+            sql += 'cycle = ' + task_new.cycle + ', '
         }
         // remove the last ', '
         sql = sql.substring(0, sql.length - 2)
@@ -833,6 +843,7 @@ class DbRepo {
                             result[i].belongs_folder_id,
                             result[i].note,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }

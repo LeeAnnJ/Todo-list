@@ -8,15 +8,16 @@ const task_1 = require("../model/task");
 const dbRepo_1 = require("../controller/dbRepo");
 // create task
 const create_task = (req, res) => {
-    var task_name = req.body.task.name;
-    var task_creator = req.body.task.register_id;
-    var task_description = req.body.task.note;
+    var task_name = req.body.task.name || '';
+    var task_creator = req.body.task.register_id || 0;
+    var task_description = req.body.task.note || '';
     var ddl = new Date(req.body.task.deadline);
-    var type = req.body.task.type;
-    var priorty = req.body.task.priority;
-    var folder_id = req.body.belongs_folder_id;
-    var group_id = req.body.group_id;
-    var task = new task_1.Task(0, task_creator, task_name, task_description, type, priorty, ddl, group_id, folder_id);
+    var type = req.body.task.type || false;
+    var priorty = req.body.task.priority || 0;
+    var folder_id = req.body.belongs_folder_id || 0;
+    var group_id = req.body.group_id || 0;
+    var cycle = req.body.task.cycle || 0;
+    var task = new task_1.Task(0, task_creator, task_name, task_description, type, priorty, ddl, group_id, folder_id, false, 0, cycle);
     dbRepo_1.db.createTask(task, (task_id) => {
         if (task_id !== 0) {
             // create task success
@@ -90,14 +91,33 @@ const modify_task = (req, res) => {
     var task_id = req.body.task.task_id;
     dbRepo_1.db.getTaskByTaskId(task_id, (task) => {
         if (task !== null) {
-            task.task_name = req.body.task.name;
-            task.task_description = req.body.task.note;
-            task.task_priority = req.body.task.priority;
-            task.task_type = req.body.task.type;
-            task.task_ddl = new Date(req.body.task.deadline);
-            task.task_folder_id = req.body.belongs_folder_id;
-            task.task_group_id = req.body.group_id;
-            task.task_isfavorite = req.body.is_favor;
+            if (req.body.task.name !== undefined) {
+                task.task_name = req.body.task.name;
+            }
+            if (req.body.task.note !== undefined) {
+                task.task_description = req.body.task.note;
+            }
+            if (req.body.task.priority !== undefined) {
+                task.task_priority = req.body.task.priority;
+            }
+            if (req.body.task.type !== undefined) {
+                task.task_type = req.body.task.type;
+            }
+            if (req.body.task.deadline !== undefined) {
+                task.task_ddl = new Date(req.body.task.deadline);
+            }
+            if (req.body.task.cycle !== undefined) {
+                task.task_folder_id = req.body.belongs_folder_id;
+            }
+            if (req.body.group_id !== undefined) {
+                task.task_group_id = req.body.group_id;
+            }
+            if (req.body.task.is_favor !== undefined) {
+                task.task_isfavorite = req.body.is_favor;
+            }
+            if (req.body.task.cycle !== undefined) {
+                task.cycle = req.body.task.cycle;
+            }
             dbRepo_1.db.alertTaskInfo(task, (result) => {
                 if (result) {
                     res.json({
@@ -127,7 +147,7 @@ const modify_task = (req, res) => {
 exports.modify_task = modify_task;
 // delete task
 const delete_task = (req, res) => {
-    var task_id = req.body.task.task_id;
+    var task_id = req.body.task.task_id || -1;
     dbRepo_1.db.deleteTask(task_id, (result) => {
         if (result) {
             res.json({

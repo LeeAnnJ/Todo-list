@@ -8,14 +8,15 @@ import { db } from '../controller/dbRepo'
 
 // create task
 export const create_task = (req: Request, res: Response) => {
-    var task_name = req.body.task.name
-    var task_creator = req.body.task.register_id
-    var task_description = req.body.task.note
-    var ddl = new Date(req.body.task.deadline)
-    var type = req.body.task.type
-    var priorty = req.body.task.priority
-    var folder_id = req.body.belongs_folder_id
-    var group_id = req.body.group_id
+    var task_name = req.body.task.name as string || ''
+    var task_creator = req.body.task.register_id as number || 0
+    var task_description = req.body.task.note as string || ''
+    var ddl = new Date(req.body.task.deadline as string)
+    var type = req.body.task.type as boolean || false
+    var priorty = req.body.task.priority as number || 0
+    var folder_id = req.body.belongs_folder_id as number || 0
+    var group_id = req.body.group_id as number || 0
+    var cycle = req.body.task.cycle as number || 0
 
     var task = new Task(
         0,
@@ -27,6 +28,9 @@ export const create_task = (req: Request, res: Response) => {
         ddl,
         group_id,
         folder_id,
+        false,
+        0,
+        cycle,
     )
 
     db.createTask(task, (task_id: number) => {
@@ -99,14 +103,33 @@ export const modify_task = (req: Request, res: Response) => {
     var task_id = req.body.task.task_id
     db.getTaskByTaskId(task_id, (task: Task) => {
         if (task !== null) {
-            task.task_name = req.body.task.name
-            task.task_description = req.body.task.note
-            task.task_priority = req.body.task.priority
-            task.task_type = req.body.task.type
-            task.task_ddl = new Date(req.body.task.deadline)
-            task.task_folder_id = req.body.belongs_folder_id
-            task.task_group_id = req.body.group_id
-            task.task_isfavorite = req.body.is_favor
+            if (req.body.task.name !== undefined) {
+                task.task_name = req.body.task.name
+            }
+            if (req.body.task.note !== undefined) {
+                task.task_description = req.body.task.note
+            }
+            if (req.body.task.priority !== undefined) {
+                task.task_priority = req.body.task.priority
+            }
+            if (req.body.task.type !== undefined) {
+                task.task_type = req.body.task.type
+            }
+            if (req.body.task.deadline !== undefined) {
+                task.task_ddl = new Date(req.body.task.deadline)
+            }
+            if (req.body.task.cycle !== undefined) {
+                task.task_folder_id = req.body.belongs_folder_id
+            }
+            if (req.body.group_id !== undefined) {
+                task.task_group_id = req.body.group_id
+            }
+            if (req.body.task.is_favor !== undefined) {
+                task.task_isfavorite = req.body.is_favor
+            }
+            if (req.body.task.cycle !== undefined) {
+                task.cycle = req.body.task.cycle
+            }
 
             db.alertTaskInfo(task, (result: boolean) => {
                 if (result) {
@@ -135,7 +158,7 @@ export const modify_task = (req: Request, res: Response) => {
 
 // delete task
 export const delete_task = (req: Request, res: Response) => {
-    var task_id = req.body.task.task_id
+    var task_id = req.body.task.task_id as number || -1
     db.deleteTask(task_id, (result: boolean) => {
         if (result) {
             res.json({
