@@ -3,7 +3,7 @@
 // Path: controller\taskController.ts
 // Used in routes\task.ts to handle the request from client about task
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mark_subtask_as_done = exports.mark_task_as_done = exports.delete_subtask_from_task = exports.add_subtask_to_task = exports.get_subtasks_by_task_id = exports.delete_task = exports.modify_task = exports.get_task_by_user_id = exports.get_task_by_id = exports.create_task = void 0;
+exports.alter_subtask = exports.mark_subtask_as_done = exports.mark_task_as_done = exports.delete_subtask_from_task = exports.add_subtask_to_task = exports.get_subtasks_by_task_id = exports.delete_task = exports.modify_task = exports.get_task_by_user_id = exports.get_task_by_id = exports.create_task = void 0;
 const task_1 = require("../model/task");
 const dbRepo_1 = require("../controller/dbRepo");
 // create task
@@ -265,3 +265,37 @@ const mark_subtask_as_done = (req, res) => {
     });
 };
 exports.mark_subtask_as_done = mark_subtask_as_done;
+function alter_subtask(req, res) {
+    var task_id = req.body.task_id;
+    var subtask_id = req.body.subtask_id;
+    var subtask_name = req.body.content.subtask_name || '';
+    dbRepo_1.db.getSubTaskByIds(task_id, subtask_id, (subtask) => {
+        if (subtask !== null) {
+            subtask.subtask_name = subtask_name;
+            dbRepo_1.db.alertSubTaskInfo(subtask, (result) => {
+                if (result) {
+                    res.json({
+                        code: 200,
+                        message: 'success',
+                        data: {},
+                    });
+                }
+                else {
+                    res.json({
+                        code: 400,
+                        message: 'failed: could not modify subtask',
+                        data: {},
+                    });
+                }
+            });
+        }
+        else {
+            res.json({
+                code: 400,
+                message: 'failed: could not find subtask',
+                data: {},
+            });
+        }
+    });
+}
+exports.alter_subtask = alter_subtask;

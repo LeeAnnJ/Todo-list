@@ -455,6 +455,7 @@ responseType: 'blob'
 ```json
 {
     "subtask_id":"xxx",
+    "task_id":"xxx",
     "content": {
         "name": "xxx",
     }

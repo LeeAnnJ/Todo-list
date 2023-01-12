@@ -25,5 +25,20 @@ export const get_message = (req: Request, res: Response) => {
 
 // get message by id
 export const post_message = (req: Request, res: Response) => {
-    res.send('get message by id')
+    var message_id = req.body.message_id
+    var is_read = req.body.is_read
+    db.change_message_status(message_id, is_read, (result: boolean) => {
+        if (result) {
+            // success
+            res.json({
+                code: 200,
+                message: 'success',
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'fail',
+            })
+        }
+    })
 }

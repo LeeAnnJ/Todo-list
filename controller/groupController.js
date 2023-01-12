@@ -94,6 +94,7 @@ const get_members_of_group = (req, res) => {
                 code: 200,
                 message: 'success',
                 data: {
+                    owner: members[0],
                     members: members,
                 },
             });

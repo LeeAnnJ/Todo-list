@@ -24,9 +24,11 @@ CREATE TABLE `group_member`  (
 
 CREATE TABLE `message`  (
   `message_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sender_id` bigint UNSIGNED NULL DEFAULT 0,
   `client_id` bigint UNSIGNED NOT NULL,
   `push_type` int NOT NULL DEFAULT 0,
   `push_time` datetime NOT NULL,
+  `content` varchar(255) NOT NULL DEFAULT '',
   `is_read` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`message_id`)
 );

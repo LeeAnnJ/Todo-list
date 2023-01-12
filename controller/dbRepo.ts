@@ -305,19 +305,40 @@ class DbRepo {
 
     // get members of a group
     public getGroupMembers(group_id: number, callback: Function) {
+        // get owner
         var sql = 'SELECT * FROM group_member WHERE group_id = ' + group_id
         var res: Account[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
+                callback(res)
             } else {
                 for (var i = 0; i < result.length; i++) {
                     this.getUserById(result[i].client_id, (acc: Account) => {
                         res.push(acc)
                     })
                 }
+
+                // change the group creater to the first member
+                sql = "SELECT founder_id as creater FROM group_info WHERE group_id = " + group_id
+                this.connection.query(sql, (err, result) => {
+
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        var creater_id = result[0].creater
+                        for (var i = 0; i < res.length; i++) {
+                            if (res[i].client_id == creater_id) {
+                                var temp = res[0]
+                                res[0] = res[i]
+                                res[i] = temp
+                                break
+                            }
+                        }
+                    }
+                })
+                callback(res)
             }
-            callback(res)
         })
     }
 
@@ -871,30 +892,32 @@ class DbRepo {
 
     // add a sub task
     public addSubTask(subtask: SubTask, callback: Function) {
-        var sql =
-            "INSERT INTO subtask_info (name, status, task_id) VALUES ('" +
-            subtask.subtask_name +
-            "', " +
-            subtask.subtask_status +
-            ', ' +
-            subtask.subtask_task_id +
-            ')'
+        // get the number of sub tasks for this task
+        var sql = "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " + subtask.subtask_task_id
+        var count = 0
         this.connection.query(sql, (err, result) => {
             if (err) {
-                console.log(err)
                 callback(0)
-            } else {
+            }
+            else {
+                count = result[0].count
+
                 sql =
-                    "SELECT subtask_id FROM subtask_info WHERE subtask_name = '" +
+                    "INSERT INTO subtask_info (subtask_id, name, status, task_id) VALUES ('" +
+                    (count + 1).toString + "', '" +
                     subtask.subtask_name +
-                    "' AND task_id = " +
-                    subtask.subtask_task_id
+                    "', " +
+                    subtask.subtask_status +
+                    ', ' +
+                    subtask.subtask_task_id +
+                    ')'
+                
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err)
                         callback(0)
                     } else {
-                        callback(result[0].subtask_id)
+                        callback(count + 1)
                     }
                 })
             }
@@ -968,6 +991,68 @@ class DbRepo {
                 }
             }
             callback(res)
+        })
+    }
+
+    public get_message_by_id(message_id: number, callback: Function) {
+        var sql = 'SELECT * FROM message_info WHERE message_id = ' + message_id
+        var res: Message = new Message(0, 0, 0, 0, '', new Date(), 0)
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res = new Message(
+                    result[0].message_id,
+                    result[0].sender_id,
+                    result[0].client_id,
+                    result[0].push_type,
+                    result[0].content,
+                    result[0].push_time_time,
+                    result[0].is_read,
+                )
+            }
+            callback(res)
+        })
+    }
+
+
+    public add_message(message: Message, callback: Function) {
+        var sql =
+            "INSERT INTO message (sender_id, client_id, push_type, content, push_time, is_read) VALUES (" +
+            message.message_sender + ", " +
+            message.message_receiver + ", " +
+            message.message_type + ", '" +
+            message.message_content + "', '" +
+            message.message_send_time + "', " +
+            message.message_status + ")"
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                callback(0)
+            } else {
+                sql = "SELECT * FROM message WHERE sender_id = " + message.message_sender + " AND client_id = " + message.message_receiver + " AND push_type = " + message.message_type + " AND content = '" + message.message_content + "' AND push_time = '" + message.message_send_time + "' AND is_read = " + message.message_status
+                // callback
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        callback(0)
+                    } else {
+                        callback(result[0].message_id)
+                    }
+                })
+            }
+        })
+    }
+
+    public change_message_status(message_id: number, is_read: number, callback: Function) {
+        var sql = "UPDATE message SET is_read = " + is_read + " WHERE message_id = " + message_id
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                callback(false)
+            } else {
+                callback(true)
+            }
         })
     }
 }

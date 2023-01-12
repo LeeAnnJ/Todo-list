@@ -51,4 +51,6 @@ router.post('/deleteSubTaskFromTask', task_controller.delete_subtask_from_task);
 router.post('/markTaskAsDone', task_controller.mark_task_as_done);
 // mark subtask as done
 router.post('/markSubTaskAsDone', task_controller.mark_subtask_as_done);
+// alter subtask
+router.post('/alterSubTaskToTask', task_controller.alter_subtask);
 module.exports = router;

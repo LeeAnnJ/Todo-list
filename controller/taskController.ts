@@ -268,3 +268,37 @@ export const mark_subtask_as_done = (req: Request, res: Response) => {
         })
     })
 }
+
+export function alter_subtask(req: Request, res: Response) {
+    var task_id = req.body.task_id
+    var subtask_id = req.body.subtask_id
+    var subtask_name = req.body.content.subtask_name as string || ''
+
+    db.getSubTaskByIds(task_id, subtask_id, (subtask: SubTask) => {
+        if (subtask !== null) {
+            subtask.subtask_name = subtask_name
+
+            db.alertSubTaskInfo(subtask, (result: boolean) => {
+                if (result) {
+                    res.json({
+                        code: 200,
+                        message: 'success',
+                        data: {},
+                    })
+                } else {
+                    res.json({
+                        code: 400,
+                        message: 'failed: could not modify subtask',
+                        data: {},
+                    })
+                }
+            })
+        } else {
+            res.json({
+                code: 400,
+                message: 'failed: could not find subtask',
+                data: {},
+            })
+        }
+    })
+}
