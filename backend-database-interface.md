@@ -494,6 +494,7 @@ responseType: 'blob'
 请求参数说明：
 ```json
 {
+    "task_id":"xxx",
     "subtask_id":"xxx",
     "content": {
         "name": "xxx",
@@ -709,6 +710,7 @@ responseType: 'blob'
 }
 ```
 **P.S. 若用户是该任务的创建人，则`is_owner`字段为`true`**
+*update:目前做法是创建人是返回元组的第一个元素，这样后端好复用一点*
 
 ### 9. 添加共同参与人
 
