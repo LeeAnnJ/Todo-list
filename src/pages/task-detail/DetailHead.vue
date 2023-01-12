@@ -33,7 +33,7 @@
 
 <style scoped>
   .head{
-      position: absolute;
+      position: fixed;
       top: 55px;
       width: 100%;
       height: 33px;

@@ -3,7 +3,6 @@ import Service from "../axios";
 
 /**
  * 登录接口
- * @returns 
  */ 
 async function login(username,password){
     return await Service.requestService({
