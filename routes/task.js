@@ -31,6 +31,8 @@ const express_1 = __importDefault(require("express"));
 // import task controller
 const task_controller = __importStar(require("../controller/taskController"));
 const router = express_1.default.Router();
+// create task
+router.post('/createTask', task_controller.create_task);
 //get task by id
 router.get('/getTaskById', task_controller.get_task_by_id);
 // get tasks by user id

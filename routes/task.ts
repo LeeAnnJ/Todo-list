@@ -7,6 +7,9 @@ import * as task_controller from '../controller/taskController'
 
 const router = express.Router()
 
+// create task
+router.post('/createTask', task_controller.create_task)
+
 //get task by id
 router.get('/getTaskById', task_controller.get_task_by_id)
 
