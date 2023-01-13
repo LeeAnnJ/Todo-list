@@ -156,7 +156,7 @@ const change_avator = (req, res) => {
     const upload = multer({ dest: 'public/' });
     // upload the avator to the piblic folder
     // read the avator from the request
-    var avator_file = req.body.avator_file;
+    var avator_file = req.body.avatar_file;
     var client_id = req.body.client_id;
     // save the avator to the public folder
     var avator_path = 'public/' + client_id + '.jpg';

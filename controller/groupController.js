@@ -138,8 +138,8 @@ const get_user_groups = (req, res) => {
 exports.get_user_groups = get_user_groups;
 // add member to group
 const add_member_to_group = (req, res) => {
-    var group_id = req.body.group.group_id;
-    var member_id = req.body.group.member_id;
+    var group_id = req.body.group_id;
+    var member_id = req.body.member_id;
     dbRepo_1.db.addMemberToGroup(group_id, member_id, (isSucc) => {
         if (isSucc) {
             // add member to group success
@@ -161,8 +161,8 @@ const add_member_to_group = (req, res) => {
 exports.add_member_to_group = add_member_to_group;
 // remove member from group
 const remove_member_from_group = (req, res) => {
-    var group_id = req.body.group.group_id;
-    var member_id = req.body.group.member_id;
+    var group_id = req.body.group_id;
+    var member_id = req.body.member_id;
     dbRepo_1.db.deleteMemberFromGroup(group_id, member_id, (isSucc) => {
         if (isSucc) {
             // remove member from group success
@@ -184,7 +184,7 @@ const remove_member_from_group = (req, res) => {
 exports.remove_member_from_group = remove_member_from_group;
 // delete group
 const delete_group = (req, res) => {
-    var group_id = req.body.group.group_id;
+    var group_id = req.body.group_id;
     dbRepo_1.db.deleteGroup(group_id, (isSucc) => {
         if (isSucc) {
             // delete group success

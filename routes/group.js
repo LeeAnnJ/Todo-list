@@ -49,4 +49,6 @@ router.post('/deleteMemberFromGroup', group_controller.remove_member_from_group)
 router.post('/updateGroupInfo', group_controller.update_group);
 // get tasks of group
 router.get('/getTasksByGroupId', group_controller.get_tasks_of_group);
+// get the task owner of group
+router.get('/getTaskOwnerOfGroup', group_controller.get_task_owner_of_group);
 module.exports = router;

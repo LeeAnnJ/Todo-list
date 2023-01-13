@@ -91,7 +91,7 @@ exports.alert_folder = alert_folder;
 // TODO: 这个放在task里面写吧
 // delete a folder
 const delete_folder = (req, res) => {
-    const folder_id = parseInt(req.body.folder.folder_id);
+    const folder_id = parseInt(req.body.folder_id);
     dbRepo_1.db.deleteFolder(folder_id, (result) => {
         if (result) {
             // delete folder success

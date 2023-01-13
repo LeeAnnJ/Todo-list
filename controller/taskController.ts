@@ -199,7 +199,7 @@ export const get_subtasks_by_task_id = (req: Request, res: Response) => {
 
 // add subtask to task
 export const add_subtask_to_task = (req: Request, res: Response) => {
-    var task_id = req.body.task.task_id
+    var task_id = req.body.task_id
     var subtask_name = req.body.subtask.name
 
     var subtask = new SubTask(0, subtask_name, 0, task_id)
@@ -227,8 +227,8 @@ export const add_subtask_to_task = (req: Request, res: Response) => {
 
 // delete subtask from task
 export const delete_subtask_from_task = (req: Request, res: Response) => {
-    var subtask_id = req.body.subtask.subtask_id
-    var task_id = req.body.subtask.task_id
+    var subtask_id = req.body.subtask_id
+    var task_id = req.body.task_id
     db.deleteSubTask(task_id, subtask_id, (result: boolean) => {
         if (result) {
             res.json({
@@ -248,7 +248,7 @@ export const delete_subtask_from_task = (req: Request, res: Response) => {
 
 // mark task as done
 export const mark_task_as_done = (req: Request, res: Response) => {
-    var task_id = req.body.task.task_id
+    var task_id = req.body.task_id
     db.getTaskByTaskId(task_id, (task: Task) => {
         task.task_status = 1
         db.alertTaskInfo(task, (result: boolean) => {

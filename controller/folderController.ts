@@ -98,7 +98,7 @@ export const alert_folder = (req: Request, res: Response) => {
 
 // delete a folder
 export const delete_folder = (req: Request, res: Response) => {
-    const folder_id = parseInt(req.body.folder.folder_id as string)
+    const folder_id = parseInt(req.body.folder_id as string)
     db.deleteFolder(folder_id, (result: boolean) => {
         if (result) {
             // delete folder success
