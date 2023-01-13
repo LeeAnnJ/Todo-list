@@ -4,32 +4,24 @@
     <span class="title">
       <b>To-do List 在线看板</b>
     </span>
-
-    <el-input v-model="input_search" class="input_search" placeholder="输入编号搜索任务">
+    <el-input v-model="task_id" @change="goToTaskDetail" class="input_search" placeholder="输入编号搜索任务">
       <template #prefix>
         <el-icon class="el-input__icon"><search /></el-icon>
       </template>
     </el-input>
+    
 
     <!-- 个人设置 -->
     <div class="setting_block">
       <!-- 点击显示详细信息 -->
-      <el-popover show="" placement="bottom" :width="300" trigger="click">
-        <template #reference>
           <el-icon class="setting" :size="24"><Setting /></el-icon>
-        </template>
-        <h2>个人设置页面</h2>
-        <div>我是个人设置</div>
-      </el-popover>
-      <!-- 悬停显示提示 -->
-      <div class="setting_tips">个人设置</div>
     </div>
 
     <!-- 消息通知 -->
     <div class="bell_block">
       <el-popover placement="bottom" :width="300" trigger="click">
         <template #reference>
-          <el-icon class="bell" :size="24" @click="unreadVis = true; allVis = false">
+          <el-icon class="bell" :size="24" @click="showMessage">
             <Bell />
           </el-icon>
         </template>
@@ -38,9 +30,9 @@
             <el-collapse-item title="未读消息" name="1">
               <div>
                 <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
-                  <li @click="info.noRead = false" v-show="info.noRead" v-for="info in infomation"
-                    class="infinite-list-item">{{ info.date }}{{ info.data }}&nbsp;{{ info.content }}
-                    未读消息未读消息未读消息未读消息未读消息未读消息</li>
+                  <li @click="changeMessage,info.is_read=1" v-show="info.is_read==0?1:0" v-for="info in infomation"
+                    class="infinite-list-item">{{ info.send_time }}&nbsp;{{ info.message_content }}
+                  </li>
                 </ul>
               </div>
             </el-collapse-item>
@@ -49,8 +41,8 @@
               <div>
                 <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
                   <li v-for="info in infomation" class="infinite-list-item">
-                    {{ info.date }}{{ info.data }}&nbsp;{{ info.content }}
-                    全部消息全部消息全部消息全部消息全部消息全部消息</li>
+                    {{ info.send_time }}&nbsp;{{ info.message_content }}
+                  </li>
                 </ul>
               </div>
             </el-collapse-item>
@@ -66,27 +58,16 @@
       <el-dialog v-model="dialogVisible" title="编辑个人信息" width="24%" :before-close="handleClose">
         <div>
           <span class="edit_words1">用户名：</span>
-          <el-input class="input_username" v-model="username" placeholder="real_un" />
+          <el-input class="input_username" v-model="username" placeholder="请输入用户名" />
           <br><br>
-          <span class="edit_words2">性别：</span>
-          <el-radio-group v-model="sex" class="radio_sex">
-            <el-radio label="男" size="large">男</el-radio>
-            <el-radio label="女" size="large">女</el-radio>
-          </el-radio-group>
-          <br><br><br>
-          <span class="edit_words3">
-            生日：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-date-picker v-model="birthday" type="date" 
-              value-format="YYYY/MM/DD" placeholder="pick your birthday" />
-          </span>
-          <span class="edit_words4">简介：</span>
-          <el-input class="input_intro" v-model="introduction" placeholder="real_intro" />
+          <span class="edit_words2">简介：</span>
+          <el-input class="input_intro" v-model="introduction" placeholder="请输入简介" />
           <br><br><br><br><br>
         </div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible = false;">取消</el-button>
-            <el-button type="primary" @click="dialogVisible = false;">保存</el-button>
+            <el-button type="primary" @click="dialogVisible = false,alterUserInfo">保存</el-button>
           </span>
         </template>
       </el-dialog>
@@ -95,22 +76,21 @@
     <div class="user_block">
       <el-popover show="" placement="bottom" :width="250" trigger="click" v-model:visible="popoverVis">
         <template #reference>
-          <el-avatar class="user"> {{ username }} </el-avatar>
+          <el-avatar class="user"> {{ store.state.account.user_name }} </el-avatar>
         </template>
 
         <div class="user_info_block">
-          <el-avatar :size="80" class="avatar"><span class="avatar_content">{{ username }}</span></el-avatar>
-          <el-button type="plain" class="edit_info" @click="dialogVisible = true; popoverVis = false">编辑资料</el-button>
+          <el-avatar :size="80" class="avatar"><span class="avatar_content">{{ store.state.account.user_name }}</span></el-avatar>
+          <el-button type="plain" class="edit_info" @click="initEdit">编辑资料</el-button>
           <br><el-divider class="divider1" />
           <div class="user_info">
-            <h4>用户名：{{ username }}</h4>
-            <h4>账号：{{ account }}</h4>
-            <h4>性别：{{ sex }}</h4>
-            <h4>生日：{{ birthday }}</h4>
-            <h4>简介：{{ introduction }}</h4>
+            <h4>用户名：{{ store.state.account.user_name }}</h4>
+            <h4>账号：{{ store.state.account.client_id }}</h4>
+            <h4>注册时间：{{ store.state.account.register_time }}</h4>
+            <h4>简介：{{ store.state.account.intro }}</h4>
           </div>
           <el-divider class="divider2" />
-          <router-link to="login">
+          <router-link to="/login">
             <el-button class="log_out" :key="buttons.text" :type="buttons.type" text>退出登录</el-button>
           </router-link>
         </div>
@@ -124,58 +104,130 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
-import { ElMessageBox } from 'element-plus'
+import account from '../http/api/account'
+import task from '../http/api/task'
+import message from '../http/api/message'
+import { ElMessageBox, useTransitionFallthroughEmits } from 'element-plus'
+import { Store, useStore } from 'vuex';
+
 export default {
   data() {
     return {
+      store: useStore(),
       count: 0,
       infomation: [
-        { date: '2012-1-12', content: '消息一的内容', noRead: true },
-        { data: '2013-1-13', content: '消息二的内容', noRead: true },
-        { data: '2014-1-14', content: '消息三的内容', noRead: true },
-        { data: '2015-1-15', content: '消息四的内容', noRead: true },
-        { data: '2016-1-16', content: '消息五的内容', noRead: true },
-        { data: '2017-1-17', content: '消息六的内容', noRead: true },
-        { data: '2018-1-18', content: '消息七的内容', noRead: true },
-        { data: '2019-1-19', content: '消息八的内容', noRead: true },
-        { data: '2020-1-20', content: '消息九的内容', noRead: true },
-        { data: '2021-1-21', content: '消息十的内容', noRead: true },
-        { data: '2022-1-22', content: '消息11的内容', noRead: true }
+        {
+          message_id: '',
+          message_sender: '',
+          message_receiver: '',
+          message_type: '',
+          message_content: 'test',
+          send_time: '1111-11-11',
+          message_status: 0,
+          is_read: 0
+        }
       ],
+      // [
+      //   { date: '2012-1-12', content: '消息一的内容', noRead: true },
+      //   { data: '2013-1-13', content: '消息二的内容', noRead: true },
+      //   { data: '2014-1-14', content: '消息三的内容', noRead: true },
+      // ],
       unreadVis: false,
       allVis: false,
       activeName: 1,
       dialogVisible: false,
       popoverVis: false,
-      input_search: '',
-      username: 'name',
-      account: '33322244455',
-      sex: '男',
-      birthday: '2000-1-1',
-      introduction: '我是一个简介',
+      buttons: { type: '', text: 'plain' },
 
-      // const real_un = username.value;
-      // const real_sex = sex.value;
-      // const real_bir = birthday.value;
-      // const real_intro = introduction.value;
-
-      buttons: { type: '', text: 'plain' }
+      task_id: '',
+      //client_id: '',
+      username: '',
+      //account: '33322244455',
+      //regi_date: '2000-1-1',
+      introduction: '',      
     }
   },
   methods: {
+    showMessage(){
+      this.unreadVis = true;
+      this.allVis = false;
+      let client_id = this.store.state.account.client_id;
+      message.getMessage(client_id).then(res => {
+        if(res.data.message == "success"){
+          this.infomation = res.data.message_list; 
+        }
+      },error => {
+        console.log(error);
+      }
+      )
+    },
+
+    changeMessage(){
+      let message_id = this.message_id;
+      //this.is_read = 0;
+      message.postMessage(message_id,this.is_read).then(res => {
+        if(res.data.message == "success"){
+          this.is_read = 1;
+        }
+      },error => {
+        console.log(error);
+      })
+    },
+
+    initEdit(){
+      this.dialogVisible = true;
+      this.popoverVis = false;
+      this.username = this.store.state.account.user_name;
+      this.introduction = this.store.state.account.intro;
+    },
+
     load() {
       this.count += 2
     },
+
     handleClose(done: () => void) {
       ElMessageBox.confirm('个人信息未保存更改，是否要退出？')
         .then(() => {
           done()
         })
-        .catch(() => {
-          // catch error
-        })
+        .catch(() => {})
+    },
+
+    goToTaskDetail(task_id){
+      task.getTaskById(task_id)
+      .then(res => {
+        if(res.data.message == "success"){
+            this.$router.push({
+            name: "taskDetail",
+            params: {id: task_id}
+          })
+        } 
+        else{
+          ElMessageBox.alert('不存在该任务', '提示', {
+          confirmButtonText: '确定'})
+        }           
+      }),error => {
+          console.log(error)
+      };
+    },
+
+    alterUserInfo(){
+      let content = {
+        new_user_name: this.username,
+        introduction: this.introduction
+      };
+      let client_id = this.store.state.account.client_id;
+      account.alterUser(client_id, content).then(res => {
+        if(res.data.message == "success"){
+          this.store.commit("alterUser",content);
+        }
+        else{
+          ElMessageBox.alert('修改失败', '提示', {
+          confirmButtonText: '确定'})
+        }
+      },error => {
+        console.log(error)
+      }) 
     }
   }
 }
@@ -184,7 +236,7 @@ export default {
 
 <style scoped>
 .infinite-list-item:hover {
-  border: 0.1px solid rgb(0, 162, 255);
+  border: 0px;
   box-shadow: 2px 2px 1.5px 1px#c7c8ca !important;
 }
 
@@ -210,10 +262,6 @@ export default {
   margin-top: 10px;
 }
 
-/* .info_block{
-  position: absolute;
-  top:50px;
-} */
 .divider3 {
   position: absolute;
   top: 32px;
@@ -224,52 +272,34 @@ export default {
   font-size: 27px;
 }
 
-.edit_words4 {
-  position: absolute;
-  left: 10px;
-  top: 222px;
-}
-
 .input_intro {
   position: absolute;
   width: 220px;
   left: 75px;
-  top: 217px;
-}
-
-.edit_words3 {
-  position: absolute;
-  left: 10px;
-  top: 170px;
-}
-
-.radio_sex {
-  position: absolute;
-  left: 80px;
-  top: 115px;
+  top: 150px;
 }
 
 .edit_words1 {
   position: absolute;
   left: 10px;
-  top: 75px;
+  top: 95px;
 }
 
 .edit_words2 {
   position: absolute;
   left: 10px;
-  top: 125px;
+  top: 155px;
 }
 
 .log_out {
   position: absolute;
-  top: 315px;
+  top: 275px;
   width: 100%;
   left: 0px;
 }
 
 .user_info_block {
-  height: 328px;
+  height: 288px;
 }
 
 .user_info {
@@ -285,7 +315,7 @@ export default {
 
 .divider2 {
   position: absolute;
-  top: 285px;
+  top: 245px;
   left: 0px;
 }
 
@@ -294,7 +324,6 @@ export default {
   top: 35px;
   right: 20px;
 }
-
 .header {
   border-bottom: 2px solid #CDD0D6;
   background-color: #2564CF;
@@ -343,7 +372,7 @@ export default {
   position: absolute;
   width: 220px;
   left: 75px;
-  top: 70px;
+  top: 90px;
 }
 
 .setting {
@@ -373,17 +402,6 @@ export default {
   color: #f9f9f9;
 }
 
-.setting_tips {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  right: 75px;
-  top: 32px;
-  border: 1px solid black;
-  height: 22px;
-  width: 64px;
-}
-
 .bell_tips {
   display: none;
   position: absolute;
@@ -406,20 +424,8 @@ export default {
   width: 64px;
 }
 
-.setting_block:hover .setting_tips {
-  display: block;
-}
-
-.setting_block:hover .setting {
-  background-color: white;
-}
-
 .bell_block:hover .bell_tips {
   display: block;
-}
-
-.bell_block:hover .bell {
-  background-color: white;
 }
 
 .user_block:hover .user_tips {

@@ -30,6 +30,10 @@ export default createStore({
             state.account.avator_path = data.avator_path;
             state.account.register_time = data.register_time;
             state.account.intro = data.intro;
+        },
+        alterUser(state,content){
+            state.account.user_name = content.new_user_name;
+            state.account.intro = content.introduction;
         }
     },
     // 3、定义对state的各种操作
