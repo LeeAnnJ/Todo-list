@@ -537,7 +537,7 @@ class DbRepo {
     }
     // get tasks of a folder
     getFolderTasks(folder_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE task_folder = ' +
+        var sql = 'SELECT * FROM task WHERE task_folder = ' +
             folder_id +
             ' AND task_group = 0';
         var res = [];
@@ -556,7 +556,7 @@ class DbRepo {
     //////////////////////////// Task ////////////////////////////
     // get tasks of a user
     getUserTasks(client_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM task WHERE client_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -585,7 +585,7 @@ class DbRepo {
             task_status: task.task_status,
             task_cycle: task.cycle,
         };
-        var sql = 'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
+        var sql = 'INSERT INTO task SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -611,7 +611,7 @@ class DbRepo {
             }
             else {
                 sql =
-                    "SELECT task_id FROM task_info WHERE task_name = '" +
+                    "SELECT task_id FROM task WHERE task_name = '" +
                         values.task_name +
                         "' AND client_id = " +
                         values.client_id;
@@ -629,7 +629,7 @@ class DbRepo {
     }
     // get task by user_id
     getTaskByUserId(client_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM task WHERE client_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -645,7 +645,7 @@ class DbRepo {
     }
     // get task by task_id
     getTaskByTaskId(task_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id;
+        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id;
         this.connection.query(sql, (err, result) => {
             var res = new task_1.Task(0, 0, '', '', false, 0, new Date(), 0);
             if (err) {
@@ -659,7 +659,7 @@ class DbRepo {
     }
     // alert task info
     alertTaskInfo(task_new, callback) {
-        var sql = 'UPDATE task_info SET ';
+        var sql = 'UPDATE task SET ';
         if (task_new.task_name != '') {
             sql += 'name = "' + task_new.task_name + '", ';
         }
@@ -700,7 +700,7 @@ class DbRepo {
     }
     // delete a task
     deleteTask(task_id, callback) {
-        var sql = 'DELETE FROM task_info WHERE task_id = ' + task_id;
+        var sql = 'DELETE FROM task WHERE task_id = ' + task_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -713,7 +713,7 @@ class DbRepo {
     }
     // get tasks of a group
     getGroupTasks(group_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE group_brlonging = ' + group_id;
+        var sql = 'SELECT * FROM task WHERE group_brlonging = ' + group_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -729,7 +729,7 @@ class DbRepo {
     }
     // get sub tasks of a task
     getSubTasksByTaskId(task_id, callback) {
-        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id;
+        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
