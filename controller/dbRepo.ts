@@ -27,6 +27,9 @@ import { Folder } from '../model/folder'
 import { Task, SubTask } from '../model/task'
 import { Message } from '../model/message'
 
+// import util
+import { date_to_mysql } from '../utils/dateutil'
+
 // 7 tables in total
 
 // the database repository class
@@ -239,6 +242,10 @@ class DbRepo {
             group_creator: group.group_creator,
             group_create_time: group.group_create_time,
         }
+        // let ts = new Date();
+        // ts.setMinutes(ts.getMinutes() - ts.getTimezoneOffset());
+        // console.log(ts.toISOString().slice(0, 19).replace('T', ' '));
+        var sql_time = date_to_mysql(values.group_create_time)
         // FIXME: use Transaction to add the group and the creater to the group
         var sql =
             'INSERT INTO group_info (group_name, group_description, group_creator, group_create_time) VALUES (' +
@@ -248,7 +255,7 @@ class DbRepo {
             ', ' +
             values.group_creator +
             ', ' +
-            values.group_create_time +
+            sql_time +
             ')'
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -305,19 +312,41 @@ class DbRepo {
 
     // get members of a group
     public getGroupMembers(group_id: number, callback: Function) {
+        // get owner
         var sql = 'SELECT * FROM group_member WHERE group_id = ' + group_id
         var res: Account[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
+                callback(res)
             } else {
                 for (var i = 0; i < result.length; i++) {
                     this.getUserById(result[i].client_id, (acc: Account) => {
                         res.push(acc)
                     })
                 }
+
+                // change the group creater to the first member
+                sql =
+                    'SELECT founder_id as creater FROM group_info WHERE group_id = ' +
+                    group_id
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        var creater_id = result[0].creater
+                        for (var i = 0; i < res.length; i++) {
+                            if (res[i].client_id == creater_id) {
+                                var temp = res[0]
+                                res[0] = res[i]
+                                res[i] = temp
+                                break
+                            }
+                        }
+                    }
+                })
+                callback(res)
             }
-            callback(res)
         })
     }
 
@@ -567,7 +596,7 @@ class DbRepo {
     // get tasks of a folder
     public getFolderTasks(folder_id: number, callback: Function) {
         var sql =
-            'SELECT * FROM task_info WHERE task_folder = ' +
+            'SELECT * FROM task WHERE task_folder = ' +
             folder_id +
             ' AND task_group = 0'
         var res: Task[] = []
@@ -582,13 +611,14 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -601,7 +631,7 @@ class DbRepo {
 
     // get tasks of a user
     public getUserTasks(client_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id
+        var sql = 'SELECT * FROM task WHERE register_id = ' + client_id
         var res: Task[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -612,6 +642,7 @@ class DbRepo {
                         new Task(
                             result[i].task_id,
                             result[i].register_id,
+                            result[i].create_time,
                             result[i].name,
                             result[i].note,
                             result[i].type,
@@ -620,6 +651,7 @@ class DbRepo {
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -641,9 +673,10 @@ class DbRepo {
             task_deadline: task.task_ddl,
             task_priority: task.task_priority,
             task_status: task.task_status,
+            task_cycle: task.cycle,
         }
         var sql =
-            'INSERT INTO task_info SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`) VALUES (' +
+            'INSERT INTO task (register_id, create_time, name, type, priority, deadline, group_belonging, belongs_folder_id, note, is_favor, status, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -652,13 +685,17 @@ class DbRepo {
             ', ' +
             values.task_priority +
             ', "' +
-            values.task_deadline +
+            date_to_mysql(values.task_deadline) +
             '", ' +
             values.task_group +
             ', "' +
+            values.task_folder +
+            '", "' +
             values.task_description +
             '", 0, ' +
             values.task_status +
+            ', ' +
+            values.task_cycle +
             ')'
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -666,9 +703,9 @@ class DbRepo {
                 callback(0)
             } else {
                 sql =
-                    "SELECT task_id FROM task_info WHERE task_name = '" +
+                    "SELECT task_id FROM task WHERE name = '" +
                     values.task_name +
-                    "' AND client_id = " +
+                    "' AND register_id = " +
                     values.client_id
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -684,7 +721,7 @@ class DbRepo {
 
     // get task by user_id
     public getTaskByUserId(client_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task_info WHERE client_id = ' + client_id
+        var sql = 'SELECT * FROM task WHERE register_id = ' + client_id
         var res: Task[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -697,13 +734,14 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -714,9 +752,9 @@ class DbRepo {
 
     // get task by task_id
     public getTaskByTaskId(task_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id
+        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id
         this.connection.query(sql, (err, result) => {
-            var res: Task = new Task(0, 0, '', '', false, 0, new Date(), 0)
+            var res: Task = new Task(0, 0, new Date(),'', '', false, 0, new Date(), 0)
             if (err) {
                 console.log(err)
             } else {
@@ -725,13 +763,14 @@ class DbRepo {
                     result[0].register_id,
                     result[0].create_time,
                     result[0].name,
+                    result[0].note,
                     result[0].type,
                     result[0].priority,
                     result[0].deadline,
                     result[0].group_belonging,
                     result[0].belongs_folder_id,
-                    result[0].note,
                     result[0].status,
+                    result[0].cycle,
                 )
             }
             callback(res)
@@ -740,7 +779,7 @@ class DbRepo {
 
     // alert task info
     public alertTaskInfo(task_new: Task, callback: Function) {
-        var sql = 'UPDATE task_info SET '
+        var sql = 'UPDATE task SET '
         if (task_new.task_name != '') {
             sql += 'name = "' + task_new.task_name + '", '
         }
@@ -749,7 +788,7 @@ class DbRepo {
             sql += 'priority = ' + task_new.task_priority + ', '
         }
         if (task_new.task_ddl != null) {
-            sql += 'deadline = "' + task_new.task_ddl + '", '
+            sql += 'deadline = "' + date_to_mysql(task_new.task_ddl) + '", '
         }
         if (task_new.task_group_id != -1) {
             sql += 'group_belonging = ' + task_new.task_group_id + ', '
@@ -762,6 +801,9 @@ class DbRepo {
         }
         if (task_new.task_status != -1) {
             sql += 'status = ' + task_new.task_status + ', '
+        }
+        if (task_new.cycle != -1) {
+            sql += 'cycle = ' + task_new.cycle + ', '
         }
         // remove the last ', '
         sql = sql.substring(0, sql.length - 2)
@@ -779,7 +821,7 @@ class DbRepo {
 
     // delete a task
     public deleteTask(task_id: number, callback: Function) {
-        var sql = 'DELETE FROM task_info WHERE task_id = ' + task_id
+        var sql = 'DELETE FROM task WHERE task_id = ' + task_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -792,7 +834,7 @@ class DbRepo {
 
     // get tasks of a group
     public getGroupTasks(group_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task_info WHERE group_brlonging = ' + group_id
+        var sql = 'SELECT * FROM task WHERE group_brlonging = ' + group_id
         var res: Task[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -805,13 +847,14 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -822,7 +865,7 @@ class DbRepo {
 
     // get sub tasks of a task
     public getSubTasksByTaskId(task_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task_info WHERE task_id = ' + task_id
+        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id
         var res: SubTask[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -871,30 +914,34 @@ class DbRepo {
 
     // add a sub task
     public addSubTask(subtask: SubTask, callback: Function) {
+        // get the number of sub tasks for this task
         var sql =
-            "INSERT INTO subtask_info (name, status, task_id) VALUES ('" +
-            subtask.subtask_name +
-            "', " +
-            subtask.subtask_status +
-            ', ' +
-            subtask.subtask_task_id +
-            ')'
+            "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " +
+            subtask.subtask_task_id
+        var count = 0
         this.connection.query(sql, (err, result) => {
             if (err) {
-                console.log(err)
                 callback(0)
             } else {
+                count = result[0].count
+
                 sql =
-                    "SELECT subtask_id FROM subtask_info WHERE subtask_name = '" +
+                    "INSERT INTO subtask_info (subtask_id, name, status, task_id) VALUES ('" +
+                    (count + 1).toString +
+                    "', '" +
                     subtask.subtask_name +
-                    "' AND task_id = " +
-                    subtask.subtask_task_id
+                    "', " +
+                    subtask.subtask_status +
+                    ', ' +
+                    subtask.subtask_task_id +
+                    ')'
+
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err)
                         callback(0)
                     } else {
-                        callback(result[0].subtask_id)
+                        callback(count + 1)
                     }
                 })
             }
@@ -968,6 +1015,93 @@ class DbRepo {
                 }
             }
             callback(res)
+        })
+    }
+
+    public get_message_by_id(message_id: number, callback: Function) {
+        var sql = 'SELECT * FROM message_info WHERE message_id = ' + message_id
+        var res: Message = new Message(0, 0, 0, 0, '', new Date(), 0)
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res = new Message(
+                    result[0].message_id,
+                    result[0].sender_id,
+                    result[0].client_id,
+                    result[0].push_type,
+                    result[0].content,
+                    result[0].push_time_time,
+                    result[0].is_read,
+                )
+            }
+            callback(res)
+        })
+    }
+
+    public add_message(message: Message, callback: Function) {
+        var sql =
+            'INSERT INTO message (sender_id, client_id, push_type, content, push_time, is_read) VALUES (' +
+            message.message_sender +
+            ', ' +
+            message.message_receiver +
+            ', ' +
+            message.message_type +
+            ", '" +
+            message.message_content +
+            "', '" +
+            date_to_mysql(message.message_send_time) +
+            "', " +
+            message.message_status +
+            ')'
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                callback(0)
+            } else {
+                sql =
+                    'SELECT * FROM message WHERE sender_id = ' +
+                    message.message_sender +
+                    ' AND client_id = ' +
+                    message.message_receiver +
+                    ' AND push_type = ' +
+                    message.message_type +
+                    " AND content = '" +
+                    message.message_content +
+                    "' AND push_time = '" +
+                    date_to_mysql(message.message_send_time) +
+                    "' AND is_read = " +
+                    message.message_status
+                // callback
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        callback(0)
+                    } else {
+                        callback(result[0].message_id)
+                    }
+                })
+            }
+        })
+    }
+
+    public change_message_status(
+        message_id: number,
+        is_read: number,
+        callback: Function,
+    ) {
+        var sql =
+            'UPDATE message SET is_read = ' +
+            is_read +
+            ' WHERE message_id = ' +
+            message_id
+        this.connection.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                callback(false)
+            } else {
+                callback(true)
+            }
         })
     }
 }

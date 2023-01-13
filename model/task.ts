@@ -20,9 +20,12 @@ export class Task {
     task_status: number
     subtasks_count: number
 
+    cycle: number
+
     constructor(
         task_id: number,
         task_creater_id: number,
+        task_create_time: Date,
         task_name: string,
         task_description: string,
         task_type: boolean,
@@ -32,10 +35,11 @@ export class Task {
         belongs_folder_id: number = 0,
         isfavor: boolean = false,
         status: number = 0,
+        cycle: number = 0,
     ) {
         this.task_id = task_id
         this.task_creator = task_creater_id
-        this.task_create_time = new Date()
+        this.task_create_time = task_create_time
         this.task_name = task_name
         this.task_description = task_description
         this.task_type = task_type
@@ -47,6 +51,8 @@ export class Task {
         this.task_folder_id = belongs_folder_id
         this.task_status = status
         this.subtasks_count = 0
+
+        this.cycle = cycle
     }
 
     // add subtask

@@ -26,6 +26,22 @@ const get_message = (req, res) => {
 exports.get_message = get_message;
 // get message by id
 const post_message = (req, res) => {
-    res.send('get message by id');
+    var message_id = req.body.message_id;
+    var is_read = req.body.is_read;
+    dbRepo_1.db.change_message_status(message_id, is_read, (result) => {
+        if (result) {
+            // success
+            res.json({
+                code: 200,
+                message: 'success',
+            });
+        }
+        else {
+            res.json({
+                code: 400,
+                message: 'fail',
+            });
+        }
+    });
 };
 exports.post_message = post_message;

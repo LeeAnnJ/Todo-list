@@ -8,7 +8,7 @@ import * as task_controller from '../controller/taskController'
 const router = express.Router()
 
 // create task
-router.post('createTask',task_controller.create_task)
+router.post('/createTask', task_controller.create_task)
 
 //get task by id
 router.get('/getTaskById', task_controller.get_task_by_id)
@@ -39,5 +39,8 @@ router.post('/markTaskAsDone', task_controller.mark_task_as_done)
 
 // mark subtask as done
 router.post('/markSubTaskAsDone', task_controller.mark_subtask_as_done)
+
+// alter subtask
+router.post('/alterSubTaskToTask', task_controller.alter_subtask)
 
 module.exports = router

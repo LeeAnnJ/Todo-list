@@ -109,9 +109,10 @@ export const alert_user = (req: Request, res: Response) => {
     const client_id = req.body.client_id
     db.getUserById(client_id, (acc_now: Account) => {
         if (acc_now.client_id !== 0) {
-            var new_user_name = req.body.content.new_user_name
-            var new_password_hash = req.body.content.new_password_hash
-            var new_avator = req.body.content.new_avator
+            var new_user_name = req.body.content.new_user_name || ''
+            var new_password_hash = req.body.content.new_password_hash || ''
+            var new_avator = req.body.content.new_avator || ''
+            var new_intro = req.body.content.new_intro || ''
             if (new_user_name !== '') {
                 acc_now.user_name = new_user_name
             }
@@ -120,6 +121,9 @@ export const alert_user = (req: Request, res: Response) => {
             }
             if (new_avator !== '') {
                 acc_now.avatar_path = new_avator
+            }
+            if (new_intro !== '') {
+                acc_now.introduction = new_intro
             }
             db.alertUserInfo(acc_now, (result: Boolean) => {
                 if (result) {

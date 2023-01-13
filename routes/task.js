@@ -32,7 +32,7 @@ const express_1 = __importDefault(require("express"));
 const task_controller = __importStar(require("../controller/taskController"));
 const router = express_1.default.Router();
 // create task
-router.post('createTask', task_controller.create_task);
+router.post('/createTask', task_controller.create_task);
 //get task by id
 router.get('/getTaskById', task_controller.get_task_by_id);
 // get tasks by user id
@@ -53,4 +53,6 @@ router.post('/deleteSubTaskFromTask', task_controller.delete_subtask_from_task);
 router.post('/markTaskAsDone', task_controller.mark_task_as_done);
 // mark subtask as done
 router.post('/markSubTaskAsDone', task_controller.mark_subtask_as_done);
+// alter subtask
+router.post('/alterSubTaskToTask', task_controller.alter_subtask);
 module.exports = router;

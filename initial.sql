@@ -24,9 +24,11 @@ CREATE TABLE `group_member`  (
 
 CREATE TABLE `message`  (
   `message_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sender_id` bigint UNSIGNED NULL DEFAULT 0,
   `client_id` bigint UNSIGNED NOT NULL,
   `push_type` int NOT NULL DEFAULT 0,
   `push_time` datetime NOT NULL,
+  `content` varchar(255) NOT NULL DEFAULT '',
   `is_read` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`message_id`)
 );
@@ -45,11 +47,12 @@ CREATE TABLE `task`  (
   `create_time` datetime NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 0,
-  `priorty` int NOT NULL DEFAULT 0,
+  `priority` int NOT NULL DEFAULT 0,
   `deadline` datetime NULL,
   `group_belonging` bigint UNSIGNED NULL,
   `note` text NULL,
   `is_favor` tinyint(1) NOT NULL DEFAULT 0,
+  `cycle` int NOT NULL DEFAULT 0,
   `belongs_folder_id` bigint UNSIGNED NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`task_id`)

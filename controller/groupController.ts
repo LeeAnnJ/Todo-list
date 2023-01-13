@@ -6,6 +6,7 @@ import { Request, Response } from 'express'
 import { Group, GroupAccount } from '../model/group'
 import { db } from '../controller/dbRepo'
 import { Task } from '../model/task'
+import { Account } from '../model/account'
 
 // create group
 export const create_group = (req: Request, res: Response) => {
@@ -91,13 +92,14 @@ export const get_task_owner_of_group = (req: Request, res: Response) => {
 // get the members of group
 export const get_members_of_group = (req: Request, res: Response) => {
     var group_id = parseInt(req.query['group_id'] as string)
-    db.getGroupMembers(group_id, (members: number[]) => {
+    db.getGroupMembers(group_id, (members: Account[]) => {
         if (members !== null) {
             // get members success
             res.json({
                 code: 200,
                 message: 'success',
                 data: {
+                    owner : members[0],
                     members: members,
                 },
             })
