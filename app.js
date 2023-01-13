@@ -78,9 +78,6 @@ app.use('/message', messageRouter);
 app.use('/group', groupRouter);
 app.use('/folder', folderRouter);
 app.use('/', indexRouter);
-// var server = app.listen(app.get('port'), '127.0.0.1', () => {
-//     console.log('Express server listening on port ' + app.get('port'));
-// });
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));
