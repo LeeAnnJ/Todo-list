@@ -17,7 +17,7 @@ const create_task = (req, res) => {
     var folder_id = req.body.belongs_folder_id || 0;
     var group_id = req.body.group_id || 0;
     var cycle = req.body.task.cycle || 0;
-    var task = new task_1.Task(0, task_creator, task_name, task_description, type, priorty, ddl, group_id, folder_id, false, 0, cycle);
+    var task = new task_1.Task(0, task_creator, new Date(), task_name, task_description, type, priorty, ddl, group_id, folder_id, false, 0, cycle);
     dbRepo_1.db.createTask(task, (task_id) => {
         if (task_id !== 0) {
             // create task success
