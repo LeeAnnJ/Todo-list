@@ -27,6 +27,9 @@ import { Folder } from '../model/folder'
 import { Task, SubTask } from '../model/task'
 import { Message } from '../model/message'
 
+// import util
+import { date_to_mysql } from '../utils/dateutil'
+
 // 7 tables in total
 
 // the database repository class
@@ -239,6 +242,10 @@ class DbRepo {
             group_creator: group.group_creator,
             group_create_time: group.group_create_time,
         }
+        // let ts = new Date();
+        // ts.setMinutes(ts.getMinutes() - ts.getTimezoneOffset());
+        // console.log(ts.toISOString().slice(0, 19).replace('T', ' '));
+        var sql_time = date_to_mysql(values.group_create_time)
         // FIXME: use Transaction to add the group and the creater to the group
         var sql =
             'INSERT INTO group_info (group_name, group_description, group_creator, group_create_time) VALUES (' +
@@ -248,7 +255,7 @@ class DbRepo {
             ', ' +
             values.group_creator +
             ', ' +
-            values.group_create_time +
+            sql_time +
             ')'
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -320,9 +327,10 @@ class DbRepo {
                 }
 
                 // change the group creater to the first member
-                sql = "SELECT founder_id as creater FROM group_info WHERE group_id = " + group_id
+                sql =
+                    'SELECT founder_id as creater FROM group_info WHERE group_id = ' +
+                    group_id
                 this.connection.query(sql, (err, result) => {
-
                     if (err) {
                         console.log(err)
                     } else {
@@ -610,7 +618,7 @@ class DbRepo {
                             result[i].belongs_folder_id,
                             result[i].note,
                             result[i].status,
-                            result[i].cycle
+                            result[i].cycle,
                         ),
                     )
                 }
@@ -676,7 +684,7 @@ class DbRepo {
             ', ' +
             values.task_priority +
             ', "' +
-            values.task_deadline +
+            date_to_mysql(values.task_deadline) +
             '", ' +
             values.task_group +
             ', "' +
@@ -777,7 +785,7 @@ class DbRepo {
             sql += 'priority = ' + task_new.task_priority + ', '
         }
         if (task_new.task_ddl != null) {
-            sql += 'deadline = "' + task_new.task_ddl + '", '
+            sql += 'deadline = "' + date_to_mysql(task_new.task_ddl) + '", '
         }
         if (task_new.task_group_id != -1) {
             sql += 'group_belonging = ' + task_new.task_group_id + ', '
@@ -904,25 +912,27 @@ class DbRepo {
     // add a sub task
     public addSubTask(subtask: SubTask, callback: Function) {
         // get the number of sub tasks for this task
-        var sql = "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " + subtask.subtask_task_id
+        var sql =
+            "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " +
+            subtask.subtask_task_id
         var count = 0
         this.connection.query(sql, (err, result) => {
             if (err) {
                 callback(0)
-            }
-            else {
+            } else {
                 count = result[0].count
 
                 sql =
                     "INSERT INTO subtask_info (subtask_id, name, status, task_id) VALUES ('" +
-                    (count + 1).toString + "', '" +
+                    (count + 1).toString +
+                    "', '" +
                     subtask.subtask_name +
                     "', " +
                     subtask.subtask_status +
                     ', ' +
                     subtask.subtask_task_id +
                     ')'
-                
+
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err)
@@ -1026,22 +1036,39 @@ class DbRepo {
         })
     }
 
-
     public add_message(message: Message, callback: Function) {
         var sql =
-            "INSERT INTO message (sender_id, client_id, push_type, content, push_time, is_read) VALUES (" +
-            message.message_sender + ", " +
-            message.message_receiver + ", " +
-            message.message_type + ", '" +
-            message.message_content + "', '" +
-            message.message_send_time + "', " +
-            message.message_status + ")"
+            'INSERT INTO message (sender_id, client_id, push_type, content, push_time, is_read) VALUES (' +
+            message.message_sender +
+            ', ' +
+            message.message_receiver +
+            ', ' +
+            message.message_type +
+            ", '" +
+            message.message_content +
+            "', '" +
+            date_to_mysql(message.message_send_time) +
+            "', " +
+            message.message_status +
+            ')'
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
                 callback(0)
             } else {
-                sql = "SELECT * FROM message WHERE sender_id = " + message.message_sender + " AND client_id = " + message.message_receiver + " AND push_type = " + message.message_type + " AND content = '" + message.message_content + "' AND push_time = '" + message.message_send_time + "' AND is_read = " + message.message_status
+                sql =
+                    'SELECT * FROM message WHERE sender_id = ' +
+                    message.message_sender +
+                    ' AND client_id = ' +
+                    message.message_receiver +
+                    ' AND push_type = ' +
+                    message.message_type +
+                    " AND content = '" +
+                    message.message_content +
+                    "' AND push_time = '" +
+                    date_to_mysql(message.message_send_time) +
+                    "' AND is_read = " +
+                    message.message_status
                 // callback
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -1055,8 +1082,16 @@ class DbRepo {
         })
     }
 
-    public change_message_status(message_id: number, is_read: number, callback: Function) {
-        var sql = "UPDATE message SET is_read = " + is_read + " WHERE message_id = " + message_id
+    public change_message_status(
+        message_id: number,
+        is_read: number,
+        callback: Function,
+    ) {
+        var sql =
+            'UPDATE message SET is_read = ' +
+            is_read +
+            ' WHERE message_id = ' +
+            message_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
