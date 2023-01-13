@@ -23,6 +23,7 @@
     import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 	import testGet from '../../http/api/test';
 	import account from '../../http/api/account';
+    import task from '../../http/api/task';
     import{ sm3 } from 'sm-crypto';
     
     export default{
@@ -47,27 +48,20 @@
             },
             testRequest(){
                 let that = this;
-                let user_name = "hahahah";
-                let password = "d07e27c8d0695a8e6c25b2182bee0b38efc027ed8aa01a178c11ccf42964f5fc"
-                let intro = "testtest";
-                let req = {
-                    username: user_name,
-                    passwd_hash: password,
-                    introduction: intro,
+                let task_id=1;
+                let data = {
+                    register_id: 1,
+                    name: "测试添加任务",
+                    type : 0,
+                    priority: 0,
+                    deadline: "2023-1-13 12:00:00",
+                    note: "试一下后端接口",
+                    belongs_folder_id: 1,
+                    group_id: null,
+                    people :[]
                 }
-                account.create(req).then(res=>{
+                task.createTask(data).then(res=>{
                     that.getdata = JSON.stringify(res.data);
-                    // {"code":200,"message":"success","data":{"client_id":11}}
-                    // {"code":400,"message":"username already used","data":null}
-                    //console.log(res);
-                    // let account={
-                    //     client_id: data.client_id,
-                    //     user_name: data.user_name,
-                    //     avator_path: data.avatar_path,
-                    //     register_time: data.register_time,
-                    //     intro: data.introduction
-                    // };
-                    // that.alterAccount(account);
                 },error => {
                     that.getdata="请求失败！";
                     console.log(error);

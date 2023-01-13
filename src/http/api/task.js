@@ -1,28 +1,71 @@
 import Service from "../axios";
 
-/**
- * 任务接口
- * @returns 
- */ 
+async function createTask(req){
+    return await Service.requestService({
+        url: '/task/createTask',
+        method: 'post',
+        data: {
+            task: req
+        }
+    })
+}
 
-async function getTaskById(){
+/**
+ * 根据任务id返回任务  
+ * 返回数据：
+ * ```json
+ * "data": {
+ *     "task_id":1,
+ *     "task_creator":1,
+ *     "task_create_time":"yyyy-mm-ddThh:mm:ss.xxxZ",
+ *     "task_name":"xxx",
+ *     "task_description":"xxxx",
+ *     "task_type":0,
+ *     "task_priority":0,
+ *     "task_ddl":"yyyy-mm-ddThh:mm:ss.xxxZ",
+ *     "task_group_id": 0,
+ *     "task_isfavorite":"xxxx",
+ *     "task_folder_id":1,
+ *     "task_status":0,
+ *     "subtasks_count":0,
+ *     "cycle":0
+ * }
+ * ```
+ */ 
+async function getTaskById(taskid){
     return await Service.requestService({
         url: '/task/getTaskById',
         method: 'get',
+        params: {
+            "task_id": taskid
+        }
     })
 }
 
-async function getTaskByUserId(){
+/**
+ * 根据用户id获取所有任务  
+ * 返回格式:
+ * ```json
+ * "data":[{},{},{}]
+ * ```
+ */
+async function getTaskByUserId(client_id){
     return await Service.requestService({
         url: '/task/getTaskByUserId',
         method: 'get',
+        params: {
+            "user_id": client_id
+        }
     })
 }
 
-async function modifyTask(){
+async function modifyTask(req){
     return await Service.requestService({
         url: '/task/modifyTask',
         method: 'post',
+        data: {
+            task: req
+        }
     })
 }
 
@@ -69,6 +112,7 @@ async function markSubTaskAsDone(){
 }
 
 export default{
+    createTask,
     getTaskById,
     getTaskByUserId,
     modifyTask,

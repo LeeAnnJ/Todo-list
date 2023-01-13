@@ -123,6 +123,7 @@
     import { Calendar, Clock, Select, StarFilled} from '@element-plus/icons-vue';
     import { ElMessageBox } from 'element-plus'
     import {ref} from 'vue';
+    import taskAPI from '../http/api/task';
 
 		export default{
     name: "task-item",
@@ -178,6 +179,15 @@
         },
         editName(){
             this.isedit = false;
+            let that=this;
+            let task = {
+                task_id: that.task_id,
+                name : that.content.name 
+            }
+            taskAPI.modifyTask(task).then(res=>{
+                },error => {
+                    console.log(error);
+                });
         },
         setDDL() {
             if (this.selectTime != null)

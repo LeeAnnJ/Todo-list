@@ -32,11 +32,13 @@ async function deleteTaskList(){
     })
 }
 
-async function getUserTaskLists(){
+async function getUserTaskLists(user){
     return await Service.requestService({
         url: '/folder/getUserTaskLists',
-        method: 'post',
-        params: '',
+        method: 'get',
+        params: {
+            "client_id": user
+        },
     })
 }
 

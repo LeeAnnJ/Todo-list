@@ -1,0 +1,57 @@
+a:link {
+    color: black
+}
+  
+icon.color {
+color: black;
+}
+
+.side:not(.el-menu--collapse) {
+width: 200px;
+min-height: 400px;
+height: 980px;
+background-color: #FFF;
+float: left;
+margin: 0px;
+padding: 0px;
+}
+
+.fold-line {
+    /* border: 1px solid #000; */
+    width: 200px;
+    text-align: left;
+    padding: 0px 0px 0px 25px;
+    margin: 0px;
+    font-size: 20px;
+}
+.fold-line.collapse {
+    width: 60px;
+}
+.fold-line:hover {
+    color: #337ecc;
+}
+
+.menu {
+    border: transparent;
+    width: 183px;
+}
+
+.menuItem {
+    width: 99%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.list-line{
+    /* border: 1px solid #000; */
+    width: 100%;
+    text-align: left;
+    padding-left: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.icon-delete{
+    color: #525355;
+    padding-right: 15px;
+}

@@ -5,7 +5,7 @@
     <el-container class="global">
       <el-container class="main">
         <!-- 侧边栏 -->
-        <Sidebar></Sidebar>
+        <sidebar></sidebar>
         <!-- 主要内容 -->
         <div class="content">
           <!-- "我的一天"对应的标题栏 -->
@@ -52,10 +52,10 @@
     import NewTask from '../../components/NewTask.vue';
 
     export default {
-        components :{
-            Sidebar,
+        components: {
             TopLine,
-            TaskTtem: "task-item",
+            "sidebar": Sidebar,
+            "task-item": TaskItem,
             NewTask,
         },
         data(){
