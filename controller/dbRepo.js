@@ -593,7 +593,7 @@ class DbRepo {
             task_status: task.task_status,
             task_cycle: task.cycle,
         };
-        var sql = 'INSERT INTO task SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
+        var sql = 'INSERT INTO task SET (register_id, create_time, name, type, priority, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +

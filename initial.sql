@@ -47,7 +47,7 @@ CREATE TABLE `task`  (
   `create_time` datetime NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 0,
-  `priorty` int NOT NULL DEFAULT 0,
+  `priority` int NOT NULL DEFAULT 0,
   `deadline` datetime NULL,
   `group_belonging` bigint UNSIGNED NULL,
   `note` text NULL,
