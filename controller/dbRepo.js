@@ -441,7 +441,7 @@ class DbRepo {
     //////////////////////////// Folder ////////////////////////////
     // get folders of a user
     getUserFolders(client_id, callback) {
-        var sql = 'SELECT * FROM folder_info WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM folder WHERE client_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -464,7 +464,7 @@ class DbRepo {
             folder_name: folder.folder_name,
             folder_description: folder.folder_description,
         };
-        var sql = 'INSERT INTO folder_info (client_id, folder_name, folder_description) VALUES (' +
+        var sql = 'INSERT INTO folder (client_id, folder_name, folder_description) VALUES (' +
             values.client_id +
             ', ' +
             values.folder_name +
@@ -480,7 +480,7 @@ class DbRepo {
                 console.log('Folder created');
                 // return folder_id
                 sql =
-                    "SELECT folder_id FROM folder_info WHERE folder_name = '" +
+                    "SELECT folder_id FROM folder WHERE folder_name = '" +
                         values.folder_name +
                         "' AND client_id = " +
                         values.client_id;
@@ -498,7 +498,7 @@ class DbRepo {
     }
     // get folder info by folder_id
     getFolderInfo(folder_id, callback) {
-        var sql = 'SELECT * FROM folder_info WHERE folder_id = ' + folder_id;
+        var sql = 'SELECT * FROM folder WHERE folder_id = ' + folder_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -512,7 +512,7 @@ class DbRepo {
     }
     // alert folder info(by client_i and folder_id)
     alertFolderInfo(folder_new, callback) {
-        var sql = "UPDATE folder_info SET folder_name = '" +
+        var sql = "UPDATE folder SET folder_name = '" +
             folder_new.folder_name +
             "', folder_description = '" +
             folder_new.folder_description +
@@ -532,7 +532,7 @@ class DbRepo {
     }
     // delete a folder
     deleteFolder(folder_id, callback) {
-        var sql = 'DELETE FROM folder_info WHERE folder_id = ' + folder_id;
+        var sql = 'DELETE FROM folder WHERE folder_id = ' + folder_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
