@@ -50,10 +50,17 @@ async function getUserById(client_id){
     })
 }
 
-async function alterUser(){
+async function alterUser(client_id,content){
     return await Service.requestService({
         url: '/account/alterUser',
         method: 'post',
+        data:{
+            client_id:client_id,
+            content:{
+                user_name:content.new_user_name,
+                introduction:content.introduction
+            }
+        }
     })
 }
 

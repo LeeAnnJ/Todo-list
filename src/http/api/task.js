@@ -5,7 +5,7 @@ import Service from "../axios";
  * @returns 
  */ 
 
-async function getTaskById(){
+async function getTaskById(task_id){
     return await Service.requestService({
         url: '/task/getTaskById',
         method: 'get',
