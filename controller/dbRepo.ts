@@ -676,7 +676,7 @@ class DbRepo {
             task_cycle: task.cycle,
         }
         var sql =
-            'INSERT INTO task SET (register_id, create_time, name, type, priority, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
+            'INSERT INTO task (register_id, create_time, name, type, priority, deadline, group_belonging, belongs_folder_id, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -689,6 +689,8 @@ class DbRepo {
             '", ' +
             values.task_group +
             ', "' +
+            values.task_folder +
+            '", "' +
             values.task_description +
             '", 0, ' +
             values.task_status +
@@ -701,7 +703,7 @@ class DbRepo {
                 callback(0)
             } else {
                 sql =
-                    "SELECT task_id FROM task WHERE task_name = '" +
+                    "SELECT task_id FROM task WHERE name = '" +
                     values.task_name +
                     "' AND register_id = " +
                     values.client_id
