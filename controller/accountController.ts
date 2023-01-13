@@ -45,7 +45,7 @@ export const get_account_by_id = (req: Request, res: Response) => {
 
     console.log(client_id)
     db.getUserById(client_id, (acc_info: Account) => {
-        var resJson = JSON.stringify(acc_info)
+        // var resJson = JSON.stringify(acc_info)
         if (acc_info.client_id !== 0) {
             // success
             res.json({

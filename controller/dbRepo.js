@@ -131,7 +131,7 @@ class DbRepo {
         const date = new Date();
         var res = new account_1.Account(0, '', '', '', date, '');
         this.connection.query(sql, (err, result) => {
-            if (err) {
+            if (err || result == undefined || result.length == 0) {
                 console.log(err);
             }
             else {

@@ -41,7 +41,7 @@ const get_account_by_id = (req, res) => {
     var client_id = parseInt(req.query["client_id"]);
     console.log(client_id);
     dbRepo_1.db.getUserById(client_id, (acc_info) => {
-        var resJson = JSON.stringify(acc_info);
+        // var resJson = JSON.stringify(acc_info)
         if (acc_info.client_id !== 0) {
             // success
             res.json({
