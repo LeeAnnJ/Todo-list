@@ -564,7 +564,7 @@ class DbRepo {
     //////////////////////////// Task ////////////////////////////
     // get tasks of a user
     getUserTasks(client_id, callback) {
-        var sql = 'SELECT * FROM task WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM task WHERE register_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -593,7 +593,7 @@ class DbRepo {
             task_status: task.task_status,
             task_cycle: task.cycle,
         };
-        var sql = 'INSERT INTO task SET (register_id, create_time, name, type, priorty, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
+        var sql = 'INSERT INTO task SET (register_id, create_time, name, type, priority, deadline, group_belonging, note, is_favor, `status`, cycle) VALUES (' +
             values.client_id +
             ', NOW(), "' +
             values.task_name +
@@ -621,7 +621,7 @@ class DbRepo {
                 sql =
                     "SELECT task_id FROM task WHERE task_name = '" +
                         values.task_name +
-                        "' AND client_id = " +
+                        "' AND register_id = " +
                         values.client_id;
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -637,7 +637,7 @@ class DbRepo {
     }
     // get task by user_id
     getTaskByUserId(client_id, callback) {
-        var sql = 'SELECT * FROM task WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM task WHERE register_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
