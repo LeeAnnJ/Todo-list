@@ -611,12 +611,12 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
                             result[i].cycle,
                         ),
@@ -642,6 +642,7 @@ class DbRepo {
                         new Task(
                             result[i].task_id,
                             result[i].register_id,
+                            result[i].create_time,
                             result[i].name,
                             result[i].note,
                             result[i].type,
@@ -731,12 +732,12 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
                             result[i].cycle,
                         ),
@@ -751,7 +752,7 @@ class DbRepo {
     public getTaskByTaskId(task_id: number, callback: Function) {
         var sql = 'SELECT * FROM task WHERE task_id = ' + task_id
         this.connection.query(sql, (err, result) => {
-            var res: Task = new Task(0, 0, '', '', false, 0, new Date(), 0)
+            var res: Task = new Task(0, 0, new Date(),'', '', false, 0, new Date(), 0)
             if (err) {
                 console.log(err)
             } else {
@@ -760,12 +761,12 @@ class DbRepo {
                     result[0].register_id,
                     result[0].create_time,
                     result[0].name,
+                    result[0].note,
                     result[0].type,
                     result[0].priority,
                     result[0].deadline,
                     result[0].group_belonging,
                     result[0].belongs_folder_id,
-                    result[0].note,
                     result[0].status,
                     result[0].cycle,
                 )
@@ -844,12 +845,12 @@ class DbRepo {
                             result[i].register_id,
                             result[i].create_time,
                             result[i].name,
+                            result[i].note,
                             result[i].type,
                             result[i].priority,
                             result[i].deadline,
                             result[i].group_belonging,
                             result[i].belongs_folder_id,
-                            result[i].note,
                             result[i].status,
                             result[i].cycle,
                         ),

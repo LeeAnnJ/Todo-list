@@ -21,6 +21,7 @@ export const create_task = (req: Request, res: Response) => {
     var task = new Task(
         0,
         task_creator,
+        new Date(),
         task_name,
         task_description,
         type,
