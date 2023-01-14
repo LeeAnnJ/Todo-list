@@ -1,5 +1,5 @@
 <template>
-  <el-affix :offset="55">
+  <!-- <el-affix :offset="55"> -->
     <el-menu class="side" default-active="this.$route.path " :collapse="isCollapse" router>
       <!-- 伸缩和展开图标 -->
       <div :class="isCollapse? 'fold-line collapse':'fold-line'">
@@ -41,7 +41,7 @@
       <el-divider />
       <task-list></task-list>
     </el-menu>
-  </el-affix>
+  <!-- </el-affix> -->
 </template>
 
 <script>
@@ -64,5 +64,5 @@ export default {
 </script>
 
 <style scoped>
-  @import '../../assets/css/sidebar.css';
+  @import '../assets/css/sidebar.css';
 </style>

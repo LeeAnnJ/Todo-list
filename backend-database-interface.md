@@ -377,7 +377,7 @@ responseType: 'blob'
         "task_priority":0,
         "task_ddl":"2023-01-24T02:05:47.000Z",
         "task_group_id":1,
-        "task_isfavorite":"用来测试群组任务",
+        "task_isfavorite":1,
         "task_folder_id":null,
         "task_status":0,
         "subtasks_count":0,

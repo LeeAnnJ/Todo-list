@@ -3,17 +3,18 @@ a:link {
 }
   
 icon.color {
-color: black;
+    color: black;
 }
 
 .side:not(.el-menu--collapse) {
-width: 200px;
-min-height: 400px;
-height: 980px;
-background-color: #FFF;
-float: left;
-margin: 0px;
-padding: 0px;
+    width: 200px;
+    min-height: 762px;
+    height: fit-content;
+    position:static;
+    background-color: #FFF;
+    float: left;
+    margin: 0px;
+    padding: 0px;
 }
 
 .fold-line {

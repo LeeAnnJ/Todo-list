@@ -31,7 +31,7 @@
 
 <script>
   import { mapState } from 'vuex';
-import Folder from '../../http/api/folder';
+  import Folder from '../http/api/folder';
 
   export default {
     data() {
@@ -89,5 +89,5 @@ import Folder from '../../http/api/folder';
 </script>
 
 <style scoped>
-  @import '../../assets/css/sidebar.css';
+  @import '../assets/css/sidebar.css';
 </style>

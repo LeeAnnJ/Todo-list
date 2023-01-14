@@ -35,7 +35,9 @@ declare module '@vue/runtime-core' {
     NewTask: typeof import('./components/NewTask.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./components/Sidebar.vue')['default']
     TaskItem: typeof import('./components/TaskItem.vue')['default']
+    TaskListMenu: typeof import('./components/taskList-menu.vue')['default']
     TopLine: typeof import('./components/TopLine.vue')['default']
   }
   export interface ComponentCustomProperties {
