@@ -511,11 +511,11 @@ class DbRepo {
         var sql =
             'INSERT INTO folder (client_id, folder_name, folder_description) VALUES (' +
             values.client_id +
-            ', ' +
+            ", '" +
             values.folder_name +
-            ', ' +
+            "', '"+
             values.folder_description +
-            ')'
+            "')"
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
