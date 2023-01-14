@@ -228,7 +228,7 @@ class DbRepo {
         // console.log(ts.toISOString().slice(0, 19).replace('T', ' '));
         var sql_time = (0, dateutil_1.date_to_mysql)(values.group_create_time);
         // FIXME: use Transaction to add the group and the creater to the group
-        var sql = 'INSERT INTO group_info (group_name, group_description, group_creator, group_create_time) VALUES (' +
+        var sql = 'INSERT INTO group (group_name, group_description, group_creator, group_create_time) VALUES (' +
             values.group_name +
             ', ' +
             values.group_description +
@@ -244,7 +244,7 @@ class DbRepo {
             }
             else {
                 sql =
-                    "SELECT group_id FROM group_info WHERE group_name = '" +
+                    "SELECT group_id FROM group WHERE group_name = '" +
                         values.group_name +
                         "' AND group_creator = " +
                         values.group_creator;
@@ -270,7 +270,7 @@ class DbRepo {
     }
     // get group by id
     getGroupById(group_id, callback) {
-        var sql = 'SELECT * FROM group_info WHERE group_id = ' + group_id;
+        var sql = 'SELECT * FROM group WHERE group_id = ' + group_id;
         var res = new group_1.Group(0, '', '', new Date(), 0);
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -302,7 +302,7 @@ class DbRepo {
                 }
                 // change the group creater to the first member
                 sql =
-                    'SELECT founder_id as creater FROM group_info WHERE group_id = ' +
+                    'SELECT founder_id as creater FROM group WHERE group_id = ' +
                         group_id;
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -326,7 +326,7 @@ class DbRepo {
     }
     // get group creater
     getGroupCreaterId(group_id, callback) {
-        var sql = 'SELECT creater_id FROM group_info WHERE group_id = ' + group_id;
+        var sql = 'SELECT creater_id FROM group WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -339,7 +339,7 @@ class DbRepo {
     }
     // alert group info(by group_id)
     alertGroupInfo(group_new, callback) {
-        var sql = "UPDATE group_info SET group_name = '" +
+        var sql = "UPDATE group SET group_name = '" +
             group_new.group_name +
             "', group_description = '" +
             group_new.group_description +
@@ -374,9 +374,9 @@ class DbRepo {
         });
     }
     // add a member to a group
-    // FIXME: change the number of members in group_info
+    // FIXME: change the number of members in group
     // Maybe we should use a Transaction to do this
-    // Mysql: START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES (1, 1); UPDATE group_info SET group_member_num = group_member_num + 1 WHERE group_id = 1; COMMIT;
+    // Mysql: START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES (1, 1); UPDATE group SET group_member_num = group_member_num + 1 WHERE group_id = 1; COMMIT;
     addMemberToGroup(group_id, client_id, callback) {
         var values = {
             group_id: group_id,
@@ -387,7 +387,7 @@ class DbRepo {
             values.group_id +
             ', ' +
             values.client_id +
-            '); UPDATE group_info SET group_member_num = group_member_num + 1 WHERE group_id = ' +
+            '); UPDATE group SET group_member_num = group_member_num + 1 WHERE group_id = ' +
             values.group_id +
             '; COMMIT;';
         this.connection.query(sql, (err, result) => {
@@ -401,16 +401,16 @@ class DbRepo {
         });
     }
     // delete a member from a group
-    // FIXME: change the number of members in group_info
+    // FIXME: change the number of members in group
     // Maybe we should use a Transaction to do this
-    // Mysql: START TRANSACTION; DELETE FROM group_member WHERE group_id = 1 AND client_id = 1; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = 1; COMMIT;
+    // Mysql: START TRANSACTION; DELETE FROM group_member WHERE group_id = 1 AND client_id = 1; UPDATE group SET group_member_num = group_member_num - 1 WHERE group_id = 1; COMMIT;
     deleteMemberFromGroup(group_id, client_id, callback) {
         // FIXME: Check if the user is the creater of the group
         var sql = 'START TRANSACTION; DELETE FROM group_member WHERE group_id = ' +
             group_id +
             ' AND client_id = ' +
             client_id +
-            '; UPDATE group_info SET group_member_num = group_member_num - 1 WHERE group_id = ' +
+            '; UPDATE group SET group_member_num = group_member_num - 1 WHERE group_id = ' +
             group_id +
             '; COMMIT;';
         // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
@@ -420,14 +420,14 @@ class DbRepo {
                 callback(false);
             }
             else {
-                // FIXME: change the number of members in group_info
+                // FIXME: change the number of members in group
                 callback(true);
             }
         });
     }
     // delete a group
     deleteGroup(group_id, callback) {
-        var sql = 'DELETE FROM group_info WHERE group_id = ' + group_id;
+        var sql = 'DELETE FROM group WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -849,7 +849,7 @@ class DbRepo {
     }
     //////////////////////////// Message ////////////////////////////
     get_client_message(client_id, callback) {
-        var sql = 'SELECT * FROM message_info WHERE client_id = ' + client_id;
+        var sql = 'SELECT * FROM message WHERE client_id = ' + client_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -864,7 +864,7 @@ class DbRepo {
         });
     }
     get_message_by_id(message_id, callback) {
-        var sql = 'SELECT * FROM message_info WHERE message_id = ' + message_id;
+        var sql = 'SELECT * FROM message WHERE message_id = ' + message_id;
         var res = new message_1.Message(0, 0, 0, 0, '', new Date(), 0);
         this.connection.query(sql, (err, result) => {
             if (err) {
