@@ -92,6 +92,7 @@ export const get_task_owner_of_group = (req: Request, res: Response) => {
 // get the members of group
 export const get_members_of_group = (req: Request, res: Response) => {
     var group_id = parseInt(req.query['group_id'] as string)
+    
     db.getGroupMembers(group_id, (members: Account[]) => {
         if (members !== null) {
             // get members success

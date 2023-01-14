@@ -132,7 +132,7 @@ class DbRepo {
     }
 
     // get user by id
-    public getUserById(client_id: number, callback: Function) {
+    public async getUserById(client_id: number, callback: Function) {
         var sql = 'SELECT * FROM user_info WHERE client_id = ' + client_id
         const date = new Date()
         var res = new Account(0, '', '', '', date, '')
@@ -304,7 +304,7 @@ class DbRepo {
                     result.group_creator,
                     result.group_create_time,
                 )
-                console.log(result)
+                // console.log(result)
             }
             callback(res)
         })
@@ -326,6 +326,13 @@ class DbRepo {
                     })
                 }
 
+                // cintinue when the res is full
+                var interval = setInterval(() => {
+                    if (res.length == result.length) {
+                        clearInterval(interval)
+                    }
+                }, 50)
+
                 // change the group creater to the first member
                 sql =
                     'SELECT founder_id as creater FROM `group` WHERE group_id = ' +
@@ -333,6 +340,7 @@ class DbRepo {
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err)
+                        callback(res)
                     } else {
                         var creater_id = result[0].creater
                         for (var i = 0; i < res.length; i++) {
@@ -343,9 +351,9 @@ class DbRepo {
                                 break
                             }
                         }
+                        callback(res)
                     }
                 })
-                callback(res)
             }
         })
     }
@@ -389,14 +397,21 @@ class DbRepo {
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
+                callback(res)
             } else {
                 for (var i = 0; i < result.length; i++) {
                     this.getGroupById(result[i].group_id, (group: Group) => {
                         res.push(group)
                     })
                 }
+                // cintinue when the res is full
+                var interval = setInterval(() => {
+                    if (res.length == result.length) {
+                        clearInterval(interval)
+                        callback(res)
+                    }
+                }, 50)
             }
-            callback(res)
         })
     }
 

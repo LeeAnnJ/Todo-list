@@ -127,19 +127,21 @@ class DbRepo {
     }
     // get user by id
     getUserById(client_id, callback) {
-        var sql = 'SELECT * FROM user_info WHERE client_id = ' + client_id;
-        const date = new Date();
-        var res = new account_1.Account(0, '', '', '', date, '');
-        this.connection.query(sql, (err, result) => {
-            if (err || result == undefined || result.length == 0) {
-                console.log(err);
-            }
-            else {
-                result = result[0];
-                res = new account_1.Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
-                console.log(result);
-            }
-            callback(res);
+        return __awaiter(this, void 0, void 0, function* () {
+            var sql = 'SELECT * FROM user_info WHERE client_id = ' + client_id;
+            const date = new Date();
+            var res = new account_1.Account(0, '', '', '', date, '');
+            this.connection.query(sql, (err, result) => {
+                if (err || result == undefined || result.length == 0) {
+                    console.log(err);
+                }
+                else {
+                    result = result[0];
+                    res = new account_1.Account(result.client_id, result.user_name, result.passwd_hash, result.avatar_path, result.register_time, result.intro);
+                    console.log(result);
+                }
+                callback(res);
+            });
         });
     }
     // alert user info(by client_id)
@@ -279,7 +281,7 @@ class DbRepo {
             else {
                 result = result[0];
                 res = new group_1.Group(result.group_id, result.group_name, result.group_description, result.group_creator, result.group_create_time);
-                console.log(result);
+                // console.log(result)
             }
             callback(res);
         });
@@ -300,6 +302,12 @@ class DbRepo {
                         res.push(acc);
                     });
                 }
+                // cintinue when the res is full
+                var interval = setInterval(() => {
+                    if (res.length == result.length) {
+                        clearInterval(interval);
+                    }
+                }, 50);
                 // change the group creater to the first member
                 sql =
                     'SELECT founder_id as creater FROM `group` WHERE group_id = ' +
@@ -307,6 +315,7 @@ class DbRepo {
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err);
+                        callback(res);
                     }
                     else {
                         var creater_id = result[0].creater;
@@ -318,9 +327,9 @@ class DbRepo {
                                 break;
                             }
                         }
+                        callback(res);
                     }
                 });
-                callback(res);
             }
         });
     }
@@ -362,6 +371,7 @@ class DbRepo {
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
+                callback(res);
             }
             else {
                 for (var i = 0; i < result.length; i++) {
@@ -369,8 +379,14 @@ class DbRepo {
                         res.push(group);
                     });
                 }
+                // cintinue when the res is full
+                var interval = setInterval(() => {
+                    if (res.length == result.length) {
+                        clearInterval(interval);
+                        callback(res);
+                    }
+                }, 50);
             }
-            callback(res);
         });
     }
     // add a member to a group

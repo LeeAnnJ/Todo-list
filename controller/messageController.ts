@@ -11,7 +11,7 @@ export const get_message = (req: Request, res: Response) => {
             res.json({
                 code: 200,
                 message: 'success',
-                message_list,
+                message_list: message_list,
             })
         } else {
             res.json({
