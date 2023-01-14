@@ -449,7 +449,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new folder_1.Folder(result[i].folder_id, result[i].folder_name, result[i].folder_description, result[i].folder_creator));
+                    res.push(new folder_1.Folder(result[i].folder_creator, result[i].folder_id, result[i].folder_name, result[i].folder_description));
                 }
             }
             callback(res);
@@ -509,7 +509,7 @@ class DbRepo {
                 callback(null);
             }
             else {
-                var folder = new folder_1.Folder(result[0].folder_id, result[0].folder_name, result[0].folder_description, result[0].folder_creator);
+                var folder = new folder_1.Folder(result[0].folder_creator, result[0].folder_id, result[0].folder_name, result[0].folder_description);
                 callback(folder);
             }
         });
