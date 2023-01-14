@@ -5,7 +5,7 @@
     <task-head></task-head>
     <el-container class="main">
       <!-- 任务详情栏 -->
-      <detail-slot></detail-slot>
+      <detail-slot :task_id="task_id"></detail-slot>
 
       <!-- 子步骤 -->
       <sub-task></sub-task>
@@ -96,34 +96,34 @@ export default {
         Document,
     },
     data() {
-          return {
-              task_id: 0,
-              dialogVisible2:false,
-              cooperatorName:'',
-              trends:[{
-                  avator_path: "user",
-                  user_name: "张三",
-                  detail: "添加了子步骤：子步骤3",
-                  time: "2022-12-14 20:51",
-              },{
-                  avator_path: "user",
-                  user_name: "李四",
-                  detail: "加入了该任务",
-                  time: "2022-12-14 20:52",
-              }],
-              cooperators: [{
-                  client_id: "001",
-                  avator_path: "user",
-                  user_name: "张三",
-              },{
-                  client_id: "002",
-                  avator_path: "user",
-                  user_name: "李四",
-              },{
-                  client_id: "003",
-                  avator_path: "user",
-                  user_name: "王五",
-              }],
+        return {
+            task_id: 0,
+            dialogVisible2:false,
+            cooperatorName:'',
+            trends:[{
+                avator_path: "user",
+                user_name: "张三",
+                detail: "添加了子步骤：子步骤3",
+                time: "2022-12-14 20:51",
+            },{
+                avator_path: "user",
+                user_name: "李四",
+                detail: "加入了该任务",
+                time: "2022-12-14 20:52",
+            }],
+            cooperators: [{
+                client_id: "001",
+                avator_path: "user",
+                user_name: "张三",
+            },{
+                client_id: "002",
+                avator_path: "user",
+                user_name: "李四",
+            },{
+                client_id: "003",
+                avator_path: "user",
+                user_name: "王五",
+            }],
           }
       },
       computed: {
@@ -146,8 +146,8 @@ export default {
             this.cooperatorName = '';
         },
     },
-    mounted(){
-        console.log(this.$route.params)
+    created(){
+        console.log(this.$route.params);
         this.task_id=this.$route.params.id;
     }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="head">
-    <div class="left-option">
-      <button class="back-button">
+    <div class="left-option" >
+      <el-button class="back-button" @click="backHome">
         <el-icon><ArrowLeftBold /></el-icon>
-      </button>
+      </el-button>
       <span style="margin-right: 5px;">任务详情</span>
       <el-divider direction="vertical" style="height: 65%;"/>
     </div>
@@ -26,6 +26,13 @@
         data(){
             return{
 
+            }
+        },
+        methods:{
+            backHome(){
+                this.$router.push({
+                    path:"/home"
+                });
             }
         }
     }

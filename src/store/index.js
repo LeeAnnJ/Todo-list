@@ -6,7 +6,7 @@ export default createStore({
         account: {
             client_id: 1,
             user_name:'testusername',
-            avator_path: '',
+            avator_path: 'http://localhost:3000/static/default.png',
             register_time: '2023-1-13',
             intro: 'intro'
         }

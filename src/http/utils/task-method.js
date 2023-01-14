@@ -1,8 +1,17 @@
 import Task from '../api/task.js';
 
+const cycle=["暂无","每周一","每周二","每周三","每周四","每周五","每周六","每周日"];
+
 function parseTime(time){
     if (time==null) return "暂无";
-    return time.slice(0,19).replace("T"," ");
+    var date = new Date(time);
+	let monthString = date.getMonth()+1>=10? String(date.getMonth()+1): '0'+(date.getMonth()+1);
+    let dtString = date.getDate()>=10? String(date.getDate()):'0' + date.getDate();	
+	let hourString = date.getHours()>=10? String(date.getHours()):'0'+date.getHours();
+	let minuString = date.getMinutes()>=10? String(date.getMinutes()):'0'+date.getMinutes();
+	let secondString = date.getSeconds()>=10? String(date.getSeconds()):'0'+date.getSeconds();
+	let str=date.getFullYear()+'-'+monthString+'-'+dtString+' '+hourString+':'+minuString+':'+secondString;
+    return str;
 }
 
 /**
@@ -71,7 +80,7 @@ async function getToday(client_id){
             let list = res.data.data;
             list = list.filter(lis=> {
                 var today = new Date();
-                today = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                today = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
                 return ((lis.task_ddl!=null&&lis.task_ddl.startsWith(today)) || lis.task_isfavorite==1)
             });
             if(list.length>0){
@@ -185,11 +194,55 @@ async function getPeriod(client_id){
     return tasks;
 }
 
+/**
+ * 设置重要性
+ */
+async function setImportant(task_id,important){
+    let task = {
+        task_id: task_id,
+        priority: important
+    }
+    var data;
+    await Task.modifyTask(task).then(
+        res => { data = res.data; },
+        err =>{ data = err }
+    )
+    return data;
+}
+
+function convertKeyToDetail(item){
+    let task = {
+        name: item.task_name,
+        note: item.task_description,
+        indaily: false, //
+        belongs_folder: "中级实训",
+        belongs_folder_id: item.task_folder_id,
+        create_time: parseTime(item.task_create_time),
+        priority: item.task_priority>0? true:false,
+        deadline: parseTime(item.task_ddl),
+        circle: cycle[item.cycle],
+        is_favor: item.task_isfavorite>0? true:false,       
+    }
+    return task;
+}
+
+async function getTaskDetail(task_id){
+    var task;
+    await Task.getTaskById(task_id).then(
+        res => {
+            task = convertKeyToDetail(res.data.data);
+        },err => {task = err;}
+    )
+    return task;
+}
+
 export default{
     getAllTask,
     getToday,
     getDDL,
     getGroupTask,
     getImportant,
-    getPeriod
+    getPeriod,
+    setImportant,
+    getTaskDetail
 }

@@ -88,6 +88,15 @@ async function checkUserName(user_name){
     })
 }
 
+async function getAvator(){
+    return await Service.requestService({
+        headers: {
+            'Content-Type': 'multpart/form-data'
+        },
+        url:'/static/default.png',
+    })
+}
+
 export default{
     login,
     create,
@@ -96,4 +105,5 @@ export default{
     changeAvator,
     deleteUser,
     checkUserName,
+    getAvator
 }

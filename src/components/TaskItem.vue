@@ -81,7 +81,7 @@
 					/>
           <template #footer>
             <span class="dialog-footer">
-              <el-button @click="(this.dataVisible = false)">取消</el-button>
+              <el-button @click="(dataVisible = false)">取消</el-button>
               <el-button type="primary" @click="setDDL">确认</el-button>
             </span>
           </template>
@@ -97,10 +97,14 @@
 					<el-button link @click="(circulVisible=true)">修改周期性</el-button>
         </el-popover>
         <el-dialog v-model="circulVisible" title="设置周期性" width="35%">
-          周期性的数据设置我还不知道，先放一放
+          <el-select v-model="selectcrl" class="circle-select" placeholder="选择周期性" size="large">
+            <el-option v-for="item in cycle_options"
+              :key="item.value" :label="item.label" :value="item.value"
+            />
+          </el-select>
           <template #footer>
             <span class="dialog-footer">
-              <el-button @click="(this.circleVisible = false)">取消</el-button>
+              <el-button @click="(circleVisible = false)">取消</el-button>
               <el-button type="primary" @click="setCircul">确认</el-button>
             </span>
           </template>
@@ -120,10 +124,10 @@
 </template>
 
 <script>
-    import { Calendar, Clock, Select, StarFilled} from '@element-plus/icons-vue';
     import { ElMessageBox } from 'element-plus'
     import {ref} from 'vue';
     import taskAPI from '../http/api/task';
+    import TaskUtil from '../http/utils/task-method.js'
 
 		export default{
     name: "task-item",
@@ -146,7 +150,7 @@
                 deadline: "暂无",
                 circul: "暂无",
                 is_favor: false,
-                belongs_folder_id: 0
+                belongs_folder_id: 0,
             }
         }
     },
@@ -162,13 +166,28 @@
             selectcrl: ref(""),
             dateVisible: false,
             circulVisible: false,
-            corpVisible: false
+            corpVisible: false,
+            cycle_options: [
+                {value: 0, label: '暂无'},
+                {value: 1, label: '每周一'},
+                {value: 2, label: '每周二'},
+                {value: 3, label: '每周三'},
+                {value: 4, label: '每周四'},
+                {value: 5, label: '每周五'},
+                {value: 6, label: '每周六'},
+                {value: 7, label: '每周日'}
+              ]
         };
     },
     methods: {
         starClick() {
             this.isImportant = !this.isImportant;
-            //console.log(this.isImportant,this.content.priority);
+            this.content.priority = this.isImportant;
+            TaskUtil.setImportant(this.task_id,this.isImportant).then(
+                res=>{console.log(res)},
+                err=>{console.log(err)}
+            )
+            console.log(this.isImportant,this.content.priority);
         },
         focusOn() { this.isfocus = true; },
         focusLeave() { this.isfocus = false; },
@@ -197,9 +216,9 @@
         },
         setCircul() {
             if (this.selectcrl != null)
-                this.circul = this.selectcrl;
+                this.content.circul = this.cycle_options[this.selectcrl].label;
             else
-                this.circul = "暂无";
+                this.content.circul = "暂无";
             this.circulVisible = false;
         },
         turnDetail(task_id){
@@ -218,8 +237,8 @@
                   cancelButtonText: '取消',
                   type: 'info'
                 }
-            )
-              .then(()=>{
+            ).
+              then(()=>{
                   console.log("确认删除任务");
               })
               .catch(()=>{
@@ -227,7 +246,10 @@
               })
         }
     },
-    components: { Select }
+    mounted(){
+        if(this.content.deadline!="暂无") this.selectTime=this.content.deadline;
+        if(this.content.circul!="暂无") this.selectcrl=this.content.circul;
+    }
 }
 
 </script>

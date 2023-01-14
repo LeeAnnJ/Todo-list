@@ -13,18 +13,35 @@
       测试SM3:{{SM3data}}
     </div>
     <div>
-      <el-button>日期格式调整</el-button>
-      {{dateTime}}
+      <el-upload
+        name="head"
+        class="avatar-uploader"
+        action="http://localhost:3000/account/changeAvatar"
+        :data="requestData"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+      >
+      <template #trigger>
+        <el-button type="primary">select file</el-button>
+      </template>
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+      </el-upload>
+      <el-avatar class="user" :src="account.avator_path" fit="cover"> {{ store.state.account.user_name }} </el-avatar>
+      <el-button @click="alterAvator">修改头像</el-button>
+
     </div>
 	</div>
 </template>
 
 <script>
     import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-	import account from '../../http/api/account';
+	  import account from '../../http/api/account';
     import task from '../../http/api/task';
     import folder from '../../http/api/folder';
     import{ sm3 } from 'sm-crypto';
+    import { ref } from 'vue'
     
     export default{
         data(){
@@ -33,6 +50,10 @@
               SM3data:'',
               inputText: "",
               dateTime: "",
+              imageUrl: ref(''),
+              requestData:{
+                client_id: 1,
+              }
             }
         },
         computed:{
@@ -67,6 +88,23 @@
             },
             calcuSM3(){
                 this.SM3data=sm3(this.inputText);
+            },
+            getAvator(){
+                let that = this;
+                account.getAvator().then(res=>{
+                    that.getdata = res;
+                },error=>{
+                    that.getdata="请求失败！";
+                    console.log(error);
+                })
+            },
+            handleAvatarSuccess(res, file) {
+              this.imageUrl = URL.createObjectURL(file.raw);
+              console.log("res:",res);
+              console.log(this.imageUrl);
+            },
+            beforeAvatarUpload(file) {
+                this.getdata = "file type:"+file.type;
             }
         }
     }

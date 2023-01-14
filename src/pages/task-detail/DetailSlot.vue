@@ -96,21 +96,14 @@
 <script>
     import { StarFilled, MoreFilled, Select } from '@element-plus/icons-vue';
     import {ref} from 'vue';
+    import TaskUtil from '../../http/utils/task-method';
 
     export default{
         name:"detail-slot",
         props :{
-            content:{
-                type:Object,
-                default:{
-                    task_id: 0,
-                    register_id: 0,
-                    createTime: "2022-12-08",
-                    deadline: "暂无",
-                    circul: "暂无",
-                    is_favor: false,
-                    belongs_folder_id: 0
-                }
+            task_id:{
+                type: Number,
+                default: 1
             }
         },
         data(){
@@ -127,7 +120,7 @@
                 },
                 folderList: ["中级实训","任务列表1","任务列表2"],
                 isedit: false,
-                dateValue: ref('2022-12-15 20:35:00'),
+                dateValue: ref('2022-01-15 20:35:00'),
             }
         },
         methods: {
@@ -141,6 +134,11 @@
             finishEdit(){
                 this.isedit = false;
             }
+        },
+        async mounted(){
+            this.task = await TaskUtil.getTaskDetail(this.task_id);
+            // console.log("detail:",res);
+            this.dateValue = this.task.deadline;
         }
     }
 

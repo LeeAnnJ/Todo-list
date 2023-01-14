@@ -14,7 +14,7 @@
     <!-- 个人设置 -->
     <div class="setting_block">
       <!-- 点击显示详细信息 -->
-          <el-icon class="setting" :size="24"><Setting /></el-icon>
+      <el-icon class="setting" :size="24"><Setting /></el-icon>
     </div>
 
     <!-- 消息通知 -->
@@ -76,11 +76,13 @@
     <div class="user_block">
       <el-popover show="" placement="bottom" :width="250" trigger="click" v-model:visible="popoverVis">
         <template #reference>
-          <el-avatar class="user"> {{ store.state.account.user_name }} </el-avatar>
+          <el-avatar class="user" :src="store.state.account.avator_path" fit="cover"> {{ store.state.account.user_name }} </el-avatar>
         </template>
 
         <div class="user_info_block">
-          <el-avatar :size="80" class="avatar"><span class="avatar_content">{{ store.state.account.user_name }}</span></el-avatar>
+          <el-avatar :size="80" class="avatar" :src="store.state.account.avator_path" fit="cover">
+            <span class="avatar_content">{{ store.state.account.user_name }}</span>
+          </el-avatar>
           <el-button type="plain" class="edit_info" @click="initEdit">编辑资料</el-button>
           <br><el-divider class="divider1" />
           <div class="user_info">

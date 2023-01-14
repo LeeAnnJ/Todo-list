@@ -660,7 +660,7 @@ responseType: 'blob'
 ```
 
 ### 7. 根据用户id查询其参与的任务群组
-接口请求地址：`/group/getTasksByGroupId`，请求方式：`GET`
+接口请求地址：`/group/getGroupsByUserId`，请求方式：`GET`
 请求参数说明：
 ```json
 {
