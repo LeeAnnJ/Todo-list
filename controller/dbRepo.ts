@@ -248,7 +248,7 @@ class DbRepo {
         var sql_time = date_to_mysql(values.group_create_time)
         // FIXME: use Transaction to add the group and the creater to the group
         var sql =
-            'INSERT INTO group (group_name, group_description, group_creator, group_create_time) VALUES (' +
+            'INSERT INTO `group` (group_name, group_description, group_creator, group_create_time) VALUES (' +
             values.group_name +
             ', ' +
             values.group_description +
@@ -263,7 +263,7 @@ class DbRepo {
                 callback(0)
             } else {
                 sql =
-                    "SELECT group_id FROM group WHERE group_name = '" +
+                    "SELECT group_id FROM `group` WHERE group_name = '" +
                     values.group_name +
                     "' AND group_creator = " +
                     values.group_creator
@@ -290,7 +290,7 @@ class DbRepo {
 
     // get group by id
     public getGroupById(group_id: number, callback: Function) {
-        var sql = 'SELECT * FROM group WHERE group_id = ' + group_id
+        var sql = 'SELECT * FROM `group` WHERE group_id = ' + group_id
         var res = new Group(0, '', '', new Date(), 0)
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -328,7 +328,7 @@ class DbRepo {
 
                 // change the group creater to the first member
                 sql =
-                    'SELECT founder_id as creater FROM group WHERE group_id = ' +
+                    'SELECT founder_id as creater FROM `group` WHERE group_id = ' +
                     group_id
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -352,7 +352,7 @@ class DbRepo {
 
     // get group creater
     public getGroupCreaterId(group_id: number, callback: Function) {
-        var sql = 'SELECT creater_id FROM group WHERE group_id = ' + group_id
+        var sql = 'SELECT creater_id FROM `group` WHERE group_id = ' + group_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -366,7 +366,7 @@ class DbRepo {
     // alert group info(by group_id)
     public alertGroupInfo(group_new: Group, callback: Function) {
         var sql =
-            "UPDATE group SET group_name = '" +
+            "UPDATE `group` SET group_name = '" +
             group_new.group_name +
             "', group_description = '" +
             group_new.group_description +
@@ -419,7 +419,7 @@ class DbRepo {
             values.group_id +
             ', ' +
             values.client_id +
-            '); UPDATE group SET group_member_num = group_member_num + 1 WHERE group_id = ' +
+            '); UPDATE `group` SET group_member_num = group_member_num + 1 WHERE group_id = ' +
             values.group_id +
             '; COMMIT;'
         this.connection.query(sql, (err, result) => {
@@ -447,7 +447,7 @@ class DbRepo {
             group_id +
             ' AND client_id = ' +
             client_id +
-            '; UPDATE group SET group_member_num = group_member_num - 1 WHERE group_id = ' +
+            '; UPDATE `group` SET group_member_num = group_member_num - 1 WHERE group_id = ' +
             group_id +
             '; COMMIT;'
         // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
@@ -464,7 +464,7 @@ class DbRepo {
 
     // delete a group
     public deleteGroup(group_id: number, callback: Function) {
-        var sql = 'DELETE FROM group WHERE group_id = ' + group_id
+        var sql = 'DELETE FROM `group` WHERE group_id = ' + group_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -865,7 +865,7 @@ class DbRepo {
 
     // get tasks of a group
     public getGroupTasks(group_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task WHERE group_brlonging = ' + group_id
+        var sql = 'SELECT * FROM task WHERE group_belonging = ' + group_id
         var res: Task[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -897,7 +897,7 @@ class DbRepo {
 
     // get sub tasks of a task
     public getSubTasksByTaskId(task_id: number, callback: Function) {
-        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id
+        var sql = 'SELECT * FROM subtask WHERE task_id = ' + task_id
         var res: SubTask[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -924,7 +924,7 @@ class DbRepo {
         callback: Function,
     ) {
         var sql =
-            'SELECT * FROM subtask_info WHERE task_id = ' +
+            'SELECT * FROM subtask WHERE task_id = ' +
             task_id +
             ' AND subtask_id = ' +
             subtask_id
@@ -948,7 +948,7 @@ class DbRepo {
     public addSubTask(subtask: SubTask, callback: Function) {
         // get the number of sub tasks for this task
         var sql =
-            "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " +
+            "SELECT COUNT(*) AS 'count' FROM subtask WHERE task_id = " +
             subtask.subtask_task_id
         var count = 0
         this.connection.query(sql, (err, result) => {
@@ -958,7 +958,7 @@ class DbRepo {
                 count = result[0].count
 
                 sql =
-                    "INSERT INTO subtask_info (subtask_id, name, status, task_id) VALUES ('" +
+                    "INSERT INTO subtask (subtask_id, name, status, task_id) VALUES ('" +
                     (count + 1).toString +
                     "', '" +
                     subtask.subtask_name +
@@ -987,7 +987,7 @@ class DbRepo {
         callback: Function,
     ) {
         var sql =
-            'DELETE FROM subtask_info WHERE subtask_id = ' +
+            'DELETE FROM subtask WHERE subtask_id = ' +
             subtask_id +
             ' AND task_id = ' +
             task_id +
@@ -1005,7 +1005,7 @@ class DbRepo {
     // alert sub task info
     public alertSubTaskInfo(subtask_new: SubTask, callback: Function) {
         var sql =
-            "UPDATE subtask_info SET name = '" +
+            "UPDATE subtask SET name = '" +
             subtask_new.subtask_name +
             "', status = " +
             subtask_new.subtask_status +

@@ -228,7 +228,7 @@ class DbRepo {
         // console.log(ts.toISOString().slice(0, 19).replace('T', ' '));
         var sql_time = (0, dateutil_1.date_to_mysql)(values.group_create_time);
         // FIXME: use Transaction to add the group and the creater to the group
-        var sql = 'INSERT INTO group (group_name, group_description, group_creator, group_create_time) VALUES (' +
+        var sql = 'INSERT INTO `group` (group_name, group_description, group_creator, group_create_time) VALUES (' +
             values.group_name +
             ', ' +
             values.group_description +
@@ -244,7 +244,7 @@ class DbRepo {
             }
             else {
                 sql =
-                    "SELECT group_id FROM group WHERE group_name = '" +
+                    "SELECT group_id FROM `group` WHERE group_name = '" +
                         values.group_name +
                         "' AND group_creator = " +
                         values.group_creator;
@@ -270,7 +270,7 @@ class DbRepo {
     }
     // get group by id
     getGroupById(group_id, callback) {
-        var sql = 'SELECT * FROM group WHERE group_id = ' + group_id;
+        var sql = 'SELECT * FROM `group` WHERE group_id = ' + group_id;
         var res = new group_1.Group(0, '', '', new Date(), 0);
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -302,7 +302,7 @@ class DbRepo {
                 }
                 // change the group creater to the first member
                 sql =
-                    'SELECT founder_id as creater FROM group WHERE group_id = ' +
+                    'SELECT founder_id as creater FROM `group` WHERE group_id = ' +
                         group_id;
                 this.connection.query(sql, (err, result) => {
                     if (err) {
@@ -326,7 +326,7 @@ class DbRepo {
     }
     // get group creater
     getGroupCreaterId(group_id, callback) {
-        var sql = 'SELECT creater_id FROM group WHERE group_id = ' + group_id;
+        var sql = 'SELECT creater_id FROM `group` WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -339,7 +339,7 @@ class DbRepo {
     }
     // alert group info(by group_id)
     alertGroupInfo(group_new, callback) {
-        var sql = "UPDATE group SET group_name = '" +
+        var sql = "UPDATE `group` SET group_name = '" +
             group_new.group_name +
             "', group_description = '" +
             group_new.group_description +
@@ -387,7 +387,7 @@ class DbRepo {
             values.group_id +
             ', ' +
             values.client_id +
-            '); UPDATE group SET group_member_num = group_member_num + 1 WHERE group_id = ' +
+            '); UPDATE `group` SET group_member_num = group_member_num + 1 WHERE group_id = ' +
             values.group_id +
             '; COMMIT;';
         this.connection.query(sql, (err, result) => {
@@ -410,7 +410,7 @@ class DbRepo {
             group_id +
             ' AND client_id = ' +
             client_id +
-            '; UPDATE group SET group_member_num = group_member_num - 1 WHERE group_id = ' +
+            '; UPDATE `group` SET group_member_num = group_member_num - 1 WHERE group_id = ' +
             group_id +
             '; COMMIT;';
         // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
@@ -427,7 +427,7 @@ class DbRepo {
     }
     // delete a group
     deleteGroup(group_id, callback) {
-        var sql = 'DELETE FROM group WHERE group_id = ' + group_id;
+        var sql = 'DELETE FROM `group` WHERE group_id = ' + group_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -730,7 +730,7 @@ class DbRepo {
     }
     // get tasks of a group
     getGroupTasks(group_id, callback) {
-        var sql = 'SELECT * FROM task WHERE group_brlonging = ' + group_id;
+        var sql = 'SELECT * FROM task WHERE group_belonging = ' + group_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -746,7 +746,7 @@ class DbRepo {
     }
     // get sub tasks of a task
     getSubTasksByTaskId(task_id, callback) {
-        var sql = 'SELECT * FROM task WHERE task_id = ' + task_id;
+        var sql = 'SELECT * FROM subtask WHERE task_id = ' + task_id;
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -761,7 +761,7 @@ class DbRepo {
         });
     }
     getSubTaskByIds(task_id, subtask_id, callback) {
-        var sql = 'SELECT * FROM subtask_info WHERE task_id = ' +
+        var sql = 'SELECT * FROM subtask WHERE task_id = ' +
             task_id +
             ' AND subtask_id = ' +
             subtask_id;
@@ -779,7 +779,7 @@ class DbRepo {
     // add a sub task
     addSubTask(subtask, callback) {
         // get the number of sub tasks for this task
-        var sql = "SELECT COUNT(*) AS 'count' FROM subtask_info WHERE task_id = " +
+        var sql = "SELECT COUNT(*) AS 'count' FROM subtask WHERE task_id = " +
             subtask.subtask_task_id;
         var count = 0;
         this.connection.query(sql, (err, result) => {
@@ -789,7 +789,7 @@ class DbRepo {
             else {
                 count = result[0].count;
                 sql =
-                    "INSERT INTO subtask_info (subtask_id, name, status, task_id) VALUES ('" +
+                    "INSERT INTO subtask (subtask_id, name, status, task_id) VALUES ('" +
                         (count + 1).toString +
                         "', '" +
                         subtask.subtask_name +
@@ -812,7 +812,7 @@ class DbRepo {
     }
     // delete a sub task
     deleteSubTask(task_id, subtask_id, callback) {
-        var sql = 'DELETE FROM subtask_info WHERE subtask_id = ' +
+        var sql = 'DELETE FROM subtask WHERE subtask_id = ' +
             subtask_id +
             ' AND task_id = ' +
             task_id +
@@ -829,7 +829,7 @@ class DbRepo {
     }
     // alert sub task info
     alertSubTaskInfo(subtask_new, callback) {
-        var sql = "UPDATE subtask_info SET name = '" +
+        var sql = "UPDATE subtask SET name = '" +
             subtask_new.subtask_name +
             "', status = " +
             subtask_new.subtask_status +
