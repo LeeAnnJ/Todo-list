@@ -152,12 +152,18 @@ const alert_user = (req, res) => {
 exports.alert_user = alert_user;
 // change user avator
 const change_avator = (req, res) => {
-    const multer = require('multer');
-    const upload = multer({ dest: 'public/' });
+    console.log("in change avatar");
+    // const multer = require('multer');
+    // const upload = multer({ dest: 'public/' });
+    // const singleMidle = upload.single("head");
     // upload the avator to the piblic folder
     // read the avator from the request
-    var avator_file = req.body.avatar_file;
+    console.log("start get avator");
+    console.log("req.body:",req.body);
+    console.log("req.file",req.file);
+    var avator_file = req.file;
     var client_id = req.body.client_id;
+    console.log("client_id",client_id);
     // save the avator to the public folder
     var avator_path = 'public/static/' + client_id + '.png';
     fs.writeFile(avator_path, avator_file, (err) => {

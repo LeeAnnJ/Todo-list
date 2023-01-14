@@ -31,6 +31,11 @@ const express_1 = __importDefault(require("express"));
 // import account controller
 const acc_controller = __importStar(require("../controller/accountController"));
 const router = express_1.default.Router();
+
+const multer = require('multer');
+const upload = multer({ dest: 'public/' });
+const singleMidle = upload.single("head");
+
 // login
 router.post('/login', acc_controller.login);
 // createAccount
@@ -40,7 +45,7 @@ router.get('/getUserById', acc_controller.get_account_by_id);
 // alertUser
 router.post('/alertUser', acc_controller.alert_user);
 // changeUserAvator
-router.post('/changeAvatar', acc_controller.change_avator);
+router.post('/changeAvatar', singleMidle,acc_controller.change_avator);
 // get avator直接交给静态文件处理 就不写路由了
 // 但是要对应的传递blob数据 不知道静态文件能不能处理blob数据
 // router.get('/getAvator', acc_controller.get_avator);
