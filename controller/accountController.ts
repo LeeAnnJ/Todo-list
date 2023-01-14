@@ -161,7 +161,7 @@ export const change_avator = (req: Request, res: Response) => {
     var client_id = req.body.client_id
 
     // save the avator to the public folder
-    var avator_path = 'public/' + client_id + '.jpg'
+    var avator_path = 'public/static/' + client_id + '.png'
     fs.writeFile(avator_path, avator_file, (err: any) => {
         if (err) {
             res.json({
@@ -172,6 +172,7 @@ export const change_avator = (req: Request, res: Response) => {
         }
     })
     // change the avator path in the database
+    avator_path = '/static/' + client_id + '.png'
     db.changeAvatar(client_id, avator_path, (result: Boolean) => {
         if (result) {
             res.json({
