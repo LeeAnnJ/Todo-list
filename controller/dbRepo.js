@@ -562,7 +562,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status, result[i].cycle));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].is_favor, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -579,7 +579,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status, result[i].cycle));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].is_favor, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -654,7 +654,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status, result[i].cycle));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].is_favor, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
@@ -669,7 +669,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
-                res = new task_1.Task(result[0].task_id, result[0].register_id, result[0].create_time, result[0].name, result[0].note, result[0].type, result[0].priority, result[0].deadline, result[0].group_belonging, result[0].belongs_folder_id, result[0].status, result[0].cycle);
+                res = new task_1.Task(result[0].task_id, result[0].register_id, result[0].create_time, result[0].name, result[0].note, result[0].type, result[0].priority, result[0].deadline, result[0].group_belonging, result[0].belongs_folder_id, result[0].is_favor, result[0].status, result[0].cycle);
             }
             callback(res);
         });
@@ -738,7 +738,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].status, result[i].cycle));
+                    res.push(new task_1.Task(result[i].task_id, result[i].register_id, result[i].create_time, result[i].name, result[i].note, result[i].type, result[i].priority, result[i].deadline, result[i].group_belonging, result[i].belongs_folder_id, result[i].is_favor, result[i].status, result[i].cycle));
                 }
             }
             callback(res);
