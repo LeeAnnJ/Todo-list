@@ -110,7 +110,7 @@ const alert_user = (req, res) => {
             var new_user_name = req.body.content.new_user_name || '';
             var new_password_hash = req.body.content.new_password_hash || '';
             var new_avator = req.body.content.new_avator || '';
-            var new_intro = req.body.content.new_intro || '';
+            var new_intro = req.body.content.introduction || '';
             if (new_user_name !== '') {
                 acc_now.user_name = new_user_name;
             }

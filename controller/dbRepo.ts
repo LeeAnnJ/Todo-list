@@ -487,10 +487,10 @@ class DbRepo {
                 for (var i = 0; i < result.length; i++) {
                     res.push(
                         new Folder(
+                            result[i].folder_creator,
                             result[i].folder_id,
                             result[i].folder_name,
                             result[i].folder_description,
-                            result[i].folder_creator,
                         ),
                     )
                 }
@@ -558,10 +558,10 @@ class DbRepo {
                 callback(null)
             } else {
                 var folder = new Folder(
+                    result[0].folder_creator,
                     result[0].folder_id,
                     result[0].folder_name,
                     result[0].folder_description,
-                    result[0].folder_creator,
                 )
                 callback(folder)
             }
