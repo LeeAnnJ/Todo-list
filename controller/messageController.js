@@ -6,12 +6,15 @@ const dbRepo_1 = require("../controller/dbRepo");
 const get_message = (req, res) => {
     var client_id = parseInt(req.query['client_id']);
     dbRepo_1.db.get_client_message(client_id, (message_list) => {
+        // console.log(message_list);
         if (message_list.length !== 0) {
             // success
             res.json({
                 code: 200,
                 message: 'success',
-                message_list: message_list,
+                message_list: {
+                    toJSON: () => message_list,
+                },
             });
         }
         else {

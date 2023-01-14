@@ -27,6 +27,11 @@ export class Message {
         this.message_send_time = message_send_time
         this.message_status = message_status
     }
+
+    // to json string
+    toJsonString(): string {
+        return JSON.stringify(this)
+    }
 }
 
 // module.exports = Message;

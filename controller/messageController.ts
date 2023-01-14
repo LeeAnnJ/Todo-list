@@ -6,12 +6,15 @@ import { db } from '../controller/dbRepo'
 export const get_message = (req: Request, res: Response) => {
     var client_id = parseInt(req.query['client_id'] as string)
     db.get_client_message(client_id, (message_list: Message[]) => {
+        // console.log(message_list);
         if (message_list.length !== 0) {
             // success
             res.json({
                 code: 200,
                 message: 'success',
-                message_list: message_list,
+                message_list: {
+                    toJSON: () => message_list,
+                },
             })
         } else {
             res.json({

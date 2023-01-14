@@ -873,7 +873,7 @@ class DbRepo {
             }
             else {
                 for (var i = 0; i < result.length; i++) {
-                    res.push(new message_1.Message(result[i].message_id, result[i].message_sender, result[i].message_receiver, result[i].message_type, result[i].message_content, result[i].send_time, result.message_status));
+                    res.push(new message_1.Message(result[i].message_id, result[i].sender_id, result[i].client_id, result[i].push_type, result[i].content, result[i].push_time, result[i].is_read));
                 }
             }
             callback(res);
@@ -887,7 +887,7 @@ class DbRepo {
                 console.log(err);
             }
             else {
-                res = new message_1.Message(result[0].message_id, result[0].sender_id, result[0].client_id, result[0].push_type, result[0].content, result[0].push_time_time, result[0].is_read);
+                res = new message_1.Message(result[0].message_id, result[0].sender_id, result[0].client_id, result[0].push_type, result[0].content, result[0].push_time, result[0].is_read);
             }
             callback(res);
         });
