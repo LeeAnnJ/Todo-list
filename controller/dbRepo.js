@@ -464,41 +464,45 @@ class DbRepo {
             folder_name: folder.folder_name,
             folder_description: folder.folder_description,
         };
-        var sql = 'INSERT INTO folder (client_id, folder_name, folder_description) VALUES (' +
-            values.client_id +
-            ", '" +
-            values.folder_name +
-            "', '" +
-            values.folder_description +
-            "')";
+        // get the number of folders of the user and set the folder_id to the number + 1
+        // use a transaction to do this
+        var sql = 'SELECT COUNT(*) as number FROM folder WHERE client_id = ' +
+            values.client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
                 callback(0);
             }
             else {
-                console.log('Folder created');
-                // return folder_id
+                values.folder_id = result[0].number + 1;
                 sql =
-                    "SELECT folder_id FROM folder WHERE folder_name = '" +
+                    'INSERT INTO folder (client_id, folder_id, folder_name, folder_description) VALUES (' +
+                        values.client_id +
+                        ', ' +
+                        values.folder_id +
+                        ", '" +
                         values.folder_name +
-                        "' AND client_id = " +
-                        values.client_id;
+                        "', '" +
+                        values.folder_description +
+                        "')";
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err);
                         callback(0);
                     }
                     else {
-                        callback(result[0].folder_id);
+                        callback(values.folder_id);
                     }
                 });
             }
         });
     }
     // get folder info by folder_id
-    getFolderInfo(folder_id, callback) {
-        var sql = 'SELECT * FROM folder WHERE folder_id = ' + folder_id;
+    getFolderInfo(client_id, folder_id, callback) {
+        var sql = 'SELECT * FROM folder WHERE client_id = ' +
+            client_id +
+            ' folder_id = ' +
+            folder_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -531,8 +535,11 @@ class DbRepo {
         });
     }
     // delete a folder
-    deleteFolder(folder_id, callback) {
-        var sql = 'DELETE FROM folder WHERE folder_id = ' + folder_id;
+    deleteFolder(client_id, folder_id, callback) {
+        var sql = 'DELETE FROM folder WHERE client_id = ' +
+            client_id +
+            ' AND folder_id = ' +
+            folder_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -545,9 +552,9 @@ class DbRepo {
     }
     // get tasks of a folder
     getFolderTasks(folder_id, callback) {
-        var sql = 'SELECT * FROM task WHERE task_folder = ' +
+        var sql = 'SELECT * FROM task WHERE belongs_folder_id = ' +
             folder_id +
-            ' AND task_group = 0';
+            ' AND group_belonging = 0';
         var res = [];
         this.connection.query(sql, (err, result) => {
             if (err) {

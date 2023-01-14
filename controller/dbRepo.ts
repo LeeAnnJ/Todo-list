@@ -508,32 +508,33 @@ class DbRepo {
             folder_name: folder.folder_name,
             folder_description: folder.folder_description,
         }
+        // get the number of folders of the user and set the folder_id to the number + 1
+        // use a transaction to do this
         var sql =
-            'INSERT INTO folder (client_id, folder_name, folder_description) VALUES (' +
-            values.client_id +
-            ", '" +
-            values.folder_name +
-            "', '"+
-            values.folder_description +
-            "')"
+            'SELECT COUNT(*) as number FROM folder WHERE client_id = ' +
+            values.client_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
                 callback(0)
             } else {
-                console.log('Folder created')
-                // return folder_id
+                values.folder_id = result[0].number + 1
                 sql =
-                    "SELECT folder_id FROM folder WHERE folder_name = '" +
+                    'INSERT INTO folder (client_id, folder_id, folder_name, folder_description) VALUES (' +
+                    values.client_id +
+                    ', ' +
+                    values.folder_id +
+                    ", '" +
                     values.folder_name +
-                    "' AND client_id = " +
-                    values.client_id
+                    "', '" +
+                    values.folder_description +
+                    "')"
                 this.connection.query(sql, (err, result) => {
                     if (err) {
                         console.log(err)
                         callback(0)
                     } else {
-                        callback(result[0].folder_id)
+                        callback(values.folder_id)
                     }
                 })
             }
@@ -541,8 +542,16 @@ class DbRepo {
     }
 
     // get folder info by folder_id
-    public getFolderInfo(folder_id: number, callback: Function) {
-        var sql = 'SELECT * FROM folder WHERE folder_id = ' + folder_id
+    public getFolderInfo(
+        client_id: number,
+        folder_id: number,
+        callback: Function,
+    ) {
+        var sql =
+            'SELECT * FROM folder WHERE client_id = ' +
+            client_id +
+            ' folder_id = ' +
+            folder_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -581,8 +590,16 @@ class DbRepo {
     }
 
     // delete a folder
-    public deleteFolder(folder_id: number, callback: Function) {
-        var sql = 'DELETE FROM folder WHERE folder_id = ' + folder_id
+    public deleteFolder(
+        client_id: number,
+        folder_id: number,
+        callback: Function,
+    ) {
+        var sql =
+            'DELETE FROM folder WHERE client_id = ' +
+            client_id +
+            ' AND folder_id = ' +
+            folder_id
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -596,9 +613,9 @@ class DbRepo {
     // get tasks of a folder
     public getFolderTasks(folder_id: number, callback: Function) {
         var sql =
-            'SELECT * FROM task WHERE task_folder = ' +
+            'SELECT * FROM task WHERE belongs_folder_id = ' +
             folder_id +
-            ' AND task_group = 0'
+            ' AND group_belonging = 0'
         var res: Task[] = []
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -754,7 +771,17 @@ class DbRepo {
     public getTaskByTaskId(task_id: number, callback: Function) {
         var sql = 'SELECT * FROM task WHERE task_id = ' + task_id
         this.connection.query(sql, (err, result) => {
-            var res: Task = new Task(0, 0, new Date(),'', '', false, 0, new Date(), 0)
+            var res: Task = new Task(
+                0,
+                0,
+                new Date(),
+                '',
+                '',
+                false,
+                0,
+                new Date(),
+                0,
+            )
             if (err) {
                 console.log(err)
             } else {

@@ -49,8 +49,9 @@ const create_folder = (req, res) => {
 exports.create_folder = create_folder;
 // alter a folder
 const alert_folder = (req, res) => {
+    const client_id = parseInt(req.body.folder.client_id);
     const folder_id = parseInt(req.body.folder.folder_id);
-    dbRepo_1.db.getFolderInfo(folder_id, (folder) => {
+    dbRepo_1.db.getFolderInfo(client_id, folder_id, (folder) => {
         if (folder !== null) {
             // get folder info success
             const folder_name = req.body.folder.folder_name || folder.folder_name;
@@ -91,8 +92,9 @@ exports.alert_folder = alert_folder;
 // TODO: 这个放在task里面写吧
 // delete a folder
 const delete_folder = (req, res) => {
+    const client_id = parseInt(req.body.client_id);
     const folder_id = parseInt(req.body.folder_id);
-    dbRepo_1.db.deleteFolder(folder_id, (result) => {
+    dbRepo_1.db.deleteFolder(client_id, folder_id, (result) => {
         if (result) {
             // delete folder success
             res.json({

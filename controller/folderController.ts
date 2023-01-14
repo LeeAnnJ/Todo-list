@@ -50,9 +50,10 @@ export const create_folder = (req: Request, res: Response) => {
 
 // alter a folder
 export const alert_folder = (req: Request, res: Response) => {
+    const client_id = parseInt(req.body.folder.client_id as string)
     const folder_id = parseInt(req.body.folder.folder_id as string)
 
-    db.getFolderInfo(folder_id, (folder: Folder) => {
+    db.getFolderInfo(client_id, folder_id, (folder: Folder) => {
         if (folder !== null) {
             // get folder info success
             const folder_name = req.body.folder.folder_name || folder.folder_name
@@ -98,8 +99,9 @@ export const alert_folder = (req: Request, res: Response) => {
 
 // delete a folder
 export const delete_folder = (req: Request, res: Response) => {
+    const client_id = parseInt(req.body.client_id as string)
     const folder_id = parseInt(req.body.folder_id as string)
-    db.deleteFolder(folder_id, (result: boolean) => {
+    db.deleteFolder(client_id, folder_id, (result: boolean) => {
         if (result) {
             // delete folder success
             res.json({
