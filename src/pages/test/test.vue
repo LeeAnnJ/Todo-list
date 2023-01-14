@@ -21,9 +21,9 @@
 
 <script>
     import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-	import testGet from '../../http/api/test';
 	import account from '../../http/api/account';
     import task from '../../http/api/task';
+    import folder from '../../http/api/folder';
     import{ sm3 } from 'sm-crypto';
     
     export default{
@@ -48,20 +48,15 @@
             },
             testRequest(){
                 let that = this;
-                let task_id=1;
+                let client_id=1;
                 let data = {
-                    register_id: 1,
-                    name: "测试添加任务",
-                    type : 0,
-                    priority: 0,
-                    deadline: "2023-1-13 12:00:00",
-                    note: "试一下后端接口",
-                    belongs_folder_id: 1,
-                    group_id: null,
-                    people :[]
+                    folder_creator: 1,
+                    folder_name: "测试添加任务",
+                    folder_description: "测试添加任务",
                 }
-                task.createTask(data).then(res=>{
+                task.getTaskByUserId(1).then(res=>{
                     that.getdata = JSON.stringify(res.data);
+                    console.log(res.data.data)
                 },error => {
                     that.getdata="请求失败！";
                     console.log(error);

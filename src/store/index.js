@@ -4,11 +4,11 @@ export default createStore({
     // 1、 存储所有全局数据
     state: {
         account: {
-            client_id:'unknown',
+            client_id: 1,
             user_name:'testusername',
             avator_path: '',
-            register_time: '',
-            intro: ''
+            register_time: '2023-1-13',
+            intro: 'intro'
         }
     },
     // 2、 需要通过计算获取state里的内容获取的数据

@@ -57,8 +57,8 @@ async function alterUser(client_id,content){
         data:{
             client_id:client_id,
             content:{
-                user_name:content.new_user_name,
-                introduction:content.introduction
+                new_user_name:content.new_user_name,
+                new_intro:content.introduction
             }
         }
     })

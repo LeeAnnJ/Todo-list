@@ -67,7 +67,7 @@
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible = false;">取消</el-button>
-            <el-button type="primary" @click="dialogVisible = false,alterUserInfo">保存</el-button>
+            <el-button type="primary" @click="alterUserInfo">保存</el-button>
           </span>
         </template>
       </el-dialog>
@@ -163,22 +163,22 @@ export default {
     },
 
     changeMessage(){
-      let message_id = this.message_id;
-      //this.is_read = 0;
-      message.postMessage(message_id,this.is_read).then(res => {
-        if(res.data.message == "success"){
-          this.is_read = 1;
-        }
-      },error => {
-        console.log(error);
-      })
+        let message_id = this.message_id;
+        //this.is_read = 0;
+        message.postMessage(message_id,this.is_read).then(res => {
+          if(res.data.message == "success"){
+            this.is_read = 1;
+          }
+        },error => {
+          console.log(error);
+        })
     },
 
     initEdit(){
-      this.dialogVisible = true;
-      this.popoverVis = false;
-      this.username = this.store.state.account.user_name;
-      this.introduction = this.store.state.account.intro;
+        this.dialogVisible = true;
+        this.popoverVis = false;
+        this.username = this.store.state.account.user_name;
+        this.introduction = this.store.state.account.intro;
     },
 
     load() {
@@ -212,22 +212,24 @@ export default {
     },
 
     alterUserInfo(){
-      let content = {
-        new_user_name: this.username,
-        introduction: this.introduction
-      };
-      let client_id = this.store.state.account.client_id;
-      account.alterUser(client_id, content).then(res => {
-        if(res.data.message == "success"){
-          this.store.commit("alterUser",content);
-        }
-        else{
-          ElMessageBox.alert('修改失败', '提示', {
-          confirmButtonText: '确定'})
-        }
-      },error => {
-        console.log(error)
-      }) 
+        let that = this;
+        let content = {
+          new_user_name: this.username,
+          introduction: this.introduction
+        };
+        let client_id = this.store.state.account.client_id;
+        console.log(content);
+        account.alterUser(client_id, content).then(res => {
+            if(res.data.message == "success"){
+                this.store.commit("alterUser",content);
+                that.dialogVisible = false;
+            }
+            else{
+                ElMessageBox.alert('修改失败', '提示', {confirmButtonText: '确定'})
+            }
+        },error => {
+            console.log(error)
+        }) 
     }
   }
 }

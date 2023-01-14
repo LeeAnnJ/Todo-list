@@ -167,7 +167,6 @@
     },
     methods: {
         starClick() {
-            // console.log("click star");
             this.isImportant = !this.isImportant;
             //console.log(this.isImportant,this.content.priority);
         },

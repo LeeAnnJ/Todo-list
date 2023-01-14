@@ -21,7 +21,7 @@ padding: 0px;
     width: 200px;
     text-align: left;
     padding: 0px 0px 0px 25px;
-    margin: 0px;
+    margin: 20px 0px 0px 0px;
     font-size: 20px;
 }
 .fold-line.collapse {
@@ -40,6 +40,14 @@ padding: 0px;
     width: 99%;
     padding: 0px;
     margin: 0px;
+}
+
+.list-title {
+    text-align:left;
+    font-size: 14px;
+    color:#606266;
+    font-weight: 600;
+    padding-left: 5px;
 }
 
 .list-line{

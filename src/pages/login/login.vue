@@ -76,7 +76,7 @@
                         store.commit("alterAccount",account);
                         console.log(store.state.account.client_id);
                         router.push({
-                            path:"/taskDetail"
+                            path:"/home"
                         });
                     }
                     else{

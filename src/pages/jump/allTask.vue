@@ -2,13 +2,13 @@
 	<div>
 		<!-- 顶栏 -->
 		<el-affix>
-			<TopLine></TopLine>
+			<topLine></topLine>
 		</el-affix>
 
 		<el-container class="global">
 			<el-container class="main">
 				<!-- 侧边栏 -->
-				<Sidebar></Sidebar>
+				<sidebar></sidebar>
 				<!-- 主要内容 -->
 				<div class="content">
 					<!-- "我的一天"对应的标题栏 -->
@@ -30,7 +30,7 @@
                 <task-item :task_id="task.task_id" :done="task.done" :content="task.content"></task-item>
               </div>
 							<div class="item-container">
-								<NewTask></NewTask>
+								<new-task></new-task>
 							</div>
 						</div>
 					</div>
@@ -42,17 +42,19 @@
 
 
 <script>
+		import { mapState,mapMutations } from "vuex";
     import Sidebar from '../home/sidebar.vue';
     import TopLine from '../../components/TopLine.vue';
     import TaskItem from '../../components/TaskItem.vue';
     import NewTask from '../../components/NewTask.vue';
+		import TaskUtil from '../../http/utils/task-method.js';
 
     export default {
         components: {
-            Sidebar,
-            TopLine,
-            TaskTtem: "task-item",
-            NewTask
+            "sidebar": Sidebar,
+            "topline": TopLine,
+            "task-item": TaskItem,
+            "new-task": NewTask
         },
         data() {
             return {
@@ -98,8 +100,16 @@
                 }],
             }
         },
+				computed:{
+						...mapState(["account"]),
+				},
         methods: {
-        }
+        },
+				async created(){
+						let that = this;
+						let client_id = this.account.client_id;
+						this.tasks = await TaskUtil.getAllTask(client_id);
+				}
     }
 </script>
 

@@ -1,10 +1,12 @@
 import Service from "../axios";
 
-async function createTaskList(){
+async function createTaskList(list){
     return await Service.requestService({
         url: '/folder/createTaskList',
         method: 'post',
-        data: '',
+        data: {
+            folder: list
+        },
     })
 }
 
@@ -24,14 +26,23 @@ async function moveTaskList(){
     })
 }
 
-async function deleteTaskList(){
+async function deleteTaskList(client,folder){
     return await Service.requestService({
         url: '/folder/deleteTaskList',
         method: 'post',
-        data: '',
+        data: {
+            client_id: client,
+            folder_id: folder
+        },
     })
 }
 
+/**
+ * 根据用户id返回任务列表
+ * ```json
+ * 
+ * ```
+ */
 async function getUserTaskLists(user){
     return await Service.requestService({
         url: '/folder/getUserTaskLists',

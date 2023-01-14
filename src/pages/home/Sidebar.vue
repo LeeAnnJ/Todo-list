@@ -47,12 +47,10 @@
 <script>
 import TaskList from './taskList-menu.vue';
 import { ref } from 'vue'
-import { Fold } from '@element-plus/icons-vue';
 
 export default {
   components: {
     "task-list": TaskList,
-    Fold
 },
   data() {
     return {
