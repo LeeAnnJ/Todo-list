@@ -399,20 +399,26 @@ class DbRepo {
             client_id: client_id,
         };
         // var sql = 'INSERT INTO group_member (group_id, client_id) VALUES (' + values.group_id + ', ' + values.client_id + ')';
-        var sql = 'START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES ( ' +
+        var sql = 'INSERT INTO group_member (group_id, client_id) VALUES ( ' +
             values.group_id +
             ', ' +
             values.client_id +
-            '); UPDATE `group` SET group_member_num = group_member_num + 1 WHERE group_id = ' +
-            values.group_id +
-            '; COMMIT;';
+            ');';
+        // 'START TRANSACTION; INSERT INTO group_member (group_id, client_id) VALUES ( ' +
+        // values.group_id +
+        // ', ' +
+        // values.client_id +
+        // '); UPDATE `group` SET group_member_num = group_member_num + 1 WHERE group_id = ' +
+        // values.group_id +
+        // '; COMMIT;'
         this.connection.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
                 callback(false);
             }
             else {
-                callback(true);
+                sql = 'UPDATE `group` SET members_num = members_num + 1 WHERE group_id = ' +
+                    callback(true);
             }
         });
     }
@@ -422,13 +428,17 @@ class DbRepo {
     // Mysql: START TRANSACTION; DELETE FROM group_member WHERE group_id = 1 AND client_id = 1; UPDATE group SET group_member_num = group_member_num - 1 WHERE group_id = 1; COMMIT;
     deleteMemberFromGroup(group_id, client_id, callback) {
         // FIXME: Check if the user is the creater of the group
-        var sql = 'START TRANSACTION; DELETE FROM group_member WHERE group_id = ' +
+        var sql = 'DELETE FROM group_member WHERE group_id = ' +
             group_id +
             ' AND client_id = ' +
-            client_id +
-            '; UPDATE `group` SET group_member_num = group_member_num - 1 WHERE group_id = ' +
-            group_id +
-            '; COMMIT;';
+            client_id;
+        // 'START TRANSACTION; DELETE FROM group_member WHERE group_id = ' +
+        // group_id +
+        // ' AND client_id = ' +
+        // client_id +
+        // '; UPDATE `group` SET group_member_num = group_member_num - 1 WHERE group_id = ' +
+        // group_id +
+        // '; COMMIT;'
         // var sql = 'DELETE FROM group_member WHERE group_id = ' + group_id + ' AND client_id = ' + client_id;
         this.connection.query(sql, (err, result) => {
             if (err) {
@@ -436,8 +446,8 @@ class DbRepo {
                 callback(false);
             }
             else {
-                // FIXME: change the number of members in group
-                callback(true);
+                sql = 'UPDATE `group` SET members_num = members_num - 1 WHERE group_id = ' +
+                    callback(true);
             }
         });
     }

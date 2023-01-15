@@ -7,8 +7,14 @@
     "devstart": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "eslint": "^8.31.0",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "^1.11.0",
@@ -16,7 +22,8 @@
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "pug": "2.0.0-beta11",
-    "typenode": "^4.8.4"
+    "typenode": "^4.8.4",
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",
