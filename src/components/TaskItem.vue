@@ -41,8 +41,8 @@
 
       <!-- 添加共同参与人的对话框 -->
       <el-dialog v-model="corpVisible" width="35%" @click.stop="">
-        <span>添加共同参与人</span>
-        <el-input v-model="corpInput" placeholder="请输入用户名" ></el-input>
+        复制此链接，邀请用户参与任务：<br>
+        <a :href="inviteUrl">{{ inviteUrl }}</a>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="(this.corpVisible = false)">取消</el-button>
@@ -128,6 +128,7 @@
     import {ref} from 'vue';
     import taskAPI from '../http/api/task';
     import TaskUtil from '../http/utils/task-method.js'
+    import TaskAPI from '../http/api/task.js';
 
 		export default{
     name: "task-item",
@@ -176,7 +177,8 @@
                 {value: 5, label: '每周五'},
                 {value: 6, label: '每周六'},
                 {value: 7, label: '每周日'}
-              ]
+            ],
+            inviteUrl:'',
         };
     },
     methods: {
@@ -229,6 +231,7 @@
             });
         },
         deleteTask(){
+            let that = this;
             ElMessageBox.confirm(
                 '确定删除此任务？',
                 '提示',
@@ -239,6 +242,11 @@
                 }
             ).
               then(()=>{
+                  TaskAPI.deleteTask(that.task_id).then(
+                    res => {
+                        that.$router.go(0);
+                    }
+                  )
                   console.log("确认删除任务");
               })
               .catch(()=>{
@@ -249,6 +257,7 @@
     mounted(){
         if(this.content.deadline!="暂无") this.selectTime=this.content.deadline;
         if(this.content.circul!="暂无") this.selectcrl=this.content.circul;
+        this.inviteUrl = "http://localhost:8001/invite/"+this.task_id+"/"+this.content.register_id;
     }
 }
 

@@ -41,7 +41,8 @@
     import task from '../../http/api/task';
     import folder from '../../http/api/folder';
     import{ sm3 } from 'sm-crypto';
-    import { ref } from 'vue'
+    import { ref } from 'vue';
+    import Group from '../../http/api/group.js';
     
     export default{
         data(){
@@ -69,15 +70,13 @@
             },
             testRequest(){
                 let that = this;
-                let client_id=1;
                 let data = {
-                    folder_creator: 1,
-                    folder_name: "测试添加任务",
-                    folder_description: "测试添加任务",
+                    group_id: 1,
+                    member_id: 10,
                 }
-                task.getTaskByUserId(1).then(res=>{
+                Group.addMemberToGroup(data).then(res=>{
                     that.getdata = JSON.stringify(res.data);
-                    console.log(res.data.data)
+                    // console.log(res.data.data)
                 },error => {
                     that.getdata="请求失败！";
                     console.log(error);

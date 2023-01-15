@@ -69,10 +69,13 @@ async function modifyTask(req){
     })
 }
 
-async function deleteTask(){
+async function deleteTask(task){
     return await Service.requestService({
         url: '/task/deleteTask',
         method: 'post',
+        data: {
+            task_id: task
+        }
     })
 }
 

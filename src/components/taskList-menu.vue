@@ -5,7 +5,7 @@
     <template #title>
       <div class="list-title">任务列表</div>
     </template>
-    <el-menu-item v-for="lis in lists" class="menuItem" :key="lis.folder_id">
+    <el-menu-item v-for="lis in lists" class="menuItem" :key="lis.folder_id" :index="'/folder/'+lis.folder_id+'/'+lis.folder_name">
       <el-icon><Folder /></el-icon>
       <template #title>
         <div class="list-line" @mouseenter="focusOn(lis)" @mouseleave="focusLeave(lis)">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
   import Folder from '../http/api/folder';
 
   export default {
@@ -56,6 +56,7 @@
         ...mapState(["account"]),
     },
     methods: {
+      ...mapMutations(["alterFolder"]),
       focusOn(item){item.isfocus=true;},
       focusLeave(item){item.isfocus=false;},
       addList(value) {
@@ -79,7 +80,9 @@
     async created(){
         let that = this;
         await Folder.getUserTaskLists(that.account.client_id).then(res=>{
-            that.lists = res.data.data.folders;
+            let data = res.data.data.folders;
+            that.lists = data;
+            if(data.length>0) that.alterFolder(data);
         },error=>{
           console.log(error);
         })

@@ -69,7 +69,7 @@
                         let account={
                             client_id: data.client_id,
                             user_name: data.user_name,
-                            avator_path: data.avatar_path,
+                            avator_path: "http://localhost:3000"+data.avatar_path,
                             register_time: data.register_time,
                             intro: data.introduction
                         };

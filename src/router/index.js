@@ -12,6 +12,8 @@ import Period from '../pages/jump/period.vue';
 import DetailRouter from '../pages/task-detail/TaskDetail.vue';
 import TestRouter from '../pages/test/test.vue';
 import GroupRouter from '../pages/jump/grouptask.vue';
+import InviteRouter from '../pages/invite/invite.vue';
+import FolderRouter from '../pages/jump/folder.vue';
 
 const routes = [
     {
@@ -78,6 +80,16 @@ const routes = [
         name: '测试界面',
         component: TestRouter
     },
+    {
+        path: '/invite/:task/:user',
+        name:'invite',
+    	component: InviteRouter
+    },
+    {
+        path: '/folder/:fold/:name',
+        name: 'folder',
+        component: FolderRouter
+    }
    
 ]
 

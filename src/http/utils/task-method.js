@@ -37,7 +37,7 @@ function convertKeyByUser(item){
             create_time: parseTime(item.task_create_time),
             priority: item.task_priority>0? true:false,
             deadline: parseTime(item.task_ddl),
-            circul: item.cycle,
+            circul: cycle[item.cycle],
             is_favor: item.task_isfavorite>0? true:false,
             belongs_folder_id: item.task_folder_id
         },
@@ -195,6 +195,32 @@ async function getPeriod(client_id){
 }
 
 /**
+ * 任务列表
+ */
+async function getFolder(client_id,folder_id){
+    console.log(folder_id);
+    var tasks=[];
+    await Task.getTaskByUserId(client_id).then(
+        res=>{
+            let list = res.data.data;
+            list = list.filter(lis=> lis.task_folder_id == folder_id);
+            if(list.length>0){
+                for(let i=0;i<list.length;i++){
+                    tasks.push(convertKeyByUser(list[i]));
+                }
+                tasks.sort(sortTask);
+            }
+        },
+        error=>{
+            console.log(error);
+            return [];
+        }
+    )
+    console.log("tasks:",tasks);
+    return tasks;
+}
+
+/**
  * 设置重要性
  */
 async function setImportant(task_id,important){
@@ -236,6 +262,25 @@ async function getTaskDetail(task_id){
     return task;
 }
 
+function convertKeyToInvite(item){
+    let task= {
+        group_id: item.task_group_id,
+        task_name: item.task_name,
+        task_description: item.task_description
+    }
+    return task;
+}
+
+async function getTaskforInvite(task_id){
+    var task;
+    await Task.getTaskById(task_id).then(
+        res => {
+            task = convertKeyToInvite(res.data.data);
+        },err => {task = err;}
+    )
+    return task;
+}
+
 export default{
     getAllTask,
     getToday,
@@ -244,5 +289,7 @@ export default{
     getImportant,
     getPeriod,
     setImportant,
-    getTaskDetail
+    getFolder,
+    getTaskDetail,
+    getTaskforInvite
 }

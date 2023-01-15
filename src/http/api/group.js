@@ -36,18 +36,22 @@ async function deleteGroup(){
 }
 
 
-async function getMembersByGroupId(){
+async function getMembersByGroupId(group_id){
     return await Service.requestService({
         url: '/group/getMembersByGroupId',
         method: 'get',
+        params: {
+            "group_id": group_id
+        }
     })
 }
 
 
-async function addMemberToGroup(){
+async function addMemberToGroup(req){
     return await Service.requestService({
         url: '/group/addMemberToGroup',
         method: 'post',
+        data: req
     })
 }
 
@@ -58,15 +62,6 @@ async function deleteMemberFromGroup(){
         method: 'post',
     })
 }
-
-
-async function getMembersByGroupId(){
-    return await Service.requestService({
-        url: '/group/getMembersByGroupId',
-        method: 'get',
-    })
-}
-
 
 async function updateGroupInfo(){
     return await Service.requestService({

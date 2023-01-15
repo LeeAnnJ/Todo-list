@@ -398,6 +398,7 @@ export default {
 }
 
 .user {
+  border: 1px solid #fff;
   position: absolute;
   top: 7px;
   right: 10px;

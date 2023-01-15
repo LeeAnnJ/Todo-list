@@ -36,9 +36,12 @@
           <b style="float: left;">共同参与人（{{ coopernumber }}）</b>
         </div>
         <!-- 参与人 -->
-        <el-card v-for="coop in cooperators" class="user">
-          <el-avatar :size="50" class="user-avatar">{{ coop.avator_path }}</el-avatar>
-          {{ coop.user_name }}
+        <el-card v-for="coop in cooperators" class="user-card">
+          <div class="user">
+            <el-avatar :size="50" class="user-avatar" :src="coop.avatar_path">{{ coop.user_name }}</el-avatar>
+            <div class="user-name">{{ coop.user_name }}</div>
+            <div v-if="coop.isowner" class="user-owner">Owner</div>
+          </div>
         </el-card>
         <!-- 添加按钮 -->
         <el-button round class="add-button" @click="dialogVisible2 = true">
@@ -46,9 +49,10 @@
           添加共同参与人
         </el-button>
 
-        <!-- todo-升级成查找模式 -->
         <el-dialog v-model="dialogVisible2" title="添加共同参与人" width="30%" draggable>
-          <span class="txt_CooperatorName">用户名：</span>
+          复制此链接，邀请用户参与任务：<br>
+          <a :href="inviteUrl">{{ inviteUrl }}</a>
+          <!-- <span class="txt_CooperatorName">用户名：</span>
           <span class="input_cooperatorName">
             <el-input v-model="cooperatorName" placeholder="请输入参与人用户名" />
           </span>
@@ -59,23 +63,23 @@
                 确定
               </el-button>
             </span>
-          </template>
+          </template> -->
         </el-dialog>
       </div>
 
       <!-- 附件， -->
-      <div class="card-slot">
+      <!-- <div class="card-slot"> -->
         <!-- 标题栏 -->
-        <div class="title">
+        <!-- <div class="title">
           <img class="title-icon" src="../../assets/icons/6_classific.png" alt="text" />
           <b style="float: left;">附件（0）</b>
-        </div>
+        </div> -->
         <!-- 添加附件按钮 -->
-        <el-button class="add-button" round>
+        <!-- <el-button class="add-button" round>
           <el-icon><Plus /></el-icon>
           添加附件
         </el-button>
-      </div>
+      </div> -->
     </el-container>
   </div>
 </template>
@@ -86,6 +90,9 @@ import TaskHead from './DetailHead.vue';
 import DetailSLot from './DetailSlot.vue';
 import { Document } from '@element-plus/icons-vue';
 import SubTaskSlot from './SubTaskSlot.vue';
+import GroupUtil from '../../http/utils/group-method.js';
+import { toRaw } from '@vue/reactivity';
+import { mapState } from "vuex";
 
 export default {
     components: {
@@ -115,15 +122,19 @@ export default {
                 client_id: "001",
                 avator_path: "user",
                 user_name: "张三",
+                isowner: true
             },{
                 client_id: "002",
                 avator_path: "user",
                 user_name: "李四",
+                isowner: false
             },{
                 client_id: "003",
                 avator_path: "user",
                 user_name: "王五",
+                isowner: false
             }],
+            inviteUrl: "",
           }
       },
       computed: {
@@ -131,8 +142,9 @@ export default {
               return this.trends.length;
           },
           coopernumber: function () {
-              return this.cooperators.length;
+              return toRaw(this.cooperators).length;
           },
+          ...mapState(["account"]),
       },
       methods: {
         focusOn(item) { item.isfocus = true },
@@ -148,7 +160,18 @@ export default {
     },
     created(){
         console.log(this.$route.params);
-        this.task_id=this.$route.params.id;
+        this.task_id=Number(this.$route.params.id);
+    },
+    async mounted (){
+        this.inviteUrl = "http://localhost:8001/invite/"+this.task_id+"/"+this.account.client_id;
+        let that = this;
+        await GroupUtil.MemberforDetail(1).then(res=>{
+            that.cooperators = res;
+            console.log("coop:",that.cooperators);
+        },err=>{
+            console.log(err);
+        });
+        this.cooperators = toRaw(this.cooperators);
     }
 }
 </script>

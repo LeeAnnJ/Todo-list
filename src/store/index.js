@@ -9,7 +9,8 @@ export default createStore({
             avator_path: 'http://localhost:3000/static/default.png',
             register_time: '2023-1-13',
             intro: 'intro'
-        }
+        },
+        folders: [],
     },
     // 2、 需要通过计算获取state里的内容获取的数据
     // 只能读取不可修改
@@ -34,6 +35,10 @@ export default createStore({
         alterUser(state,content){
             state.account.user_name = content.new_user_name;
             state.account.intro = content.introduction;
+        },
+        alterFolder(state,list){
+            state.folders=list;
+            console.log("state:",state.folders);
         }
     },
     // 3、定义对state的各种操作

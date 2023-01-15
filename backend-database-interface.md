@@ -338,17 +338,20 @@ responseType: 'blob'
 ```json
 {
     "task": {
-        "task_id": "xxx",
-        "register_id": "xxx",
-        "create_time": "yyyy-mm-dd hh:mm",
-        "name": "xxx",
-        "type" :0,
-        "priority": 0,
-        "deadline": "yyyy-mm-dd hh:mm",
-        "group_belong": 0000,
-        "note": "xxxx",
-        "is_favor": 0,
-        "belongs_folder_id": "xxx"
+        "task_id":2,
+        "task_creator":1,
+        "task_create_time":"yyyy-mm-ddThh:mm:ss.xxxZ",
+        "task_name":"2023-01-02T02:05:34.000Z",
+        "task_description":"测试群组任务1",
+        "task_type":1,
+        "task_priority":0,
+        "task_ddl":"2023-01-24T02:05:47.000Z",
+        "task_group_id":1,
+        "task_isfavorite":1,
+        "task_folder_id":null,
+        "task_status":0,
+        "subtasks_count":0,
+        "cycle":0
     }
 }
 ```
@@ -727,7 +730,7 @@ responseType: 'blob'
 请求参数说明：
 ```json
 {
-    "task_id": "xxx",
+    "group_id": "xxx",
     "member_id": "xxx"
 }
 ```
