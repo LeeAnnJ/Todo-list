@@ -33,7 +33,7 @@
         <!-- 标题栏 -->
         <div class="title">
           <img class="title-icon" src="../../assets/icons/3_user.png" alt="some_text" />
-          <b style="float: left;">共同参与人（{{ coopernumber }}）</b>
+          <b style="float: left;">共同参与人</b>
         </div>
         <!-- 参与人 -->
         <el-card v-for="coop in cooperators" class="user-card">
@@ -109,12 +109,12 @@ export default {
             cooperatorName:'',
             trends:[{
                 avator_path: "user",
-                user_name: "张三",
-                detail: "添加了子步骤：子步骤3",
+                user_name: "cathy",
+                detail: "加入了该任务",
                 time: "2022-12-14 20:51",
             },{
                 avator_path: "user",
-                user_name: "李四",
+                user_name: "bob",
                 detail: "加入了该任务",
                 time: "2022-12-14 20:52",
             }],

@@ -1,4 +1,3 @@
-<!-- todo-实现敲回车登录 -->
 <template>
   <div class="login-main">
     <div>
@@ -21,7 +20,6 @@
       </el-form>
       <el-button class="button" type="primary" @click="submitLog(ruleFormRef)">登录</el-button>
     </div>
-    <!-- <div>新底栏开发中...</div> -->
   </div>
 </template>
   
