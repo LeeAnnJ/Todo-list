@@ -1,0 +1,556 @@
+*   commit 90daf480ea2e4a77b6934f9222c4e48594025813
+|\  Merge: 740826d 719a8dd
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Fri Jan 13 23:33:12 2023 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit 719a8dd646ba748fa7c10e507d959b4a4c0386ad
+| | Author: sinlena <1183971314@qq.com>
+| | Date:   Fri Jan 13 21:24:50 2023 +0800
+| | 
+| |     update topline
+| | 
+| * commit e912c1895fd0d6a5d2b183a23c681650ff9f8609
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Fri Jan 13 18:03:53 2023 +0800
+| | 
+| |     添加部分文档
+| | 
+* | commit 740826d8cc62bb957ec925b8b591de2ea6fd3f92
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Fri Jan 13 23:31:37 2023 +0800
+|   
+|       improve sidebar
+| 
+* commit b84acf8f8a47002a953cd20e721682df218b5633
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Thu Jan 12 14:18:06 2023 +0800
+| 
+|     add some file
+| 
+* commit d3cb1c927f48701f7a3a0202474547f53c22ab02
+| Author: yangyf83 <yangyf83@aliyun.com>
+| Date:   Thu Jan 12 10:58:06 2023 +0800
+| 
+|     update someting about backend
+|     
+|     notice: Database has been changed!!
+| 
+* commit 525f4c5a4cf37df83a350d7fa06652300e893383
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Jan 11 21:05:39 2023 +0800
+| 
+|     add request to finish login and registor window
+| 
+* commit ad9eb908e08fb2840f37396bbba79166db5d866e
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Jan 9 12:42:41 2023 +0800
+| 
+|     a simple topline for TaskDetail
+| 
+* commit 219ed897a84d5b33f516ae04aac971d5723715b4
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Jan 6 21:24:23 2023 +0800
+| 
+|     improve menu option in TaskItem
+| 
+* commit 90cd1fd106aa73d77bb5f3d169ac1a528abd2b46
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Jan 4 00:00:53 2023 +0800
+| 
+|     slitely modify document and axios interface
+| 
+* commit 5bd4fb4599424152bb735e3c5268d09e322f0c25
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Dec 26 19:58:35 2022 +0800
+| 
+|     alter display in jump detail
+| 
+* commit 7cdfd5cd8cee433b5fe237495e4b489dab0a6600
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Dec 25 10:55:06 2022 +0800
+| 
+|     update login form and register form
+| 
+* commit 18cf114ae099eab77d7ca69e5d667b22738a73d0
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sat Dec 24 11:44:00 2022 +0800
+| 
+|     modify loginForm and vuex
+| 
+* commit 3c182f4e1197cbb2e46648739bf2fa5b721d8ed3
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Dec 23 20:47:19 2022 +0800
+| 
+|     modify jump path and registor form
+| 
+* commit 10b79bbef86e8d9d489690b68d37a293a7b69c5e
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Thu Dec 22 20:42:47 2022 +0800
+| 
+|     modify display on main window
+| 
+* commit 5d895ff151130dfd97d77895f90e82875918e268
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Dec 21 20:46:30 2022 +0800
+| 
+|     finish subtask & deleteSubtask
+| 
+* commit 4a0814c0b55714df66228ef081450295c1923a24
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Dec 19 00:40:17 2022 +0800
+| 
+|     exact subtask from TaskDetail
+| 
+* commit 2e5968e13d2c947297bb50c088e9cfe4476f84a7
+| Author: sinlena <98014376+sinlena@users.noreply.github.com>
+| Date:   Sun Dec 18 22:58:30 2022 +0800
+| 
+|     add cooperators
+| 
+* commit a3725d0d310995d623ad9d41b4e6d52e475dcab9
+| Author: 2040196969@qq.com <2040196969@qq.com>
+| Date:   Sun Dec 18 20:51:47 2022 +0800
+| 
+|     subtasks
+| 
+* commit b3802524ef9519302bc7224d4b365aabe197c7a7
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Dec 18 15:16:13 2022 +0800
+| 
+|     make detail and substep editable
+| 
+* commit ea9059788a63ec4556614ad93320223f5615eb01
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Thu Dec 15 21:34:48 2022 +0800
+| 
+|     improve detail in TaskDetail
+| 
+* commit 260980d3de7c3c790cc831b2e39975bf3f33bf28
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Dec 14 21:00:02 2022 +0800
+| 
+|     modify dataset in TaskDetail
+| 
+* commit 5c85c87bb0481dabc3da616e1dd1ce4b1314bb96
+| Author: 2040196969@qq.com <2040196969@qq.com>
+| Date:   Tue Dec 13 21:25:13 2022 +0800
+| 
+|     group
+| 
+* commit ecf27633d2f2759ad9d1a6d0d402c00102b61c97
+| Author: 2040196969@qq.com <2040196969@qq.com>
+| Date:   Tue Dec 13 21:22:54 2022 +0800
+| 
+|     group.js
+| 
+* commit 8ae053579ddecba7233bb2574e473d2f2f7c4986
+| Author: sinlena <1183971314@qq.com>
+| Date:   Tue Dec 13 21:18:39 2022 +0800
+| 
+|     add interface in /api
+| 
+* commit 9918eb1234970eb2b880d52c5c91b7d83549ab46
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Tue Dec 13 15:34:06 2022 +0800
+| 
+|     add interface in /api and modify interface doc
+| 
+* commit 8137d2028551950b4d310c3bf0ecdb2354a11a31
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Tue Dec 13 00:17:14 2022 +0800
+| 
+|     example for axios
+| 
+* commit 0aa4a71ea8bd880181f43c2cde89d324295c7bf3
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Dec 12 21:06:25 2022 +0800
+| 
+|     alter dataset in NewTask
+| 
+* commit 9aba9a1cbe9e436c2b69058ba820abebd2fcbc1e
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Dec 9 17:48:05 2022 +0800
+| 
+|     again alter the interface document
+| 
+* commit 9ee4ae2b71493b7d87734f0857c7e0378e300d1f
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Dec 9 17:39:18 2022 +0800
+| 
+|     alter interface document
+| 
+* commit cc467ca1adeebb821240cc308bd2c05cfd591e53
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Dec 9 10:52:01 2022 +0800
+| 
+|     alter component:TaskItem
+| 
+* commit f304a367cfb4ca882eef31c08c142be459909a7c
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Dec 7 01:23:10 2022 +0800
+| 
+|     again alter mainWindow
+| 
+* commit f478c8df95fb1f0804c279ebef24ecdc6d792bfa
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Tue Dec 6 01:49:17 2022 +0800
+| 
+|     alter mainWindow
+|   
+*   commit 5c483ef2e6c48282fee77844129c6a7b7b7a8fd1
+|\  Merge: a3a20eb 2fd1042
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Mon Dec 5 22:02:10 2022 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit 2fd1042caa147aeca56d95604964820231d622b2
+| | Author: sinlena <98014376+sinlena@users.noreply.github.com>
+| | Date:   Sun Dec 4 21:43:51 2022 +0800
+| | 
+| |     Update readme.md
+| | 
+| * commit 54a63e5dfad751347163a07498d053c1ea267303
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Sun Dec 4 21:04:16 2022 +0800
+| | 
+| |     系统体系结构
+| | 
+* | commit a3a20ebbe747370515e3cf0fd35ebadbd0fd4df3
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Mon Dec 5 22:01:36 2022 +0800
+|   
+|       compelete dackend-interface file
+| 
+* commit 5c2a9a13544f8b646b8f5569ffe07b47fa527d79
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Dec 4 18:03:11 2022 +0800
+| 
+|     add interface file
+| 
+* commit 643a3e87841ef38f538e6a0fe8afb8543dfc1aa0
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Dec 4 18:00:05 2022 +0800
+| 
+|     add interface file
+| 
+* commit 3c8dc040ca26c38daf13e399522a32c98f9a4e0f
+| Author: yangyf83 <yangyf83@aliyun.com>
+| Date:   Sun Dec 4 15:47:39 2022 +0800
+| 
+|     Update repo
+|     
+|     1. update gitignore
+|     2. remove the node_modules from the repo
+|   
+*   commit 0c45b9086276e7b0d6a99711c693cdf99ba782da
+|\  Merge: cb5be00 c80cded
+| | Author: yangyf83 <yangyf83@aliyun.com>
+| | Date:   Sun Dec 4 15:45:07 2022 +0800
+| | 
+| |     Merge branch 'front-main' of https://github.com/LeeAnnJ/Todo-list into front-main
+| | 
+| * commit c80cded76be0773e6179f2ea518915a9e12b1a25
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Sun Dec 4 14:16:13 2022 +0800
+| | 
+| |     complete vuex and update
+| | 
+* | commit cb5be0055f7ce717aa5bd3de89f96c067a4e2848
+|/  Author: yangyf83 <yangyf83@aliyun.com>
+|   Date:   Sun Dec 4 15:38:21 2022 +0800
+|   
+|       update git ignore file
+| 
+* commit f0c41ebb69539d696f964a3ec5d9a0503aa18305
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sat Dec 3 19:56:47 2022 +0800
+| 
+|     compelete axio frame and design registor window.
+|   
+*   commit aba55e6a97380ca31b9b11efbd5d698397f7bb0f
+|\  Merge: f093db7 de09040
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Fri Dec 2 21:30:04 2022 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit de090406f8a1ed02c4702dad2c8a0935dcd6cca4
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Thu Dec 1 22:23:16 2022 +0800
+| | 
+| |     新建任务form补充
+| | 
+* | commit f093db7ac71ee84f467bd4685a7f070a7fa7fe5c
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Fri Dec 2 21:27:25 2022 +0800
+|   
+|       just to pull new code
+|   
+*   commit f14d435ac559f58c73b37e78d2c9c82ce5668a42
+|\  Merge: b1e38dd 89ceb57
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Thu Dec 1 20:06:01 2022 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit 89ceb577a5eb9940d031481165c75c528774c7be
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Thu Dec 1 19:16:39 2022 +0800
+| | 
+| |     alltask界面显示
+| | 
+| * commit 26fdec77656bf1f0d0fd2968c8c6088b3f2982d3
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Thu Dec 1 19:12:33 2022 +0800
+| | 
+| |     新建任务dialog
+| | 
+* | commit b1e38dd4c8e06448c503a11c6bf0c4d8c0eeba27
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Thu Dec 1 19:54:45 2022 +0800
+|   
+|       add detail in TaskItem
+| 
+* commit 3437c983442b47f31ea5eecf4aa72d8351ce493e
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Nov 30 19:23:06 2022 +0800
+| 
+|     improve NewTask
+| 
+* commit d022e20619eac01271a4a14a5a9842908070feab
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Nov 28 20:43:20 2022 +0800
+| 
+|             modified:   readme.md
+| 
+* commit 31f073a9cc8fda665ba1c8a08f70d4aefceadda7
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Nov 28 20:42:13 2022 +0800
+| 
+|     improve welcome window & writedoc
+| 
+* commit 51d7339539bc9659757ec7e299e9a31c5f4554c5
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Mon Nov 28 19:33:50 2022 +0800
+| 
+|     adjust code
+|   
+*   commit 884289d253f4da48b2e7dfc74db28d86dc51b9f5
+|\  Merge: d037f44 c30774b
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Mon Nov 28 01:35:12 2022 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit c30774b7bae34b8ccc0c81afdbbca831cec24e05
+| | Author: sinlena <1183971314@qq.com>
+| | Date:   Sun Nov 27 22:25:02 2022 +0800
+| | 
+| |     update TopLine
+| | 
+| * commit 437869fd6b22acb71fed41552dbc2a93f45dd608
+| | Author: 2040196969@qq.com <2040196969@qq.com>
+| | Date:   Sun Nov 27 21:35:04 2022 +0800
+| | 
+| |     sidebar_
+| | 
+* | commit d037f442fe20fb5682177749075becde89cc2949
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Mon Nov 28 01:30:31 2022 +0800
+|   
+|       add welcomePage and login page
+| 
+* commit f2e85b1a53857ae74abb54470ab05908b187515d
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Nov 27 20:22:05 2022 +0800
+| 
+|     add details in TaskDetail
+| 
+* commit 74cdc18d53e9dbd35a42cc96c772f7dcb9ed0e72
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Fri Nov 25 22:00:54 2022 +0800
+| 
+|     implement design in TaskDetail
+|     and add some icons
+| 
+* commit 35b968ffa330e61268c9f31d614677371b6d9f3d
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Thu Nov 24 10:31:16 2022 +0800
+| 
+|     add page:task-detail
+|     and modified dislpay in MainWindow
+| 
+* commit e2e1abbc48543c2579dc04ab30dd1d7015c61c1e
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Wed Nov 23 01:23:27 2022 +0800
+| 
+|     improve TaskItem and add new component
+| 
+* commit b2797c48b787d8d772717e425bb0982977f8ff72
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Tue Nov 22 00:29:44 2022 +0800
+| 
+|     improve style in main window
+| 
+* commit d5f203ef21564496d40480d257a2c979539464a2
+| Author: liuhr29 <1183971314@qq.com>
+| Date:   Sun Nov 20 23:53:15 2022 +0800
+| 
+|     update for TopLine.vue
+| 
+* commit 7324ba99c7fb1d27220329e11eb16bd70fc48213
+| Author: sinlena <98014376+sinlena@users.noreply.github.com>
+| Date:   Sun Nov 20 23:14:06 2022 +0800
+| 
+|     Update TopLine.vue
+| 
+* commit 47bc1a769cf21e34477a510855c997997f79f017
+| Author: gmz312 <112796208+gmz312@users.noreply.github.com>
+| Date:   Sun Nov 20 22:00:33 2022 +0800
+| 
+|     Add files via upload
+| 
+* commit 70cac32f12bf1c2dfb61fc2a88b3d5e2fbb36b3a
+| Author: gmz312 <112796208+gmz312@users.noreply.github.com>
+| Date:   Sun Nov 20 21:55:14 2022 +0800
+| 
+|     Update Sidebar.vue
+| 
+* commit 7f9ea6b40333b69f5cc88099b07df6306ff9c6de
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Nov 20 21:17:55 2022 +0800
+| 
+|     modified:   src/components.d.ts
+| 
+* commit c25c79e7dd5008529e6d34fb326ee75836092595
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Nov 20 21:10:53 2022 +0800
+| 
+|     update readme.md
+| 
+* commit 26f326810972c28c1cd07d735780b2d4f72a3816
+| Author: LeeAnnJ <lee_ann.j@qq.com>
+| Date:   Sun Nov 20 21:02:24 2022 +0800
+| 
+|     add component design in mainWindow
+|     update readme.md
+|   
+*   commit 059d500d8fb2817077630eade3aaee2b6b7d485e
+|\  Merge: 126ba30 2512015
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Sat Nov 19 14:08:38 2022 +0800
+| | 
+| |     Merge branch 'front-main' of github.com:LeeAnnJ/Todo-list into front-main
+| | 
+| * commit 2512015a2b2f506eb65a376ca0622818052128f5
+| | Author: LeeAnnJ <112742129+LeeAnnJ@users.noreply.github.com>
+| | Date:   Wed Nov 16 17:07:55 2022 +0800
+| | 
+| |     Update readme.md
+| |   
+| *   commit bb741ae2da94b59e0d25ae44b7c88dd99e0979b8
+| |\  Merge: 9b89b78 f92bb17
+| | | Author: LeeAnnJ <112742129+LeeAnnJ@users.noreply.github.com>
+| | | Date:   Wed Nov 16 16:43:51 2022 +0800
+| | | 
+| | |     Merge pull request #2 from LeeAnnJ/frontend-main
+| | |     
+| | |     inject element-plus and element-icon.
+| | |   
+| * |   commit 9b89b78bdc862c2c8eb05762d2fc2b68edfde29e
+| |\ \  Merge: fadf5da 9116c58
+| | | | Author: LeeAnnJ <112742129+LeeAnnJ@users.noreply.github.com>
+| | | | Date:   Wed Nov 16 09:32:15 2022 +0800
+| | | | 
+| | | |     Merge pull request #1 from LeeAnnJ/main
+| | | | 
+| * | | commit fadf5da4bd4d41f91bb0df6cf74658c7309748e9
+| | | | Author: LeeAnnJ <112742129+LeeAnnJ@users.noreply.github.com>
+| | | | Date:   Tue Nov 15 00:31:39 2022 +0800
+| | | | 
+| | | |     add UI design
+| | | | 
+* | | | commit 126ba308a58b1803fd0ba94fdf55530bdca9952e
+| | | | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | | | Date:   Sat Nov 19 14:04:04 2022 +0800
+| | | | 
+| | | |     add components in mainWindow
+| | | | 
+* | | | commit 0909fb4534fa56e43909a9bc873543d4895d1cda
+| |_|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|/| |   Date:   Wed Nov 16 17:02:34 2022 +0800
+| | |   
+| | |               modified:   readme.md
+| | | 
+* | | commit f92bb17dc2fdd47acc95011ba85e9adbb109ed97
+| |/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|/|   Date:   Wed Nov 16 16:40:37 2022 +0800
+| |   
+| |       inject element-plus and element-icon.
+| | 
+* | commit 9116c5851b74021fc1d8664478c3b3989bd2bd16
+| | Author: LeeAnnJ <lee_ann.j@qq.com>
+| | Date:   Wed Nov 16 09:11:31 2022 +0800
+| | 
+| |             renamed:    node_modules/resolve/.eslintignore -> .gitignore
+| |             modified:   index.html
+| |             deleted:    node_modules/.bin/nanoid
+| |             deleted:    node_modules/.bin/nanoid.cmd
+| |             deleted:    node_modules/.bin/nanoid.ps1
+| |             modified:   node_modules/.vite/_metadata.json
+| |             deleted:    node_modules/.vite/chunk-MEOA3D7T.js
+| |             deleted:    node_modules/.vite/chunk-MEOA3D7T.js.map
+| |             modified:   node_modules/.vite/vue-router.js
+| |             modified:   node_modules/.vite/vue-router.js.map
+| |             modified:   node_modules/.vite/vue.js
+| |             modified:   node_modules/@babel/parser/lib/index.js
+| |             modified:   node_modules/@babel/parser/lib/index.js.map
+| |             modified:   node_modules/@babel/parser/package.json
+| |             modified:   node_modules/@babel/parser/typings/babel-parser.d.ts
+| |             deleted:    node_modules/is-core-module/.eslintignore
+| |             modified:   node_modules/is-core-module/.eslintrc
+| |             modified:   node_modules/is-core-module/CHANGELOG.md
+| |             modified:   node_modules/is-core-module/core.json
+| |             modified:   node_modules/is-core-module/package.json
+| |             modified:   node_modules/is-core-module/test/index.js
+| |             modified:   node_modules/resolve/.eslintrc
+| |             deleted:    node_modules/resolve/appveyor.yml
+| |             modified:   node_modules/resolve/lib/async.js
+| |             modified:   node_modules/resolve/lib/core.js
+| |             modified:   node_modules/resolve/lib/core.json
+| |             modified:   node_modules/resolve/lib/node-modules-paths.js
+| |             modified:   node_modules/resolve/lib/sync.js
+| |             modified:   node_modules/resolve/package.json
+| |             modified:   node_modules/resolve/readme.markdown
+| |             deleted:    node_modules/resolve/test/.eslintrc
+| |             modified:   node_modules/resolve/test/core.js
+| |             modified:   node_modules/resolve/test/mock_sync.js
+| |             modified:   node_modules/resolve/test/node_path.js
+| |             modified:   node_modules/resolve/test/resolver.js
+| |             modified:   node_modules/resolve/test/resolver/invalid_main/package.json
+| |             modified:   node_modules/resolve/test/resolver_sync.js
+| |             modified:   package-lock.json
+| |             modified:   package.json
+| |             modified:   src/main.js
+| |             modified:   src/pages/hello/HelloWorld.vue
+| |             modified:   vite.config.js
+| | 
+* | commit 70ef80f9963b3d65b2cd69b5a94a68255d1f2110
+|/  Author: LeeAnnJ <lee_ann.j@qq.com>
+|   Date:   Tue Nov 15 09:08:59 2022 +0800
+|   
+|               new file:   UIdesign/.$design.drawio.bkp
+|               new file:   UIdesign/1668086723854.jpg
+|               new file:   UIdesign/1668097399307.png
+|               new file:   UIdesign/design.drawio
+|               new file:   UIdesign/mainWindow.png
+|               new file:   UIdesign/mainWindow_comment.png
+| 
+* commit d0de09c544ea8f86f8a3537338a8ad5f69de2576
+  Author: LeeAnnJ <lee_ann.j@qq.com>
+  Date:   Mon Nov 14 20:31:55 2022 +0800
+  
+      init frontend project

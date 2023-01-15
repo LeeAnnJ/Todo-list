@@ -11,12 +11,12 @@
 
 |组员|分工|
 |:--:|:--:|
-|杨翼飞|后端开发，前后端接口测试，<br>项目文档后端实现和测试部分|
+|杨翼飞|数据库，后端开发，前后端接口测试，<br>项目文档数据库与后端实现和测试部分|
 |李安吉|界面设计，前端开发，前后端接口测试，<br>项目文档前端实现部分、接口文档|
 |吕敬|前端组件开发，项目文档需求分析与设计部分|
 |刘浩然|前端组件开发，项目文档需求分析部分|
 |王凡||
-</center>
+|</center>||
 
 ---
 
@@ -116,11 +116,11 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 #### 3 1.2 任务模块结构图
 
-![Image text](/UIdesign/任务模块结构图.png)
+![Image text](./UIdesign/任务模块结构图.png)
 
 #### 3 1.3 用户模块结构图
 
-![Image text](/UIdesign/用户模块结构图.png)
+![Image text](./UIdesign/用户模块结构图.png)
 
 ### 3.2 子系统功能描述
 #### 3.2.1用户信息子系统
@@ -224,7 +224,7 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 * 消息提醒界面，用户可以在此界面查看所有消息提醒
 ### 3.5 交互界面设计
 初步设定主界面设计如下：
-![Image text](/UIdesign/mainWindow.png)
+![Image text](./UIdesign/mainWindow.png)
 
 ---
 ## 4 项目功能实现——前端部分
@@ -256,7 +256,7 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 ### 4.2 页面设计
 #### **4.2.1 主页面设计**
-![Image text](/UIdesign/mainWindow.png)
+![Image text](./UIdesign/mainWindow.png)
 **设计详细说明：**
 
 * 页面布局：页面将采用简洁明了的卡片式布局，分为顶部导航栏、中间任务列表和侧边栏三部分。
@@ -271,7 +271,7 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 * 图标：采用 el-element 图标库.
 
 #### **4.2.2 任务详情页面设计**
-![Image text](/UIdesign/taskDetail.png)
+![Image text](./UIdesign/taskDetail.png)
 设计详细说明：
 
 * 页面布局：页面将采用简洁明了的卡片式布局，分为顶部导航栏、中间任务详情列表两部分。
@@ -309,11 +309,11 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 主界面分解如下：
 
-![main-decom](/UIdesign/main-decom.png)
+![main-decom](./UIdesign/main-decom.png)
 
 任务详情分解如下：
 
-![detail-decom](/UIdesign/detail-decom.png)
+![detail-decom](./UIdesign/detail-decom.png)
 
 ### 4.4 数据交互请求与api实现
 #### **4.3.1 http请求接口设置**
@@ -326,10 +326,121 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 具体可见`/src/http`文件夹。
 
 ---
-## 5 项目功能实现——后端部分
+## 5 项目功能实现——数据库部分
+
+### 5.1 数据字典
+
+数据字典详见数据字典文档
+
+### 5.2 数据库设计
+
+在完成数据字典定义后，我们进行了数据库设计。数据库的物理设计见下图：
+
+![image-20230115222435765](./UIdesign/database.png)
+
+从图像中我们可以看到，项目数据库由七个数据表组成，数据库和数据表的设计基本满足第二范式的要求。
 
 ---
-## 6 项目测试
-详情可见测试文档。
+
+## 6 项目功能实现——后端部分
+
+### 6.1 后端项目框架
+
+后端项目的基本框架如下图所示：
+
+![](./UIdesign/整体结构.svg)
+
+除去最左端的前端和最右端的数据库，后端整体业务代码由3层组成。
+
+最靠近前端的一层为路由层。其使用Express框架自带的路由转发中间件实现，负责处理前端的发来的数据和向前端发送后端处理后的数据回应，具体实现方式将在6.2节详细说明。
+
+中间一层为业务代码层，终于成为整个后端项目的核心。由3个部分组成。 我将这一层的各个对象大致分为3种：工具类、控制类和实体类。
+
++ 控制类（Controller）负责接收路由层转发的后端接收到的各类请求和对应的参数，根据不同的请求，控制层会进行不同的操作业务操作，控制不同的实体内容，在必要时调用对应的工具类中的工具函数，协助控制类的处理。控制类还有一大任务就是将其各类中返回的回调数据发送给路由层，作为对应的请求的回应。
+
++ 工具类（utils）就是整个业务代码之中所间接用到的一些工具的集合。这部分按代码不涉及具体的业务或数据库，主要就是一些工具函数。
+
++ 实体类（Entity）就是对应的各种数据实体。在我的函数设计中，我只给实体类操纵数据库的权限，以此来避免业务和数据之间的相互干扰。 实体类的实现过程中与数据库的表项基本上做到了一一对应的关系。其他所有业务代码如果需要操作数据，都必须通过操作实体类进行实际实体的编辑来进行数据库的调用。
+
+最后点一层是通过 Repository 实现的数据库代理类，为了降低实现的复杂度和避免业务和数据库之间的相互干扰，我使用了Repository DDD设计模式。这一点我将在6.3节详细介绍。
+
+### 6.2 技术选型
+
++ 项目语言： `TypeScript`
++ 项目框架：Node.js + Express 框架
++ 数据库：[MariaDB](https://mariadb.org/)，为了便于前端同学调试设置为和 MySQL 相同的3306端口
+
+### 6.3 Router 接口路由转发表实现
+
+Router是Express框架的一个 [路由中间件](https://expressjs.com/en/guide/routing.html) 功能，表示应用程序端点 (URI) 的定义以及端点响应客户机请求的方式。我们使用 app 与 HTTP 方法相对应的 Express 对象方法来定义路由，如 `app.get()` 用于处理 GET 请求，而 `app.post` 则用于处理 POST 请求。这些路由方法都指定了回调函数（或者：“处理程序函数”），当程序接收到指定的路由（端点）的时候（也就是说 HTTP 方法请求时被调用），来调用回调函数，换句话说就是应用程序监听与指定路由和方法匹配的请求，当检测到匹配时，他会调用对应的回调函数。
+
+基本示意图如下：
+
+![image-20230115230039819](./UIdesign/r1.png)
+
+基本原理示意图如下：
+
+![image-20230115230039819](./UIdesign/r2.png)
+
+在后端的编写过程中，我对于不同的接口类型定义了不同的 router URL，在满足 Restful API 的同时也提高了代码的可读性。![image-20230115230039819](./UIdesign/router3.png)
+
+以上是我们的接口定义文件，可以看到我根据不同的类型定义了不同文件，使用下述代码设置不同的 URL 前缀。
+
+```typescript
+// import routers
+const indexRouter = require('./routes/index');
+const accountRouter = require('./routes/account');
+const taskRouter = require('./routes/task');
+const messageRouter = require('./routes/message');
+const groupRouter = require('./routes/group');
+const folderRouter = require('./routes/folder');
+
+// bind routers
+app.use('/account', accountRouter);
+app.use('/task', taskRouter);
+app.use('/message', messageRouter);
+app.use('/group', groupRouter);
+app.use('/folder', folderRouter);
+app.use('/', indexRouter);
+```
+
+### 6.4 Repository 数据库代理实现
+
+#### 6.4.1 Repository 设计模式介绍
+
+> "*A Repository mediates between the domain and data mapping layers, acting like an in-memory domain object collection.*
+>
+>  *Client objects construct query specifications declaratively and submit them to Repository for satisfaction.*
+>
+>  *Objects can be added to and removed from the Repository, as they can from a simple collection of objects,*
+>
+>  *and the mapping code encapsulated by the Repository will carry out the appropriate operations behind the scenes.* 
+>
+> *Conceptually, a Repository encapsulates the set of objects persisted in a data store and the operations performed over them,* 
+>
+> *providing a more object-oriented view of the persistence layer. Repository also supports the objective of achieving a clean separation and one-way* 
+>
+> *dependency between the domain and data mapping layers.*"
+
+按照最初提出者的介绍，Repository 是衔接数据映射层和域之间的一个纽带，作用相当于一个在内存中的域对象集合。客户端对象把查询的一些实体进行组合，并把它们提交给Repository。对象能够从   Repository 中移除或者添加，就好比这些对象在一个Collection对象上就行数据操作，同时映射层的代码会对应的从数据库中取出相应的数据。
+
+![示意图](https://codingsight.com/wp-content/uploads/2017/09/layers.png)
+
+#### 6.4.2 Repository 实现
+
+该模式最理想的实现方式是通过2个 Domain 进行网络通信从而进行数据库的操作。但是由于后端项目仅有1万行左右，规模相对比较小。为了降低代码框架的复杂度，我根据非必要勿增实体的原则仅设置了一个数据库代理类负责进行业务代码和数据库之间的联系。
+
+在代理类的设计中，我遵循以下几个原则：
+
++ **数据业务隔离**：数据库代理不会插手任何业务相关的代码进行业务操作。
++ **数据完整性与原子性**：对于需要多个SQL语句进行的操作，统一使用事务来进行对应的数据库处理，保证操作的原子性。
++ **数据安全**：原则上数据库内容和数据库错误不对外暴露，仅对外返回指定函数的结果，进行一定的防诸如操作。
++ **可靠操作**：对于语言特性带来的异步处理语句统一进行同步化操作。
+
+前面部分已经提到，在业务代码中，只有实体内可以调用数据库代理类。后来进行数据库操作，这是在该模式的基础上，进一步避免常规业务代码对于整个数据库安全的影响。 
+
+---
+## 7 项目测试
+项目测试在单独的测试文档中。
 ## 总结
 本次实训是一次较为完整的web项目实践，在锻炼我们的编程能力的同时，也培养了我们优化项目结构的意识。另外，前端使用的 `Vue` 框架和后端使用的 `Express` 框架都是目前较为流行的web应用开发框架，选择这两个框架的初衷是想尝试更贴近目前行业内的项目开发流程，从而达到实训“动手实践、自主学习”的教学目的。虽然项目的部分细节不是最完善的状态，但是希望我们的努力可以为本次实训交上一份合格的答卷。
