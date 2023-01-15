@@ -228,6 +228,9 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 ---
 ## 4 项目功能实现——前端部分
+
+**P.S.** 如需运行本项目感受实现效果，可以参考 [起步说明](intro.md)
+
 本项目前端部分整体采用 [Vue 3.2.8](https://cn.vuejs.org/) 框架结构，并引入 [element-plus](https://element-plus.gitee.io/zh-CN/component/button.html) 组件库和 [element-icon](https://element-plus.gitee.io/zh-CN/component/icon.html) 图标组辅助界面设计，使用 [Axios http网络请求库](https://www.axios-http.cn/) 进行前后端数据交互。
 渲染层开发语言为 html+css, 逻辑层开发语言为 javascript、typescript。
 
@@ -327,6 +330,6 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 ---
 ## 6 项目测试
-我不知道怎么写，但是PPT里说要测试报告，也许可以新开一个文档
+详情可见测试文档。
 ## 总结
-
+本次实训是一次较为完整的web项目实践，在锻炼我们的编程能力的同时，也培养了我们优化项目结构的意识。另外，前端使用的 `Vue` 框架和后端使用的 `Express` 框架都是目前较为流行的web应用开发框架，选择这两个框架的初衷是想尝试更贴近目前行业内的项目开发流程，从而达到实训“动手实践、自主学习”的教学目的。虽然项目的部分细节不是最完善的状态，但是希望我们的努力可以为本次实训交上一份合格的答卷。
