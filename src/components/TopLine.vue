@@ -87,7 +87,7 @@
           <br><el-divider class="divider1" />
           <div class="user_info">
             <h4>用户名：{{ store.state.account.user_name }}</h4>
-            <h4>账号：{{ store.state.account.client_id }}</h4>
+            <!-- <h4>账号：{{ store.state.account.client_id }}</h4> -->
             <h4>注册时间：{{ store.state.account.register_time }}</h4>
             <h4>简介：{{ store.state.account.intro }}</h4>
           </div>

@@ -96,8 +96,10 @@
                 let user = {
                   client_id: '',
                   username: regisForm.user_name,
+                  user_name:'',
                   passwd_hash: sm3(regisForm.password),
                   introduction: regisForm.introduce,
+                  intro: '',
                   register_time: date,
                   avator_path: '/static/default.png',
                 }
@@ -106,10 +108,13 @@
                         let client_id = res.data.data.client_id;
                         // console.log(res);
                         user.client_id=client_id;
+                        user.avator_path= "http://localhost:3000/static/default.png"
+                        user.user_name=user.username;
+                        user.intro = user.introduction;
                         store.commit("alterAccount",user);
                         console.log(store.state.account.client_id);
                         router.push({
-                            path:"/taskDetail"
+                            path:"/home"
                         });
                     }
                     else{

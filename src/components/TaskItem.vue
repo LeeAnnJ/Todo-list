@@ -157,7 +157,7 @@
     },
     data() {
         return {
-            coordinator: ["张三", "李四"],
+            coordinator: [],
             isImportant: this.content.priority,
             isDone: this.done,
             corpInput: "",

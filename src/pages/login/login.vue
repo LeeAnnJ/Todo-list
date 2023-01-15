@@ -56,6 +56,18 @@
         }],
     })
 
+    function parseTime(time){
+        if (time==null) return "暂无";
+        var date = new Date(time);
+        let monthString = date.getMonth()+1>=10? String(date.getMonth()+1): '0'+(date.getMonth()+1);
+        let dtString = date.getDate()>=10? String(date.getDate()):'0' + date.getDate();	
+        let hourString = date.getHours()>=10? String(date.getHours()):'0'+date.getHours();
+        let minuString = date.getMinutes()>=10? String(date.getMinutes()):'0'+date.getMinutes();
+        let secondString = date.getSeconds()>=10? String(date.getSeconds()):'0'+date.getSeconds();
+        let str=date.getFullYear()+'-'+monthString+'-'+dtString+' '+hourString+':'+minuString+':'+secondString;
+        return str;
+    }
+
     const submitLog = async (formEl: FormInstance | undefined) => {
         if(!formEl) return;
         await formEl.validate( (valid,fields) => {
@@ -70,7 +82,7 @@
                             client_id: data.client_id,
                             user_name: data.user_name,
                             avator_path: "http://localhost:3000"+data.avatar_path,
-                            register_time: data.register_time,
+                            register_time: parseTime(data.register_time),
                             intro: data.introduction
                         };
                         store.commit("alterAccount",account);
