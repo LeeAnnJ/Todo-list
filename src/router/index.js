@@ -18,7 +18,7 @@ import FolderRouter from '../pages/jump/folder.vue';
 const routes = [
     {
     	path: '/',
-    	redirect: '/home'
+    	redirect: '/hello'
     },
     {
     	path:'/hello',

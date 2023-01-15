@@ -3,47 +3,19 @@
 <center>
 项目成员：杨翼飞 李安吉 吕敬 刘浩然 王凡<br>
 指导教师: 黄袁 &emsp; 助教：陈中麒<br>
-2022年11月——2022年12月
+2022年11月——2023年1月
 </center>
-
-## 更新日志（这段交上去之前可以删掉，放在前面方便看）
-<center>
-
-|时间|作者|更新内容|
-|:--:|:--:|:--:|
-|2022.11.10|李安吉|创建文档，搭了一下基本的结构，<br>大概充实了一下需求分析，内容之后可以看情况调|
-|2022.11.20|李安吉|写了一点点前端实现部分|
-|xxxx|xxxx|xxxx|
-|xxxx|xxxx|xxxx|
-</center>
-
-### 2022.11.28 by联机
-[vuex参考](https://blog.csdn.net/qq_45934504/article/details/123462736)
-
-### 2022.11.16 by 联机
-引入了vue3支持的[element-plus组件](https://element-plus.gitee.io/zh-CN/component/button.html)和顺带的[element-icon图标组](https://element-plus.gitee.io/zh-CN/component/icon.html)，使用方法可以看链接的文档。
-
-### 2022.11.14 by 联机
-在需要预览界面效果前，请先[配置Vue环境](https://blog.csdn.net/mengchuan6666/article/details/125893199)
-
-（有一部分内容我挪到实现部分了）
-
-### 2022.11.12 by 联机
-前端为了保证合理的项目工作量和良好的界面效果，决定采用`Vue 3.2.8`b版本的框架，创建的初始项目为Hbuiler中的Vue项目，并考虑使用[Vue Design](https://www.iviewui.com/view-ui-plus/guide/introduce)引入简单组件方便开发。可能使用到的小图标也会考虑从图标库找一套，之后放在代码库里。
-
-基本的界面设计会放在`/UIdesign`文件夹里，有意见或疑问还请及时提出。
-
 
 ## 人员分工
 <center>
 
 |组员|分工|
 |:--:|:--:|
-|杨翼飞|xxxx|
-|李安吉|xxxx|
-|吕敬|xxxx|
-|刘浩然|xxxx|
-|王凡|xxxx|
+|杨翼飞|后端开发，前后端接口测试，<br>项目文档后端实现和测试部分|
+|李安吉|界面设计，前端开发，前后端接口测试，<br>项目文档前端实现部分、接口文档|
+|吕敬|前端组件开发，项目文档需求分析与设计部分|
+|刘浩然|前端组件开发，项目文档需求分析部分|
+|王凡||
 </center>
 
 ---
@@ -256,26 +228,31 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 
 ---
 ## 4 项目功能实现——前端部分
-本项目前端部分整体采用`Vue 3.2.8`框架结构，并引入`element-plus`和`element-icon`
+本项目前端部分整体采用 [Vue 3.2.8](https://cn.vuejs.org/) 框架结构，并引入 [element-plus](https://element-plus.gitee.io/zh-CN/component/button.html) 组件库和 [element-icon](https://element-plus.gitee.io/zh-CN/component/icon.html) 图标组辅助界面设计，使用 [Axios http网络请求库](https://www.axios-http.cn/) 进行前后端数据交互。
+渲染层开发语言为 html+css, 逻辑层开发语言为 javascript、typescript。
+
 ### 4.1 整体项目文件结构
-- node_models: vite进行的Vue框架的基本配置和element引入。
+项目的文件结构设计如下：
+
 - public: 通用资源
 - src: 项目的主要结构
 	- assets: 静态资源，例如通用的css样式、界面会用到的图片等
-		- css: 通用样式
+    	- css: 通用样式
 		- icons：使用的图标
 	- components: 通用组件
 	- http: 连接后端的api
+        - api：实现由接口文档规定的接口
+        - util: 由接口派生的适用于页面展示的方法
 	- pages: 页面文件，采用一个页面配置一个文件夹的结构设计。
-	- router: 路由，具体的路由设置在`index.js`中实现
+	- router: 网页路由，具体的路由设置在`index.js`中实现
+	- store: 使用 `vuex` 实现的全局变量存储
 	- `App.vue`: 框架的启动页面
-	- `main.js`: 框架启动的脚本
+	- `main.js`: 框架入口
 - `vite.config.js`:vite打包的配置文件。
 - UIdesign 界面设计图 
-### 4.2 页面设计实现
-#### **4.2.1 登录界面**
-留着之后写吧
-#### **4.2.2 主页面实现**
+
+### 4.2 页面设计
+#### **4.2.1 主页面设计**
 ![Image text](/UIdesign/mainWindow.png)
 **设计详细说明：**
 
@@ -290,7 +267,7 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 	* 主界面：FAF9F8，顶部栏： 2564CF，侧边栏：FFFFFF，星标：FFCA19，任务栏备选颜色：00994D。
 * 图标：采用 el-element 图标库.
 
-#### **4.2.3 任务详情页面实现**
+#### **4.2.2 任务详情页面设计**
 ![Image text](/UIdesign/taskDetail.png)
 设计详细说明：
 
@@ -301,15 +278,49 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 设计规范：
 
 * 颜色：
-	* 主界面：F5F6F7，顶部栏： 2564CF，侧边栏：FFFFFF，星标：FFCA19，未完成任务：FFCC99，已完成任务：97D077。
-* 图标：采用  el-element 图标库.
+	* 主界面：#F5F6F7，顶部栏： #2564CF，侧边栏：#FFFFFF，星标：#FFCA19，未完成子步骤：#FFCC99，已完成子步骤：#97D077。
+* 图标：采用 el-element 图标库.
 
+### 4.3 组件结构与页面实现
 
+#### **4.3.1 页面设置**
+本项目共设计页面如下：
 
-#### **4.2.X**
-### 4.3 数据交互请求与api实现
+<center>
+
+|路由|所在文件夹|页面功能|
+|:-:|:-:|:-:|
+|`/hello`|[/hello](/src/pages/hello/)|项目首页|
+|`/login`|[/login](/src/pages/login/)|登录界面|
+|`/registor`|[/registor](/src/pages/registor/)|注册账户|
+|`/home`|[/home](/src/pages/home)|主界面|
+|`/period`、`/ddl`、`/group`<br>`/important`、`/allTask`|[/jump](/src/pages/jump/)|按分类展示任务|
+|`/folder/:fold/:name`|[/jump](/src/pages/jump/)|展示用户自定义列表的任务|
+|`/taskDetail/:id`|[/task-detail](/src/pages/task-detail/)|任务详情界面|
+|`/invite/:task/:user`|[/invite](/src/pages/invite/)|邀请加入任务群组|
+
+</center>
+
+#### **4.3.2 页面组件分解**
+由于部分页面较为复杂，我们将其用组件结构分解实现。
+
+主界面分解如下：
+
+![main-decom](/UIdesign/main-decom.png)
+
+任务详情分解如下：
+
+![detail-decom](/UIdesign/detail-decom.png)
+
+### 4.4 数据交互请求与api实现
 #### **4.3.1 http请求接口设置**
-[详情见接口文档](https://github.com/LeeAnnJ/Todo-list/blob/front-main/backend-database-interface.md)
+这一部分主要规定请求的接口名称、请求参数和响应参数，详情可见 [接口文档](https://github.com/LeeAnnJ/Todo-list/blob/front-main/backend-database-interface.md)
+
+#### **4.3.2** 接口实现
+
+使用`axios`发送请求。在 `/src/http/axios.js` 完成基础路由和拦截器配置后，按项目文档声明每个接口的请求方法，并配置对应的数据，即可实现基本的请求接口，由此可继续开发适配于页面响应数据的方法。
+
+具体可见`/src/http`文件夹。
 
 ---
 ## 5 项目功能实现——后端部分
@@ -318,3 +329,4 @@ To-do List在线看板是一个结合待办任务checklist和小组项目可视�
 ## 6 项目测试
 我不知道怎么写，但是PPT里说要测试报告，也许可以新开一个文档
 ## 总结
+
