@@ -14,3 +14,7 @@ package-lock.json
 *.ntvs*
 *.njsproj
 *.sln
+
+*.mp4
+*.zip
+情况说明/*
