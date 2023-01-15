@@ -417,8 +417,15 @@ class DbRepo {
                 callback(false);
             }
             else {
-                sql = 'UPDATE `group` SET members_num = members_num + 1 WHERE group_id = ' +
-                    callback(true);
+                sql =
+                    'UPDATE `group` SET members_num = members_num + 1 WHERE group_id = ' +
+                        values.group_id;
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+                callback(true);
             }
         });
     }
@@ -446,8 +453,15 @@ class DbRepo {
                 callback(false);
             }
             else {
-                sql = 'UPDATE `group` SET members_num = members_num - 1 WHERE group_id = ' +
-                    callback(true);
+                sql =
+                    'UPDATE `group` SET members_num = members_num - 1 WHERE group_id = ' +
+                        group_id;
+                this.connection.query(sql, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+                callback(true);
             }
         });
     }
